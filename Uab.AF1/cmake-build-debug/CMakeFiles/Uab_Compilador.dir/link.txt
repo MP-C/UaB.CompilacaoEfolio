@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2021.2.3\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\Uab_Compilador.dir/objects.a
+C:\MinGW\bin\ar.exe cr CMakeFiles\Uab_Compilador.dir/objects.a @CMakeFiles\Uab_Compilador.dir\objects1.rsp
+C:\MinGW\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\Uab_Compilador.dir/objects.a -Wl,--no-whole-archive -o Uab_Compilador.exe -Wl,--out-implib,libUab_Compilador.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Uab_Compilador.dir\linklibs.rsp

@@ -1,0 +1,3 @@
+S:/Mario/Documentos/EngInformatica/UaB/3Ano/2.Semestre/3.2.Compilacao-21018-Cont/Projetos/C++/Uab.AF2/cmake-build-debug/CMakeFiles/AF2.dir
+S:/Mario/Documentos/EngInformatica/UaB/3Ano/2.Semestre/3.2.Compilacao-21018-Cont/Projetos/C++/Uab.AF2/cmake-build-debug/CMakeFiles/edit_cache.dir
+S:/Mario/Documentos/EngInformatica/UaB/3Ano/2.Semestre/3.2.Compilacao-21018-Cont/Projetos/C++/Uab.AF2/cmake-build-debug/CMakeFiles/rebuild_cache.dir

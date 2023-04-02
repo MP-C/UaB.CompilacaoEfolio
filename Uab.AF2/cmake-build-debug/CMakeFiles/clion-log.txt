@@ -1,0 +1,11 @@
+"C:\Program Files\JetBrains\CLion 2021.2.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - MinGW Makefiles" S:\Mario\Documentos\EngInformatica\UaB\3Ano\2.Semestre\3.2.Compilacao-21018-Cont\Projetos\C++\Uab.AF2
+CMake Error at C:/Program Files/JetBrains/CLion 2021.2.3/bin/cmake/win/share/cmake-3.20/Modules/FindPackageHandleStandardArgs.cmake:230 (message):
+  Could NOT find FLEX (missing: FLEX_EXECUTABLE)
+Call Stack (most recent call first):
+  C:/Program Files/JetBrains/CLion 2021.2.3/bin/cmake/win/share/cmake-3.20/Modules/FindPackageHandleStandardArgs.cmake:594 (_FPHSA_FAILURE_MESSAGE)
+  C:/Program Files/JetBrains/CLion 2021.2.3/bin/cmake/win/share/cmake-3.20/Modules/FindFLEX.cmake:264 (FIND_PACKAGE_HANDLE_STANDARD_ARGS)
+  CMakeLists.txt:5 (find_package)
+
+
+-- Configuring incomplete, errors occurred!
+See also "S:/Mario/Documentos/EngInformatica/UaB/3Ano/2.Semestre/3.2.Compilacao-21018-Cont/Projetos/C++/Uab.AF2/cmake-build-debug/CMakeFiles/CMakeOutput.log".

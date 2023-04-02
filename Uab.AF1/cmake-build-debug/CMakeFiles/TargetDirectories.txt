@@ -1,0 +1,3 @@
+C:/Users/capelam/Documents/MPC/EngInformatica/UaB/3Ano/2.Semestre/3.2.Compilacao-21018-Cont/Projetos/C++/Uab.AF1/cmake-build-debug/CMakeFiles/Uab_Compilador.dir
+C:/Users/capelam/Documents/MPC/EngInformatica/UaB/3Ano/2.Semestre/3.2.Compilacao-21018-Cont/Projetos/C++/Uab.AF1/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/capelam/Documents/MPC/EngInformatica/UaB/3Ano/2.Semestre/3.2.Compilacao-21018-Cont/Projetos/C++/Uab.AF1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
