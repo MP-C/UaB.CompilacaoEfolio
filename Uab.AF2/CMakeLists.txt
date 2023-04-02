@@ -5,4 +5,4 @@ set(CMAKE_CXX_STANDARD 14)
 find_package(FLEX REQUIRED)
 find_package(BISON REQUIRED)
 
-add_executable(AF2 main.cpp; analisador_lexico.l)
+add_executable(AF2 main.cpp; analisador_lexico.l; analisador_lexico.cpp)

@@ -1,141 +1,3 @@
-//#include <iostream>
-//#include <string>
-//#include <sstream>
-//
-//using namespace std;
-//
-//enum Token {
-//    TOK_IDENTIFICADOR,
-//    TOK_NUMERO,
-//    TOK_PARENTESES_ABRE,
-//    TOK_PARENTESES_FECHA,
-//    TOK_PONTO_VIRGULA,
-//    TOK_FIM
-//};
-//
-//enum Tipo {
-//    TIPO_INTEIRO,
-//    TIPO_FLOAT,
-//    TIPO_BOOLEANO
-//};
-//
-//struct TokenInfo {
-//    Token token;
-//    string lexema;
-//    Tipo tipo;
-//    union {
-//        int i;
-//        float f;
-//        bool b;
-//    } valor;
-//};
-//
-//class AnalisadorLexico {
-//public:
-//    AnalisadorLexico(string entrada) : entrada(entrada), pos(0) {}
-//
-//    TokenInfo proximoToken() {
-//        while (pos < entrada.length()) {
-//            if (isdigit(entrada[pos])) {
-//                return lerNumero();
-//            } else if (isalpha(entrada[pos])) {
-//                return lerIdentificador();
-//            } else {
-//                Token token;
-//                switch (entrada[pos]) {
-//                    case '(': token = TOK_PARENTESES_ABRE; break;
-//                    case ')': token = TOK_PARENTESES_FECHA; break;
-//                    case ';': token = TOK_PONTO_VIRGULA; break;
-//                    default: throw "Erro lexico: simbolo desconhecido";
-//                }
-//                pos++;
-//                return TokenInfo{token, "", TIPO_BOOLEANO, false};
-//            }
-//        }
-//        return TokenInfo{TOK_FIM, "", TIPO_BOOLEANO, false};
-//    }
-//
-//private:
-//    TokenInfo lerNumero() {
-//        stringstream ss;
-//        ss << entrada[pos];
-//        pos++;
-//        while (pos < entrada.length() && isdigit(entrada[pos])) {
-//            ss << entrada[pos];
-//            pos++;
-//        }
-//        if (entrada[pos] == '.') {
-//            ss << entrada[pos];
-//            pos++;
-//            while (pos < entrada.length() && isdigit(entrada[pos])) {
-//                ss << entrada[pos];
-//                pos++;
-//            }
-//            float f;
-//            ss >> f;
-//            return TokenInfo{TOK_NUMERO, ss.str(), TIPO_FLOAT, static_cast<int>(f)};
-//        } else {
-//            int i;
-//            ss >> i;
-//            return TokenInfo{TOK_NUMERO, ss.str(), TIPO_INTEIRO, i};
-//        }
-//    }
-//
-//    TokenInfo lerIdentificador() {
-//        stringstream ss;
-//        ss << entrada[pos];
-//        pos++;
-//        while (pos < entrada.length() && (isalnum(entrada[pos]) || entrada[pos] == '_')) {
-//            ss << entrada[pos];
-//            pos++;
-//        }
-//        string identificador = ss.str();
-//        Tipo tipo = identificador[0] == 'i' ? TIPO_INTEIRO : identificador[0] == 'f' ? TIPO_FLOAT : TIPO_BOOLEANO;
-//        return TokenInfo{TOK_IDENTIFICADOR, identificador, tipo, false};
-//    }
-//
-//    string entrada;
-//    int pos;
-//};
-//
-//int main() {
-////    AnalisadorLexico analisador("i42;(f3);14;btrue;i3");
-//    AnalisadorLexico analisador("(");
-//    TokenInfo token;
-//    do {
-//        token = analisador.proximoToken();
-//        switch (token.token) {
-//            case TOK_IDENTIFICADOR:
-//                cout << "Identificador: " << token.lexema << " (tipo: " << token.tipo << ")" << endl;
-//                break;
-//            case TOK_NUMERO:
-//                if (token.tipo == TIPO_INTEIRO) {
-//                    cout << "Numero inteiro: " << token.valor.i << endl;
-//                } else if (token.tipo == TIPO_FLOAT) {
-//                    cout << "Numero float: " << token.valor.f << endl;
-//                }
-//                break;
-//            case TOK_PONTO_VIRGULA:
-//                cout << "Ponto e vírgula" << endl;
-//                break;
-//            case TOK_PARENTESES_ABRE:
-//                cout << "Parenteses Abre" << endl;
-//                break;
-//            case TOK_PARENTESES_FECHA:
-//                cout << "Parentese Fecha" << endl;
-//                break;
-//            case TIPO_BOOLEANO:
-//                cout << "Booleano: " << boolalpha << token.valor.b << endl;
-//                break;
-//            default:
-//                cout << "Token desconhecido" << endl;
-//                break;
-//        }
-//    } while (token.token != TOK_FIM);
-//    return 0;
-//}
-
-
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -175,6 +37,11 @@ void lexicalAnalysis(string input) {
     stringstream ss(input);
     char ch;
     int line = 1, column = 1;
+
+    //TODO::temos que criar uma forma de guardar o ultimo token (lastToken), pois sabemos que em programação existe uma sequencia
+    // portanto, vamos fazer essa verificacao, depois de encontrar o tipo atual
+    // int(id) ' '(ws) x(id)
+    TokenType lastToken;
 
     // percorrer caracter a caracter da string dada
     while (ss >> noskipws >> ch) {
@@ -237,9 +104,7 @@ void lexicalAnalysis(string input) {
 }
 
 int main() {
-    string input = "string x = 'ines';\r;\nint \tz = 0;";
-
+    string input = "string x = 20;\r;\nint \tz = 0;";
     lexicalAnalysis(input);
-
     return 0;
 }
