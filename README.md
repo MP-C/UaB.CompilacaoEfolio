@@ -1,3 +1,8 @@
 # UaB.CompilacaoEfolio
 
-Para criar o analisador lexico, fica necessário instalar o WSL (linux) - via vários comandos (entre install apk, upgrade, mixing, ...), e correr o ficheiro analisador_lexico.l com o comando : flex -o analisador_lexico.cpp analisador_lexico.l
+In the context of the Compilation course in the 3rd year, 2nd semester of the Computer Engineering degree at the Open University of Lisbon - Portugal, this repository was created to record all code developments that occurred during the evaluation period.
+
+For informational purposes, the following information is included:
+
+- AF1, how it was resolved
+- AF2, and how it was resolved.
