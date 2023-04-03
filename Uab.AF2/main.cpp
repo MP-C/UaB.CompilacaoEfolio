@@ -30,6 +30,10 @@ bool isWhiteSpace(char ch) {
     return ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r';
 }
 
+bool isType(char ch) {
+    return ch >= 'A' && ch <= 'Z';
+}
+
 //#endregion
 
 //Implementação do analisador léxico
@@ -37,11 +41,6 @@ void lexicalAnalysis(string input) {
     stringstream ss(input);
     char ch;
     int line = 1, column = 1;
-
-    //TODO::temos que criar uma forma de guardar o ultimo token (lastToken), pois sabemos que em programação existe uma sequencia
-    // portanto, vamos fazer essa verificacao, depois de encontrar o tipo atual
-    // int(id) ' '(ws) x(id)
-    TokenType lastToken;
 
     // percorrer caracter a caracter da string dada
     while (ss >> noskipws >> ch) {
@@ -85,7 +84,7 @@ void lexicalAnalysis(string input) {
             }
             ss.putback(ch);
             column--;
-        } else {
+        } else if (isType(ch)) {
             tokenType = TYPE;
             tokenValue += ch;
             ss >> ch;
@@ -97,6 +96,10 @@ void lexicalAnalysis(string input) {
             }
             ss.putback(ch);
             column--;
+        } else {
+            tokenValue += ch;
+            cout << "Erro linha " << line << ", coluna " << column << ", sequencia nao reconhecida:" << tokenValue;
+            return;
         }
 
         cout << "Token encontrado: " << tokenNames[tokenType] << " (valor: '" << tokenValue << "', linha: " << line << ", coluna: " << column << ")" << endl;
@@ -104,7 +107,8 @@ void lexicalAnalysis(string input) {
 }
 
 int main() {
-    string input = "string x = 20;\r;\nint \tz = 0;";
+//    string input = "string x = 20;\r;\nint \tz = 0;";
+    string input = "string ! \n []";
     lexicalAnalysis(input);
     return 0;
 }
