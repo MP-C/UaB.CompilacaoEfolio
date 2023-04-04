@@ -20,3 +20,18 @@ Solution:
 Its execution requires the completion of some tasks even before launching the developed program. Such as: to create the
 lexical analyzer, it is necessary to install WSL (Linux) - via several commands (including install apk, upgrade, mixing,
  ...), and run the lexical analyzer file with the command: flex -o lexical_analyzer.cpp lexical_analyzer.l.
+
+ 
+ Correr o compile.sh:
+
+ Primeiro correr no terminal (linux) o comando:
+
+ --chmod +x compile.sh--
+
+ O comando "chmod" significa "change mode", ou seja, alterar o modo de permissões de acesso a um arquivo ou diretório. O sinal de "+" significa adicionar permissões e "x" significa permissão de execução.
+
+ Para correr o script basta usar o comando:
+
+ ./compile.sh
+
+ 
