@@ -1,0 +1,75 @@
+Aqui vai uma explicação de cada espaço do lex.letra
+
+
+%{
+/* 1 - Estrutura para o ficheiro */
+
+    #include <iostream>
+    #include <fstream>
+    #include "sintax.h"
+
+    using namespace std;
+
+    // Apresenta erro
+    void ApresentaErro();
+
+
+%}
+
+/* 2 - Regras */
+
+/* 2.1 - Regras gerais */
+espaco [ \t]
+fim [\r\n]
+numeros [0-9]+
+vouf    [true][false]   /* isto significa que o valor vouf(verdadeiro ou falso) tem dois valores [true] e [false] */
+identificador [_a-zA-Z][_a-zA-Z0-9]* /* Isto significa que uma variável nunca irá terminar com um número mas sim com uma letra*/
+
+/* 2.2 - Tipos */
+inteiro {numeros}
+real {numeros}+\.{numeros}+
+booleano {vouf}
+
+%% /* cada secção é fechada com %% */
+
+/* 3 - Especificações dos tokens */
+
+/* 3.1 - Tipos */
+"int"   {return INT;}
+"float" {return FLOAT;}
+"bool"  {return BOOL;}
+
+/* 3.2 - Palavras reservadas */
+"if"    { return SE; }
+"else"  { return SENAO; }
+"while" { return ENQUANTO; }
+"for"   { return CADA; }
+
+/* 3.3 - Simbolos */
+","	{ return(VIRGULA); }
+"{"	{ return(ABRECHAVETA); }
+"}"	{ return(FECHACHAVETA); }
+"("	{ return(ABREPARENT); }
+")"	{ return(FECHAPARENT); }
+"="	{ return(IGUAL); }
+";"	{ return(PV); }
+"<"|">"|"<="|">="|"!="|"=="	{ return(OCONDICIONAL); }
+"+"	{ return(MAIS); }
+"-"	{ return(MENOS); }
+"*"|"/"	{ return (OPERADOR); }
+
+/* 3.4 - Regras */
+{espaco}
+{fim}       { return(FIM); }
+{inteiro}   { return(INTEIRO); }
+{real}      { return(REAL); }
+{booleano}  { return(BOOLEANO); }
+
+
+
+%%
+
+/* 4 - funções apresentadas no ponto 1 */
+void ApresentaErro(){
+    cout << "caracter inesperado!" << endl;
+}
