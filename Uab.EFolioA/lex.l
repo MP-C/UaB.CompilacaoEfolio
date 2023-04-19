@@ -11,13 +11,17 @@
 
 %}
 
+divisaoImpossivel [^0]
 espaco [ \t]
 fim [\r\n]
-numeros [0-9]+
-vouf    [true][false]
-inteiro {numeros}
-real {numeros}+\.{numeros}+
-booleano {vouf}
+comentario [#]
+comentarioCodigo1 [\/][\/]
+comentarioCodigo2 /\/\*.*?\*\/
+identificador [_a-zA-Z]+([0-9]?|[_a-zA-Z]?)
+
+inteiro [0-9]+
+real [0]|((|[-])[0-9]+|\.[0-9]+)
+booleano (^\W?false)|(^\W?true)
 
 %%
 
@@ -26,10 +30,21 @@ booleano {vouf}
 "bool"  {return BOOL;}
 
 
-"if"    { return SE; }
-"else"  { return SENAO; }
-"while" { return ENQUANTO; }
-"for"   { return CADA; }
+"if"            { return SE; }
+"else"          { return SENAO; }
+"while"         { return ENQUANTO; }
+"for"           { return CADA; }
+"structs"       { return ESTRUCT; }
+"const"         { return CONSTANTE; }
+"global"        { return GLOBAL; }
+"write"         { return ESCREVE; }
+"write_all"     { return ESCREVETUDO; }
+"write_string"  { return ESCREVESTRING; }
+"read"          { return LE; }
+"read_all"      { return LETUDO; }
+"read_string"   { return LESTRING; }
+"pow"           { return EXPOENTE; }
+"square_root"   { return RAIZ; }
 
 
 ","	{ return(VIRGULA); }
@@ -38,11 +53,11 @@ booleano {vouf}
 "("	{ return(ABREPARENT); }
 ")"	{ return(FECHAPARENT); }
 "="	{ return(IGUAL); }
-";"	{ return(PV); }
-"<"|">"|"<="|">="|"!="|"=="	{ return(OCONDICIONAL); }
+";"	{ return(PONTOEVIRGULA); }
+"<"|">"|"<="|">="|"=="|"!="	{ return(CONDICIONAL); }
 "+"	{ return(MAIS); }
 "-"	{ return(MENOS); }
-"*"|"/"	{ return (OPERADOR); }
+"+"|"-"|"*"|"/"	{ return (OPERADOR); }
 
 
 {espaco}
