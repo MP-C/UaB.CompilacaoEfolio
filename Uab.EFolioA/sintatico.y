@@ -26,7 +26,7 @@
     int tipoint;
 }
 
-%token IDENT
+%token<nome_var> IDENT
 %type<tipoint>variavel
 
 %token  BOOL

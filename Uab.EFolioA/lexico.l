@@ -1,8 +1,9 @@
+%option noyywrap
 %{
 
     #include <iostream>
     #include <fstream>
-    #include "sintax.h"
+    #include "sintatico.hpp"
 
     using namespace std;
 
@@ -65,7 +66,7 @@ booleano (^\W?false)|(^\W?true)
 {inteiro}       { return(INTEIRO); }
 {real}          { return(REAL); }
 {booleano}      { return(BOOLEANO); }
-{identificador} { return(IDENT); }
+{identificador}
 
 
 %%
