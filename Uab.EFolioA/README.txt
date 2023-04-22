@@ -28,13 +28,9 @@
 +  2) lex.yy.c   - analisador lexical resultante: 	+
 +  3) README.txt - Ficheiro de explicações e conteudo	+
 +  4) RelatorioEquipa.docx - Realtório final 		+
-+  5) sint.tab.c - analisador sintatico resultante	+
-+  6) sint.tab.h - analisador sintatico para 		+
-+ 	reconhecimento dos elementos lexicais		+
-+  7) sint.y     - ficheiro com especificação sintatica	+
-+  8) YAILcomErros.txt  - ficheiro de testes realizados +
++  5) YAILcomErros.txt  - ficheiro de testes realizados +
 +	diretamente no compilador			+
-+  9) YAILsemErros.txt  - ficheiro de testes realizados +
++  6) YAILsemErros.txt  - ficheiro de testes realizados +
 +	diretamente no compilador			+
 --------------------------------------------------------+
 
@@ -58,8 +54,9 @@
 +            Instruções para Utilização                 +
 +-------------------------------------------------------+
 + 							+
-+     $ ./efolioA testeEFA.txt				+
++     $ ./efolioA YAILcomErros.txt			+
++     $ ./efolioA YAILsemErros.txt			+
 + 							+
-+     <testeEFA.txt> pode ser substituido por qualquer	+
++  <YAILcomErros.txt> pode ser substituido por qualquer	+
 +     outro ficheiro que se pretenda compilar 		+
 --------------------------------------------------------+
