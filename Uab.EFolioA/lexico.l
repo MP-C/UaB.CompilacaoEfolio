@@ -20,7 +20,7 @@ comentarioCodigo2 /\/\*.*?\*\/
 identificador [_a-zA-Z]+([0-9]?|[_a-zA-Z]?)
 
 inteiro [0-9]+
-real [0]|((|[-])[0-9]+|\.[0-9]+)
+real [0-9]+(\.[0-9]+)?
 booleano (^\W?false)|(^\W?true)
 
 %%
@@ -61,10 +61,11 @@ booleano (^\W?false)|(^\W?true)
 
 
 {espaco}
-{fim}       { return(FIM); }
-{inteiro}   { return(INTEIRO); }
-{real}      { return(REAL); }
-{booleano}  { return(BOOLEANO); }
+{fim}           { return(FIM); }
+{inteiro}       { return(INTEIRO); }
+{real}          { return(REAL); }
+{booleano}      { return(BOOLEANO); }
+{identificador} { return(IDENT); }
 
 
 %%

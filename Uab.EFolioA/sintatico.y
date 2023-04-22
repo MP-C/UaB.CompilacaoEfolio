@@ -26,7 +26,7 @@
     int tipoint;
 }
 
-%token<nome_var> IDENT
+%token IDENT
 %type<tipoint>variavel
 
 %token  BOOL
@@ -110,7 +110,7 @@ estruct:
     ;
 
 declaracao:
-        IDENT ABRECHAVETA variavel FECHACHAVETA PONTOEVIRGULA   /* point2D {int a variavel;};  */ { adddebug("declaracao"); }
+        IDENT ABRECHAVETA variavel FECHACHAVETA PONTOEVIRGULA   /* point2D {int a variavel};  */ { adddebug("declaracao"); }
     ;
 
 variavel:
@@ -120,7 +120,6 @@ variavel:
 extra:
         VIRGULA IDENT             /* , x */
     |   PONTOEVIRGULA             /* ; */
-    |   extra                     /* repete */
     ;
 
 tipo:
