@@ -1,0 +1,10 @@
+structs{
+ # definição das estruturas
+}
+const{
+ # definição das constantes
+}
+global{
+ # definição das variáveis globais
+}
+# funções

@@ -2,7 +2,7 @@
 +         Constituição do grupo de 5 elementos          +
 +-------------------------------------------------------+
 + Compilador construido	em C				+
-+ Grupo  : Alt + C ++ Elite				+					+
++ Grupo  : Alt + C ++ Elite				+				+
 + Nome   : Gonçalo Caraça				+
 + Numero : 2000130					+
 +							+
@@ -24,8 +24,8 @@
 +-------------------------------------------------------+
 +                 Conteudo da pasta                     +
 +-------------------------------------------------------+
-+  1) lex.l      - ficheiro com especificação lexical	+
-+  2) lex.yy.c   - analisador lexical resultante: 	+
++  1) lexico.l   - ficheiro com especificação lexical   +
++  2) lexco.yy.c - analisador lexical resultante:   	+
 +  3) README.txt - Ficheiro de explicações e conteudo	+
 +  4) RelatorioEquipa.docx - Realtório final 		+
 +  5) YAILcomErros.txt  - ficheiro de testes realizados +
@@ -41,12 +41,17 @@
 +							+
 + Testes realizados em Windows, com recurso aos 	+
 + comandos seguintes: 					+
-+    a) $ bison -dy sint.y -o sint.tab.c		+
-+    b) $ flex lex.l 					+
-+    c) $ gcc sint.tab.c lex.yy.c -o efolioA		+
++    a) $ flex lexico.l					+
++    b) $ bison -dy sintatico.y -o sintatico.c		+
++    c) $ gcc sintax.c yy.lex.c -o efolioA		+
 + 							+
-+   P.S. -o <nome executavel> é opcional, caso não	+
-+   execute ficará com o ficheiro a.out			+
++ Para efeitos de facilidade de execução e de testes,   +
++ foi criado um ficheiro "bash" que executa todos estes +
++ comandos de forma automatisada "compileEfolioA.sh"	+
++							+
++   P.S. -o efolioA corresponde ao <nome executavel> é 	+
++	opcional, caso não execute ficará com o nome de +
++ 	ficheiro a.out					+
 --------------------------------------------------------+
 
 

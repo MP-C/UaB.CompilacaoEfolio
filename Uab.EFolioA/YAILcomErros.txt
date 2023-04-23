@@ -1,1 +1,11 @@
+struct{
+ # definição das estruturas
+}
+constt{
+ # definição das constantes
+}
+globale{
+ # definição das variáveis globais
+}
+# funções
 int a;
