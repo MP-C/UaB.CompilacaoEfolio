@@ -1,41 +1,40 @@
+%option noyywrap
 %{
 
-    #include <iostream>
-    #include <fstream>
-    #include "sintax.h"
-
+    #include <string.h>
+    #include <stdlib.h>
+    /*
+        Incluir definicoes criadas pelo bison e exportadas para um ficheiro".h"
+    */
+    #include "sintax.hpp"
     using namespace std;
-
-    // Apresenta erro
-    void ApresentaErro();
-
+    // Caracteres invalidos
+    void yyerror(char *s);
 %}
 
 divisaoImpossivel [^0]
-espaco [ \t]
-fim [\r\n]
-comentario [#]
-comentarioCodigo1 [\/][\/]
-comentarioCodigo2 /\/\*.*?\*\/
+espaco [ \S]
+paragrafo [\r\n]
+comentario (#.*)
 identificador [_a-zA-Z]+([0-9]?|[_a-zA-Z]?)
-
 inteiro [0-9]+
-real [0]|((|[-])[0-9]+|\.[0-9]+)
+real [0-9]+(\.[0-9]+)?
 booleano (^\W?false)|(^\W?true)
 
 %%
 
-"int"   {return INT;}
-"float" {return FLOAT;}
+"int"   { return INT;}
+"float"    { return FLOAT; }
 "bool"  {return BOOL;}
 
 
-"if"            { return SE; }
-"else"          { return SENAO; }
-"while"         { return ENQUANTO; }
-"for"           { return CADA; }
-"structs"       { return ESTRUCT; }
-"const"         { return CONSTANTE; }
+"if"    { return SE;}
+"else"  { return SENAO; }
+"while" { return ENQUANTO; }
+"for"   { return PARA; }
+"structs" { return ESTRUCT; }
+"const" { return CONST; }
+"main" { return MAIN;}
 "global"        { return GLOBAL; }
 "write"         { return ESCREVE; }
 "write_all"     { return ESCREVETUDO; }
@@ -46,29 +45,27 @@ booleano (^\W?false)|(^\W?true)
 "pow"           { return EXPOENTE; }
 "square_root"   { return RAIZ; }
 
-
 ","	{ return(VIRGULA); }
 "{"	{ return(ABRECHAVETA); }
 "}"	{ return(FECHACHAVETA); }
 "("	{ return(ABREPARENT); }
 ")"	{ return(FECHAPARENT); }
 "="	{ return(IGUAL); }
-";"	{ return(PONTOEVIRGULA); }
-"<"|">"|"<="|">="|"=="|"!="	{ return(CONDICIONAL); }
+";"	{ return(PV); }
+"<"|">"|"<="|">="|"!="|"=="	{ return(OCONDICIONAL); }
 "+"	{ return(MAIS); }
 "-"	{ return(MENOS); }
-"+"|"-"|"*"|"/"	{ return (OPERADOR); }
+"*"|"/"	{ return (OPERADOR); }
 
-
+{comentario}    { return(COMENTARIO);}
 {espaco}
-{fim}       { return(FIM); }
-{inteiro}   { return(INTEIRO); }
-{real}      { return(REAL); }
-{booleano}  { return(BOOLEANO); }
+{paragrafo}           { return(PARAGRAFO); }
+{inteiro}       { return(INTEIRO); }
+{real}          { return(REAL); }
+{booleano}      { return(BOOLEANO); }
 
+{identificador}{0,31} {strcpy(yylval.nome_var,yytext); return(IDENT); }
+
+. { yyerror("caracter nao esperado"); }
 
 %%
-
-void ApresentaErro(){
-    cout << "caracter inesperado!" << endl;
-}
