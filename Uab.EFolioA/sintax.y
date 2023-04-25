@@ -37,7 +37,6 @@
     int vars_preenchidas=0;
     int le_var(const char *nome);
     int encontra_var(const char *nome, int adicionar);
-
 %}
 
 %union
@@ -79,6 +78,7 @@
 %token	FECHAPARENT
 %token	IGUAL
 %token	PV
+%token  ESPACO
 %token	OCONDICIONAL
 %token	MAIS
 %token	MENOS
@@ -139,10 +139,17 @@ comentario:
 *   STRUCTS
 *   structs { structs_corpo } \n
 *
-*/
 structs:
-        ESTRUCT {printf("\nstructs encontrado\n");} ABRECHAVETA structs_corpo FECHACHAVETA PARAGRAFO
+        ESTRUCT {printf("\nstructs encontrado\n");} ABRECHAVETA ESPACO structs_corpo ESPACO FECHACHAVETA PV PARAGRAFO
     ;
+*/
+
+structs:
+        ESTRUCT {printf("\nstructs encontrado\n");} ABRECHAVETA PV FECHACHAVETA
+    ;
+
+
+
 
 /*
 *   STRUCTS(CORPO) = structs_corpo
@@ -154,8 +161,8 @@ structs:
 *
 */
 structs_corpo:
-        PARAGRAFO structs_corpo
-    |   IDENT ABRECHAVETA decla_varia FECHACHAVETA PV structs_corpo
+        IDENT ABRECHAVETA decla_varia FECHACHAVETA PV structs_corpo
+    |   PARAGRAFO structs_corpo
     |   comentario structs_corpo
     |   %empty
     ;
