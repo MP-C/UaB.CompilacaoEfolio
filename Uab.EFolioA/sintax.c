@@ -571,7 +571,7 @@ union yyalloc
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  32
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  72
+#define YYNRULES  73
 /* YYNSTATES -- Number of states.  */
 #define YYNSTATES  167
 
@@ -626,12 +626,12 @@ static const yytype_int16 yyrline[] =
 {
        0,   101,   101,   102,   106,   107,   108,   112,   113,   114,
      115,   116,   117,   121,   122,   123,   124,   129,   129,   133,
-     133,   138,   142,   143,   144,   145,   150,   151,   156,   157,
-     162,   166,   170,   171,   172,   176,   177,   181,   182,   186,
-     187,   191,   192,   193,   194,   195,   199,   203,   204,   205,
-     209,   214,   215,   220,   224,   225,   226,   230,   231,   232,
-     233,   234,   235,   238,   239,   240,   244,   248,   249,   252,
-     253,   258,   259
+     133,   138,   139,   143,   144,   145,   146,   151,   152,   157,
+     158,   163,   167,   171,   172,   173,   177,   178,   182,   183,
+     187,   188,   192,   193,   194,   195,   196,   200,   204,   205,
+     206,   210,   215,   216,   221,   225,   226,   227,   231,   232,
+     233,   234,   235,   236,   239,   240,   241,   245,   249,   250,
+     253,   254,   259,   260
 };
 #endif
 
@@ -709,20 +709,20 @@ static const yytype_int8 yydefact[] =
        3,     0,     1,     0,    19,     0,     0,     0,    17,     4,
        2,     5,    12,     8,     9,    10,    11,    15,    16,     6,
        0,     0,     0,     0,     0,    21,     0,     0,     0,     0,
-      47,    48,    49,     0,     0,     0,    18,    25,     0,     0,
-       0,     0,    29,     0,    46,     0,     0,    25,    25,     0,
-       0,     0,     0,    27,     0,    52,    50,     0,     0,    23,
-      24,     0,     0,    32,     0,    33,     0,    34,    51,     0,
-       0,     0,     0,    26,    42,     0,    41,    43,    44,    45,
-       0,    21,     0,    36,     0,    38,     0,    40,    56,     0,
-       0,     0,    31,     0,    20,     0,     0,     0,    54,    55,
-       0,    60,     0,    57,    58,    59,     0,     0,     0,    13,
-      30,    14,    25,     0,     0,     0,     0,     0,     0,    63,
-      64,    65,     0,     0,     0,    22,    35,    37,    39,    53,
-      61,     0,    62,     0,     0,    68,    68,     0,    68,     0,
-       0,     0,    67,    68,    68,     0,    70,     0,     0,    56,
-      68,    68,    71,     0,    69,     0,     0,    68,    68,     0,
-       0,    68,    68,     0,     0,    66,    72
+      48,    49,    50,     0,     0,     0,    18,    26,     0,     0,
+       0,     0,    30,     0,    47,     0,     0,    26,    26,     0,
+       0,     0,     0,    28,     0,    53,    51,     0,     0,    24,
+      25,     0,     0,    33,     0,    34,     0,    35,    52,     0,
+       0,     0,     0,    27,    43,     0,    42,    44,    45,    46,
+       0,    21,     0,    37,     0,    39,     0,    41,    57,     0,
+       0,     0,    32,     0,    20,     0,     0,     0,    55,    56,
+       0,    61,     0,    58,    59,    60,     0,     0,     0,    13,
+      31,    14,    26,     0,     0,     0,     0,     0,     0,    64,
+      65,    66,     0,     0,     0,    23,    36,    38,    40,    54,
+      62,     0,    63,     0,     0,    69,    69,     0,    69,     0,
+       0,     0,    68,    69,    69,     0,    71,     0,     0,    57,
+      69,    69,    72,     0,    70,     0,     0,    69,    69,     0,
+       0,    69,    69,     0,     0,    67,    73
 };
 
   /* YYPGOTO[NTERM-NUM].  */
@@ -818,12 +818,12 @@ static const yytype_int8 yyr1[] =
 {
        0,    41,    42,    42,    43,    43,    43,    44,    44,    44,
       44,    44,    44,    45,    45,    45,    45,    47,    46,    49,
-      48,    50,    51,    51,    51,    51,    52,    52,    53,    53,
-      54,    55,    56,    56,    56,    57,    57,    58,    58,    59,
-      59,    60,    60,    60,    60,    60,    61,    62,    62,    62,
-      63,    64,    64,    65,    66,    66,    66,    67,    67,    67,
-      67,    67,    67,    68,    68,    68,    69,    70,    70,    71,
-      71,    72,    72
+      48,    50,    50,    51,    51,    51,    51,    52,    52,    53,
+      53,    54,    55,    56,    56,    56,    57,    57,    58,    58,
+      59,    59,    60,    60,    60,    60,    60,    61,    62,    62,
+      62,    63,    64,    64,    65,    66,    66,    66,    67,    67,
+      67,    67,    67,    67,    68,    68,    68,    69,    70,    70,
+      71,    71,    72,    72
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -831,12 +831,12 @@ static const yytype_int8 yyr2[] =
 {
        0,     2,     2,     0,     1,     1,     2,     1,     1,     1,
        1,     1,     1,     1,     1,     1,     1,     0,     3,     0,
-       8,     0,     6,     2,     2,     0,     1,     5,     1,     4,
-       8,     0,     4,     4,     4,     5,     2,     5,     2,     5,
-       2,     1,     1,     1,     1,     1,     2,     1,     1,     1,
-       2,     2,     1,     5,     1,     1,     0,     1,     1,     1,
-       1,     3,     3,     1,     1,     1,    16,     2,     0,     3,
-       1,    10,    16
+       8,     0,     0,     6,     2,     2,     0,     1,     5,     1,
+       4,     8,     0,     4,     4,     4,     5,     2,     5,     2,
+       5,     2,     1,     1,     1,     1,     1,     2,     1,     1,
+       1,     2,     2,     1,     5,     1,     1,     0,     1,     1,
+       1,     1,     3,     3,     1,     1,     1,    16,     2,     0,
+       3,     1,    10,    16
 };
 
 
@@ -1555,56 +1555,62 @@ yyreduce:
 #line 1556 "sintax.c"
     break;
 
-  case 27:
-#line 151 "sintax.y"
-                                                                       {printf("\nconstante encontrada\n");}
+  case 22:
+#line 139 "sintax.y"
+        {printf("\n espaço encontrado\n");}
 #line 1562 "sintax.c"
     break;
 
-  case 29:
-#line 157 "sintax.y"
-                                                    {printf("\nglobal encontrado\n");}
+  case 28:
+#line 152 "sintax.y"
+                                                                       {printf("\nconstante encontrada\n");}
 #line 1568 "sintax.c"
     break;
 
   case 30:
-#line 162 "sintax.y"
-                                                                                        {printf("\nmain encontrado\n");}
+#line 158 "sintax.y"
+                                                    {printf("\nglobal encontrado\n");}
 #line 1574 "sintax.c"
     break;
 
-  case 50:
-#line 209 "sintax.y"
-                        {(yyval.tipoint) = encontra_var((yyvsp[-1].nome_var),1);}
+  case 31:
+#line 163 "sintax.y"
+                                                                                        {printf("\nmain encontrado\n");}
 #line 1580 "sintax.c"
     break;
 
-  case 53:
-#line 220 "sintax.y"
-                                     {(yyval.tipoint) = le_var((yyvsp[-4].nome_var));}
+  case 51:
+#line 210 "sintax.y"
+                        {(yyval.tipoint) = encontra_var((yyvsp[-1].nome_var),1);}
 #line 1586 "sintax.c"
     break;
 
-  case 66:
-#line 244 "sintax.y"
-                                                                                                                                     {printf("\ncondicao if-else Ok"); }
+  case 54:
+#line 221 "sintax.y"
+                                     {(yyval.tipoint) = le_var((yyvsp[-4].nome_var));}
 #line 1592 "sintax.c"
     break;
 
-  case 71:
-#line 258 "sintax.y"
-                                                                                                      {printf("\nciclo while OK");}
+  case 67:
+#line 245 "sintax.y"
+                                                                                                                                     {printf("\ncondicao if-else Ok"); }
 #line 1598 "sintax.c"
     break;
 
   case 72:
 #line 259 "sintax.y"
-                                                                                                                                          {printf("\nciclo for Ok");}
+                                                                                                      {printf("\nciclo while OK");}
 #line 1604 "sintax.c"
     break;
 
+  case 73:
+#line 260 "sintax.y"
+                                                                                                                                          {printf("\nciclo for Ok");}
+#line 1610 "sintax.c"
+    break;
 
-#line 1608 "sintax.c"
+
+#line 1614 "sintax.c"
 
       default: break;
     }
@@ -1836,7 +1842,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 261 "sintax.y"
+#line 262 "sintax.y"
 
 
 

@@ -136,6 +136,7 @@ structs:
 /*      fim da linha  => representa o %empty       */
 fimdalinha:
         %empty {printf("\n fim da linha encontrado\n");}
+    |   {printf("\n espaço encontrado\n");}
     ;
 
 structs_corpo:
