@@ -14,9 +14,8 @@
 
 divisaoImpossivel [^0]
 espaco [\s+]
-paragrafo [\n]
-novalinha [\r]
-comentario (#.*)
+paragrafo [\r|\n]
+comentario [#.*]
 identificador [_a-zA-Z]+([0-9]?|[_a-zA-Z]?)
 inteiro [0-9]+
 real [0-9]+(\.[0-9]+)?
@@ -27,7 +26,6 @@ booleano (^\W?false)|(^\W?true)
 "int"   { return INT;}
 "float" { return FLOAT; }
 "bool"  {return BOOL;}
-
 
 "if"    { return SE;}
 "else"  { return SENAO; }
@@ -58,12 +56,12 @@ booleano (^\W?false)|(^\W?true)
 "-"	{ return(MENOS); }
 "*"|"/"	{ return (OPERADOR); }
 
-{comentario}    { return(COMENTARIO); }
-{espaco}        { return(ESPACO); }
-{paragrafo}     { return(PARAGRAFO); }
-{inteiro}       { return(INTEIRO); }
-{real}          { return(REAL); }
-{booleano}      { return(BOOLEANO); }
+{comentario}  { return(COMENTARIO); }
+{espaco}
+{paragrafo}   { return(PARAGRAFO); }
+{inteiro}     { return(INTEIRO); }
+{real}        { return(REAL); }
+{booleano}    { return(BOOLEANO); }
 
 {identificador}{0,31} {strcpy(yylval.nome_var,yytext); return(IDENT); }
 
