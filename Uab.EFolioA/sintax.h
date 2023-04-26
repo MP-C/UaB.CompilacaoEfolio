@@ -74,23 +74,27 @@ extern int yydebug;
     EXPOENTE = 275,                /* EXPOENTE  */
     RAIZ = 276,                    /* RAIZ  */
     MAIN = 277,                    /* MAIN  */
-    VIRGULA = 278,                 /* VIRGULA  */
-    ABRECHAVETA = 279,             /* ABRECHAVETA  */
-    FECHACHAVETA = 280,            /* FECHACHAVETA  */
-    ABREPARENT = 281,              /* ABREPARENT  */
-    FECHAPARENT = 282,             /* FECHAPARENT  */
-    IGUAL = 283,                   /* IGUAL  */
-    PV = 284,                      /* PV  */
-    OCONDICIONAL = 285,            /* OCONDICIONAL  */
-    MAIS = 286,                    /* MAIS  */
-    MENOS = 287,                   /* MENOS  */
-    OPERADOR = 288,                /* OPERADOR  */
-    COMENTARIO = 289,              /* COMENTARIO  */
-    PARAGRAFO = 290,               /* PARAGRAFO  */
-    INTEIRO = 291,                 /* INTEIRO  */
-    REAL = 292,                    /* REAL  */
-    BOOLEANO = 293,                /* BOOLEANO  */
-    SINAL = 294                    /* SINAL  */
+    LOCAL = 278,                   /* LOCAL  */
+    VIRGULA = 279,                 /* VIRGULA  */
+    ABRECHAVETA = 280,             /* ABRECHAVETA  */
+    FECHACHAVETA = 281,            /* FECHACHAVETA  */
+    ABREPARENT = 282,              /* ABREPARENT  */
+    FECHAPARENT = 283,             /* FECHAPARENT  */
+    ABREVETOR = 284,               /* ABREVETOR  */
+    FECHAVETOR = 285,              /* FECHAVETOR  */
+    IGUAL = 286,                   /* IGUAL  */
+    PV = 287,                      /* PV  */
+    ESPACO = 288,                  /* ESPACO  */
+    OCONDICIONAL = 289,            /* OCONDICIONAL  */
+    MAIS = 290,                    /* MAIS  */
+    MENOS = 291,                   /* MENOS  */
+    OPERADOR = 292,                /* OPERADOR  */
+    COMENTARIO = 293,              /* COMENTARIO  */
+    PARAGRAFO = 294,               /* PARAGRAFO  */
+    INTEIRO = 295,                 /* INTEIRO  */
+    REAL = 296,                    /* REAL  */
+    BOOLEANO = 297,                /* BOOLEANO  */
+    SINAL = 298                    /* SINAL  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -119,35 +123,39 @@ extern int yydebug;
 #define EXPOENTE 275
 #define RAIZ 276
 #define MAIN 277
-#define VIRGULA 278
-#define ABRECHAVETA 279
-#define FECHACHAVETA 280
-#define ABREPARENT 281
-#define FECHAPARENT 282
-#define IGUAL 283
-#define PV 284
-#define OCONDICIONAL 285
-#define MAIS 286
-#define MENOS 287
-#define OPERADOR 288
-#define COMENTARIO 289
-#define PARAGRAFO 290
-#define INTEIRO 291
-#define REAL 292
-#define BOOLEANO 293
-#define SINAL 294
+#define LOCAL 278
+#define VIRGULA 279
+#define ABRECHAVETA 280
+#define FECHACHAVETA 281
+#define ABREPARENT 282
+#define FECHAPARENT 283
+#define ABREVETOR 284
+#define FECHAVETOR 285
+#define IGUAL 286
+#define PV 287
+#define ESPACO 288
+#define OCONDICIONAL 289
+#define MAIS 290
+#define MENOS 291
+#define OPERADOR 292
+#define COMENTARIO 293
+#define PARAGRAFO 294
+#define INTEIRO 295
+#define REAL 296
+#define BOOLEANO 297
+#define SINAL 298
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 44 "sintaxold.y"
+#line 43 "sintax.y"
 
         char nome_var[33];
         int tipoint;
      
 
-#line 151 "sintax.h"
+#line 159 "sintax.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

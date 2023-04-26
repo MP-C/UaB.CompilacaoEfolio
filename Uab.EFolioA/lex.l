@@ -20,7 +20,7 @@ comentario (#.*)
 identificador [_a-zA-Z]+([0-9]?|[_a-zA-Z]?)
 inteiro [0-9]+
 real [0-9]+(\.[0-9]+)?
-booleano (^\W?false)|(^\W?true)
+booleano (false)|(true)
 
 %%
 
@@ -29,13 +29,14 @@ booleano (^\W?false)|(^\W?true)
 "bool"  {return BOOL;}
 
 
-"if"    { return SE;}
-"else"  { return SENAO; }
-"while" { return ENQUANTO; }
-"for"   { return PARA; }
-"structs" { return ESTRUCT; }
-"const" { return CONST; }
-"main" { return MAIN;}
+"if"            { return SE; }
+"else"          { return SENAO; }
+"while"         { return ENQUANTO; }
+"for"           { return PARA; }
+"structs"       { return ESTRUCT; }
+"const"         { return CONST; }
+"main"          { return MAIN; }
+"local"         { return LOCAL; }
 "global"        { return GLOBAL; }
 "write"         { return ESCREVE; }
 "write_all"     { return ESCREVETUDO; }
@@ -51,6 +52,8 @@ booleano (^\W?false)|(^\W?true)
 "}"	{ return(FECHACHAVETA); }
 "("	{ return(ABREPARENT); }
 ")"	{ return(FECHAPARENT); }
+"[" { return(ABREVETOR); }
+"]" { return(FECHAVETOR); }
 "="	{ return(IGUAL); }
 ";"	{ return(PV); }
 "<"|">"|"<="|">="|"!="|"=="	{ return(OCONDICIONAL); }
@@ -60,13 +63,13 @@ booleano (^\W?false)|(^\W?true)
 
 {comentario}    { return(COMENTARIO);}
 {espaco}
-{paragrafo}           { return(PARAGRAFO); }
+{paragrafo}     { return(PARAGRAFO); }
 {inteiro}       { return(INTEIRO); }
 {real}          { return(REAL); }
 {booleano}      { return(BOOLEANO); }
 
 {identificador}{0,31} {strcpy(yylval.nome_var,yytext); return(IDENT); }
 
-. { yyerror("caracter nao esperado"); }
+. { yyerror("caractere inesperado"); }
 
 %%

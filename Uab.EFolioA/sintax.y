@@ -69,6 +69,7 @@
 %token	EXPOENTE
 %token	RAIZ
 %token  MAIN
+%token  LOCAL
 
 %token  VIRGULA
 %token  ABRECHAVETA
@@ -144,14 +145,12 @@ structs_corpo:
 
 /*      CONST => const {declaracao_atribuicao}\n    */
 constante:
-        comentario
-    |   CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA PARAGRAFO {printf("\nconstante encontrada\n");}
+        CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA{printf("\nconstante encontrada\n");}
     ;
 
 /*          GLOBAL => global { declar_varia }       */
 global:
-       comentario
-    |   GLOBAL ABRECHAVETA decla_varia FECHACHAVETA {printf("\nglobal encontrado\n");}
+        GLOBAL ABRECHAVETA decla_varia FECHACHAVETA {printf("\nglobal encontrado\n");}
     ;
 
 /*          MAIN => main () bool { corpo_main }     */
@@ -163,25 +162,25 @@ funcoes:
         %empty
     ;
 
+/* falta vetores */
 declaracao_atribuicao:
-        INT IDENT IGUAL extra_int
-    |   FLOAT IDENT IGUAL extra_float
-    |   BOOL IDENT IGUAL extra_bool
+        comentario declaracao_atribuicao
+    |   PARAGRAFO declaracao_atribuicao
+    |   tipo IDENT IGUAL atributo declaracao_atribuicao
+    |   %empty
     ;
 
-extra_int:
-        INTEIRO VIRGULA IDENT IGUAL extra_int
-    |   INTEIRO PV
+
+atributo:
+        valor VIRGULA IDENT IGUAL atributo
+    |   valor PV
     ;
 
-extra_float:
-        REAL VIRGULA IDENT IGUAL extra_float
-    |   REAL PV
-    ;
-
-extra_bool:
-        BOOLEANO VIRGULA IDENT IGUAL extra_bool
-    |   BOOLEANO PV
+/* TIPO igual ao mesmo valor int = INTEIRO */
+valor:
+        INTEIRO
+    |   REAL
+    |   BOOLEANO
     ;
 
 instrucoes:
@@ -209,9 +208,15 @@ dv1:
 
 dv2:
         VIRGULA dv1
+    |   ABREVETOR vetor dv2
     |   PV
     ;
 
+/* falta expressões ex: a+2-c */
+vetor:
+        FECHAVETOR
+    |   INTEIRO FECHAVETOR
+    ;
 
 atribuicao:
         IDENT IGUAL MMV expressao PV {$$ = le_var($1);}
