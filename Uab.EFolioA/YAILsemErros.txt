@@ -1,1 +1,10 @@
-structs{;}
+structs {
+    #comentário
+    nome { int a; };
+}
+
+structs { #início
+ point1D {float x,y;}; # point2D é composta por 2 reais x e y
+ point2D {float x,y,z;}; # point3D por 3 reais x, y e z
+ pointND {float b;}; # pointnD é um vetor de reais
+} #fim

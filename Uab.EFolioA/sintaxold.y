@@ -37,6 +37,7 @@
     int vars_preenchidas=0;
     int le_var(const char *nome);
     int encontra_var(const char *nome, int adicionar);
+
 %}
 
 %union
@@ -70,40 +71,40 @@
 %token	RAIZ
 %token  MAIN
 
-%token  VIRGULA
-%token  ABRECHAVETA
-%token  FECHACHAVETA
-%token  ABREPARENT
-%token  FECHAPARENT
-%token  IGUAL
-%token  PV
-%token  ESPACO
-%token  OCONDICIONAL
-%token  MAIS
-%token  MENOS
+
+%token	VIRGULA
+%token	ABRECHAVETA
+%token	FECHACHAVETA
+%token	ABREPARENT
+%token	FECHAPARENT
+%token	IGUAL
+%token	PV
+%token	OCONDICIONAL
+%token	MAIS
+%token	MENOS
 %token	OPERADOR
 %token  COMENTARIO
-%token  PARAGRAFO
-%token  INTEIRO
+%token	PARAGRAFO
+%token	INTEIRO
 %token	REAL
 %token  BOOLEANO
 
+
 %start input
 
-/*          Associatividade de operadores         */
+/*Associatividade de operadores*/
 %left  MAIS MENOS
 %left  OPERADOR
 %nonassoc  SINAL
 
+
 %%
 
-input:
-        input linha
+input:	input linha
 	|   %empty
 	;
 
-linha:
-        PARAGRAFO
+linha:	PARAGRAFO
     |   primeira_camada
 	|   error PARAGRAFO{ yyerrok; }
 	;
@@ -124,17 +125,34 @@ segunda_camada:
     |   funcoes
     ;
 
-/*      COMENTARIO => [#].* \n  */
+/*
+*   COMENTÁRIO:
+*   [#].* \n
+*
+*/
+
 comentario:
-        COMENTARIO {printf("\ncomentario encontrado\n");}PARAGRAFO
+        COMENTARIO PARAGRAFO {printf("\ncomentario encontrado\n");}
     ;
 
-
+/*
+*   STRUCTS
+*   structs { structs_corpo } \n
+*
+*/
 structs:
         ESTRUCT {printf("\nstructs encontrado\n");} ABRECHAVETA structs_corpo FECHACHAVETA
     ;
 
-
+/*
+*   STRUCTS(CORPO) = structs_corpo
+*   verifica se:
+        - \n
+        - nome { decla_varia };
+        - comentário
+        -
+*
+*/
 structs_corpo:
         PARAGRAFO structs_corpo
     |   IDENT ABRECHAVETA decla_varia FECHACHAVETA PV structs_corpo
@@ -142,19 +160,28 @@ structs_corpo:
     |   %empty
     ;
 
-/*      CONST => const {declaracao_atribuicao}\n    */
+/*
+*   CONST
+*   const {declaracao_atribuicao}\n
+*/
 constante:
         comentario
     |   CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA PARAGRAFO {printf("\nconstante encontrada\n");}
     ;
 
-/*          GLOBAL => global { declar_varia }       */
+/*
+*   GLOBAL
+*   global { declar_varia }
+*/
 global:
        comentario
     |   GLOBAL ABRECHAVETA decla_varia FECHACHAVETA {printf("\nglobal encontrado\n");}
     ;
 
-/*          MAIN => main () bool { corpo_main }     */
+/*
+*   MAIN
+*   main () bool { corpo_main }
+*/
 main:
     MAIN ABREPARENT FECHAPARENT BOOL ABRECHAVETA instrucoes FECHACHAVETA segunda_camada {printf("\nmain encontrado\n");}
     ;
@@ -196,19 +223,16 @@ decla_varia:
         tipo dv1
     ;
 
-tipo:
-        INT
+tipo:   INT
     |   FLOAT
     |   BOOL
     ;
 
-dv1:
-        IDENT dv2       {$$ = encontra_var($1,1);}
+dv1:    IDENT dv2       {$$ = encontra_var($1,1);}
     ;
 
 
-dv2:
-        VIRGULA dv1
+dv2:    VIRGULA dv1
     |   PV
     ;
 
@@ -217,8 +241,7 @@ atribuicao:
         IDENT IGUAL MMV expressao PV {$$ = le_var($1);}
 ;
 
-MMV:
-        MAIS
+MMV:    MAIS
     |   MENOS
     |   %empty
     ;
@@ -242,6 +265,7 @@ condicionais:
 ;
 
 
+
 X:      PARAGRAFO X
     |   %empty
     ;
@@ -255,11 +279,14 @@ ciclos:
         ENQUANTO ABREPARENT expressao OCONDICIONAL expressao FECHAPARENT X ABRECHAVETA Y FECHACHAVETA {printf("\nciclo while OK");} /* output para debug */
     |   PARA ABREPARENT atribuicao expressao OCONDICIONAL expressao PV IDENT IGUAL MMV expressao FECHAPARENT X ABRECHAVETA Y FECHACHAVETA {printf("\nciclo for Ok");} /* output para debug */
 
+
+
 %%
 
-
 /* Funcao main para leitura do ficheiro a compilar*/
+
 int main(int argc, char** argv) {
+
 	yyin = fopen(argv[1], "r");
 
 	if (NULL != yyin) {
@@ -280,12 +307,15 @@ int main(int argc, char** argv) {
 }
 
 /* Contangem de erros encontrados, com ativação yylineno seria possivel colocar em que se encontrou o erro */
+
 void yyerror(char *s) {
 	count_error++;
 	fprintf(stderr,"%s\n",s); /* output para debug */
+
 }
 
 /* funcao para leitura de variaveis, permite verificar se variavel já foi declarada */
+
 int le_var(const char *nome) {
 	int i;
 
@@ -300,6 +330,7 @@ int le_var(const char *nome) {
 
 
 /* funcao para procurar variavel e/ou adicionar variavel */
+
 int encontra_var(const char *nome, int adicionar) {
 	int i;
 	for (i = 0; i < vars_preenchidas; i++)

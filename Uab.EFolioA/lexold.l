@@ -1,7 +1,6 @@
-/* versao 26.04.23 */
 %option noyywrap
 %{
-
+  
     #include <string.h>
     #include <stdlib.h>
     /*
@@ -10,7 +9,7 @@
     #include "sintax.h"
 
     // Caracteres invalidos
-    void yyerror(char *s);
+    void yyerror(char *s); 
 %}
 
 divisaoImpossivel [^0]
@@ -55,7 +54,7 @@ booleano (^\W?false)|(^\W?true)
 ";"	{ return(PV); }
 "<"|">"|"<="|">="|"!="|"=="	{ return(OCONDICIONAL); }
 "+"	{ return(MAIS); }
-"-"	{ return(MENOS); }
+"-"	{ return(MENOS); }  
 "*"|"/"	{ return (OPERADOR); }
 
 {comentario}    { return(COMENTARIO);}

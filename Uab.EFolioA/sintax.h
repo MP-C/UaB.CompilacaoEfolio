@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.5.1.  */
+/* A Bison parser, made by GNU Bison 3.7.6.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -31,8 +31,9 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* Undocumented macros, especially those whose name start with YY_,
-   are private implementation details.  Do not rely on them.  */
+/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
+   especially those whose name start with YY_ or yy_.  They are
+   private implementation details that can be changed or removed.  */
 
 #ifndef YY_YY_SINTAX_H_INCLUDED
 # define YY_YY_SINTAX_H_INCLUDED
@@ -44,52 +45,60 @@
 extern int yydebug;
 #endif
 
-/* Token type.  */
+/* Token kinds.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    IDENT = 258,
-    INT = 259,
-    FLOAT = 260,
-    BOOL = 261,
-    SE = 262,
-    SENAO = 263,
-    ENQUANTO = 264,
-    PARA = 265,
-    ESTRUCT = 266,
-    CONST = 267,
-    GLOBAL = 268,
-    ESCREVE = 269,
-    ESCREVETUDO = 270,
-    ESCREVESTRING = 271,
-    LE = 272,
-    LETUDO = 273,
-    LESTRING = 274,
-    EXPOENTE = 275,
-    RAIZ = 276,
-    MAIN = 277,
-    VIRGULA = 278,
-    ABRECHAVETA = 279,
-    FECHACHAVETA = 280,
-    ABREPARENT = 281,
-    FECHAPARENT = 282,
-    IGUAL = 283,
-    PV = 284,
-    ESPACO = 285,
-    OCONDICIONAL = 286,
-    MAIS = 287,
-    MENOS = 288,
-    OPERADOR = 289,
-    COMENTARIO = 290,
-    PARAGRAFO = 291,
-    INTEIRO = 292,
-    REAL = 293,
-    BOOLEANO = 294,
-    SINAL = 295
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    IDENT = 258,                   /* IDENT  */
+    INT = 259,                     /* INT  */
+    FLOAT = 260,                   /* FLOAT  */
+    BOOL = 261,                    /* BOOL  */
+    SE = 262,                      /* SE  */
+    SENAO = 263,                   /* SENAO  */
+    ENQUANTO = 264,                /* ENQUANTO  */
+    PARA = 265,                    /* PARA  */
+    ESTRUCT = 266,                 /* ESTRUCT  */
+    CONST = 267,                   /* CONST  */
+    GLOBAL = 268,                  /* GLOBAL  */
+    ESCREVE = 269,                 /* ESCREVE  */
+    ESCREVETUDO = 270,             /* ESCREVETUDO  */
+    ESCREVESTRING = 271,           /* ESCREVESTRING  */
+    LE = 272,                      /* LE  */
+    LETUDO = 273,                  /* LETUDO  */
+    LESTRING = 274,                /* LESTRING  */
+    EXPOENTE = 275,                /* EXPOENTE  */
+    RAIZ = 276,                    /* RAIZ  */
+    MAIN = 277,                    /* MAIN  */
+    VIRGULA = 278,                 /* VIRGULA  */
+    ABRECHAVETA = 279,             /* ABRECHAVETA  */
+    FECHACHAVETA = 280,            /* FECHACHAVETA  */
+    ABREPARENT = 281,              /* ABREPARENT  */
+    FECHAPARENT = 282,             /* FECHAPARENT  */
+    IGUAL = 283,                   /* IGUAL  */
+    PV = 284,                      /* PV  */
+    OCONDICIONAL = 285,            /* OCONDICIONAL  */
+    MAIS = 286,                    /* MAIS  */
+    MENOS = 287,                   /* MENOS  */
+    OPERADOR = 288,                /* OPERADOR  */
+    COMENTARIO = 289,              /* COMENTARIO  */
+    PARAGRAFO = 290,               /* PARAGRAFO  */
+    INTEIRO = 291,                 /* INTEIRO  */
+    REAL = 292,                    /* REAL  */
+    BOOLEANO = 293,                /* BOOLEANO  */
+    SINAL = 294                    /* SINAL  */
   };
+  typedef enum yytokentype yytoken_kind_t;
 #endif
-/* Tokens.  */
+/* Token kinds.  */
+#define YYEMPTY -2
+#define YYEOF 0
+#define YYerror 256
+#define YYUNDEF 257
 #define IDENT 258
 #define INT 259
 #define FLOAT 260
@@ -117,29 +126,28 @@ extern int yydebug;
 #define FECHAPARENT 282
 #define IGUAL 283
 #define PV 284
-#define ESPACO 285
-#define OCONDICIONAL 286
-#define MAIS 287
-#define MENOS 288
-#define OPERADOR 289
-#define COMENTARIO 290
-#define PARAGRAFO 291
-#define INTEIRO 292
-#define REAL 293
-#define BOOLEANO 294
-#define SINAL 295
+#define OCONDICIONAL 285
+#define MAIS 286
+#define MENOS 287
+#define OPERADOR 288
+#define COMENTARIO 289
+#define PARAGRAFO 290
+#define INTEIRO 291
+#define REAL 292
+#define BOOLEANO 293
+#define SINAL 294
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 43 "sintax.y"
+#line 44 "sintaxold.y"
 
         char nome_var[33];
         int tipoint;
      
 
-#line 143 "sintax.h"
+#line 151 "sintax.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
