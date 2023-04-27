@@ -46,6 +46,8 @@ booleano (false)|(true)
 "read_string"   { return LESTRING; }
 "pow"           { return EXPOENTE; }
 "square_root"   { return RAIZ; }
+"gen"           { return GEN; }
+
 
 ","	{ return(VIRGULA); }
 "{"	{ return(ABRECHAVETA); }

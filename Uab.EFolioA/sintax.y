@@ -70,6 +70,7 @@
 %token	RAIZ
 %token  MAIN
 %token  LOCAL
+%token	GEN
 
 %token  VIRGULA
 %token  ABRECHAVETA
@@ -164,7 +165,6 @@ funcoes:
         %empty
     ;
 
-/*          falta vetores       */
 declaracao_atribuicao:
         comentario declaracao_atribuicao
     |   PARAGRAFO declaracao_atribuicao
@@ -215,22 +215,33 @@ dv2:
 /* falta expressões ex: a+2-c */
 vetor:
         ABREVETOR vetor_corpo FECHAVETOR PV {printf("Vetor encontrado\n");}
+    |   ABREVETOR vetor_corpo FECHAVETOR IGUAL ABRECHAVETA vetor_listas FECHACHAVETA PV {printf("Vetor encontrado\n");}
+    |   ABREVETOR vetor_corpo FECHAVETOR IGUAL gerador PV {printf("Vetor encontrado\n");}
     ;
 
 vetor_corpo:
-	variavel {printf("Vetor simples encontrado\n");}
-    |   variavel OPERADOR variavel vetor_corpo_extra {printf("Vetor calculo encontrado\n");}
+	vetor_variavel {printf("Vetor simples encontrado\n");}
+    |   vetor_variavel OPERADOR vetor_variavel vetor_corpo_extra {printf("Vetor calculo encontrado\n");}
     |   %empty   {printf("Vetor vazio encontrado\n");}
     ;
 
 vetor_corpo_extra:
-        OPERADOR variavel vetor_corpo_extra
+        OPERADOR vetor_variavel vetor_corpo_extra
     | 	%empty
     ;
 
-variavel:
+vetor_variavel:
         IDENT
     |   INTEIRO
+    ;
+
+vetor_listas:
+	INTEIRO
+    |   INTEIRO VIRGULA vetor_listas
+    ;
+
+gerador:
+	GEN ABREPARENT vetor_listas FECHAPARENT PV
     ;
 
 atribuicao:
