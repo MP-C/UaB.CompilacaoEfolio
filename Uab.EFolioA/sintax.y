@@ -87,8 +87,6 @@
 %token	OPERADOR
 %token  COMENTARIO
 %token  PARAGRAFO
-%token  LETRAS
-%token  CALCULO
 %token  INTEIRO
 %token	REAL
 %token  BOOLEANO
@@ -120,6 +118,7 @@ primeira_camada:
     |   constante
     |   global
     |   segunda_camada
+    |   decla_varia
     ;
 
 segunda_camada:
@@ -131,12 +130,12 @@ segunda_camada:
 
 /*      COMENTARIO => [#].* \n  */
 comentario:
-        COMENTARIO {printf("\nComentario encontrado\n");}
+        COMENTARIO {printf("Comentario encontrado\n");}
 	;
 
 
 structs:
-        ESTRUCT {printf("\nStructs encontrado\n");} ABRECHAVETA structs_corpo FECHACHAVETA
+        ESTRUCT {printf("Structs encontrado\n");} ABRECHAVETA structs_corpo FECHACHAVETA
     ;
 
 
@@ -149,17 +148,17 @@ structs_corpo:
 
 /*      CONST => const {declaracao_atribuicao}\n    */
 constante:
-        CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA{printf("\nconstante encontrada\n");}
+        CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA{printf("Constante encontrada\n");}
     ;
 
 /*          GLOBAL => global { declar_varia }       */
 global:
-        GLOBAL ABRECHAVETA decla_varia FECHACHAVETA {printf("\nglobal encontrado\n");}
+        GLOBAL ABRECHAVETA decla_varia FECHACHAVETA {printf("Global encontrado\n");}
     ;
 
 /*          MAIN => main () bool { corpo_main }     */
 main:
-    MAIN ABREPARENT FECHAPARENT BOOL ABRECHAVETA instrucoes FECHACHAVETA segunda_camada {printf("\nmain encontrado\n");}
+        MAIN ABREPARENT FECHAPARENT BOOL ABRECHAVETA instrucoes FECHACHAVETA segunda_camada {printf("\nmain encontrado\n");}
     ;
 
 funcoes:
@@ -173,7 +172,6 @@ declaracao_atribuicao:
     |   tipo IDENT IGUAL atributo declaracao_atribuicao
     |   %empty
     ;
-
 
 atributo:
         valor VIRGULA IDENT IGUAL atributo
@@ -209,7 +207,6 @@ dv1:
         IDENT dv2       {$$ = encontra_var($1,1);}
     ;
 
-
 dv2:
         VIRGULA dv1
     |   vetor
@@ -218,14 +215,23 @@ dv2:
 
 /* falta expressões ex: a+2-c */
 vetor:
-        INT IDENT ABREVETOR vetor_tamanho FECHAVETOR PV {printf("\nVetor encontrado\n");}
+        ABREVETOR vetor_corpo FECHAVETOR PV {printf("Vetor encontrado\n");}
     ;
 
-vetor_tamanho:
-	INTEIRO
-    |   LETRAS
-    |   CALCULO
-    |   %empty
+vetor_corpo:
+	variavel {printf("Vetor simples encontrado\n");}
+    |   variavel OPERADOR variavel vetor_corpo_extra {printf("Vetor calculo encontrado\n");}
+    |   %empty   {printf("Vetor vazio encontrado\n");}
+    ;
+
+vetor_corpo_extra:
+        OPERADOR variavel vetor_corpo_extra
+    | 	%empty
+    ;
+
+variavel:
+        IDENT
+    |   INTEIRO
     ;
 
 atribuicao:
@@ -326,7 +332,7 @@ int encontra_var(const char *nome, int adicionar) {
 	{
 		strcpy(vars[i].nome, nome);
 		vars_preenchidas++;
-        fprintf(stderr,"\nVariavel %s declarada", nome); /* output para debug */
+        fprintf(stderr,"Variavel %s declarada\n", nome); /* output para debug */
 		return i;
 	}
     return -1;

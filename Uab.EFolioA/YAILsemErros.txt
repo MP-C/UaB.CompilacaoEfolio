@@ -1,15 +1,7 @@
-structs {
-#comentario
-nome { int a; };
-}
-
-# comentario com espaco
-#comentario sem espaco
-        #comentario com tab
-
-structs {
-    point1D {float x,y;};
-    point2D {float x,y,z;};
-}
-
- #FIM
+# START
+int v[];
+int v[a];
+int v[10];
+int v[a+2];
+int v[a+2]; # comentario
+# FIM
