@@ -1,31 +1,30 @@
-/* versao 26.04.23 */
 %option noyywrap
 %{
 
-    #include <string.h>
-    #include <stdlib.h>
-    /*
-        Incluir definicoes criadas pelo bison e exportadas para um ficheiro".h"
-    */
+    #include <stdio.h>
+    #include "sintatico.h"
 
-    #include "sintax.h"
-    // Caracteres invalidos
-    void yyerror(char *s);
+    // Apresenta erro
+    void ApresentaErro();
+
 %}
 
 divisaoImpossivel [^0]
-espaco [ \S]
-paragrafo [\r\n]
-comentario (#.*)
-identificador [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?)
+espaco [ \t]
+fim [\r\n]
+comentario [#]
+comentarioCodigo1 [\/][\/]
+comentarioCodigo2 /\/\*.*?\*\/
+identificador [_a-zA-Z]+([0-9]?|[_a-zA-Z]?)
+
 inteiro [0-9]+
 real [0-9]+(\.[0-9]+)?
-booleano (false)|(true)
+booleano (^\W?false)|(^\W?true)
 
 %%
 
-"int"   { return INT;}
-"float" { return FLOAT; }
+"int"   {return INT;}
+"float" {return FLOAT;}
 "bool"  {return BOOL;}
 
 
@@ -34,9 +33,7 @@ booleano (false)|(true)
 "while"         { return ENQUANTO; }
 "for"           { return PARA; }
 "structs"       { return ESTRUCT; }
-"const"         { return CONST; }
-"main"          { return MAIN; }
-"local"         { return LOCAL; }
+"const"         { return CONSTANTE; }
 "global"        { return GLOBAL; }
 "write"         { return ESCREVE; }
 "write_all"     { return ESCREVETUDO; }
@@ -46,31 +43,31 @@ booleano (false)|(true)
 "read_string"   { return LESTRING; }
 "pow"           { return EXPOENTE; }
 "square_root"   { return RAIZ; }
-"gen"           { return GEN; }
+
 
 ","	{ return(VIRGULA); }
 "{"	{ return(ABRECHAVETA); }
 "}"	{ return(FECHACHAVETA); }
 "("	{ return(ABREPARENT); }
 ")"	{ return(FECHAPARENT); }
-"[" { return(ABREVETOR); }
-"]" { return(FECHAVETOR); }
 "="	{ return(IGUAL); }
-";"	{ return(PV); }
-"<"|">"|"<="|">="|"!="|"=="	{ return(OCONDICIONAL); }
+";"	{ return(PONTOEVIRGULA); }
+"<"|">"|"<="|">="|"=="|"!="	{ return(CONDICIONAL); }
 "+"	{ return(MAIS); }
 "-"	{ return(MENOS); }
-"*"|"/"	{ return (OPERADOR); }
+"+"|"-"|"*"|"/"	{ return (OPERADOR); }
 
-{comentario}    { return(COMENTARIO);}
+
 {espaco}
-{paragrafo}     { return(PARAGRAFO); }
+{fim}           { return(FIM); }
 {inteiro}       { return(INTEIRO); }
 {real}          { return(REAL); }
 {booleano}      { return(BOOLEANO); }
+{identificador}
 
-{identificador}{0,31} {strcpy(yylval.nome_var,yytext); return(IDENT); }
-
-. { yyerror("caractere inesperado"); }
 
 %%
+
+void ApresentaErro(){
+    printf("caracter inesperado!");
+}

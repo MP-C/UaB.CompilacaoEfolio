@@ -27,9 +27,3 @@ int v_a_2_[a+2];
 int a_1[a+2];
 int D_1[a+2];
 int D_a1[a+2];
-
-structs { #início
- point2D {float x,y;}; # point2D é composta por 2 reais x e y
- point3D {float x,y,z;}; # point3D por 3 reais x, y e z
- pointND {float x[];}; # pointnD é um vetor de reais
-} #fim

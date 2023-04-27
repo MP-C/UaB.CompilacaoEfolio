@@ -24,6 +24,7 @@
 + explicar como se considerou o valor interno do vetor ? sem ou com letras?
 + Parte de sintatica VS parte de Funcionamento (EfolioB)
 
+
 +-------------------------------------------------------+
 +                 Conteudo da pasta                     +
 +-------------------------------------------------------+
@@ -57,7 +58,6 @@
 + Para efeitos de facilidade de execução e de testes,   +
 + foi criado um ficheiro "bash" que executa todos estes +
 + comandos de forma automatisada "./compileEfolioA.sh"	+
-+							+
 +   P.S. -o efolioA corresponde ao <nome executavel> é 	+
 +	opcional, caso não execute ficará com o nome de +
 + 	ficheiro a.out					+
