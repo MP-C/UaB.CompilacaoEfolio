@@ -17,7 +17,7 @@ divisaoImpossivel [^0]
 espaco [ \S]
 paragrafo [\r\n]
 comentario (#.*)
-identificador [_a-zA-Z]+([0-9]?|[_a-zA-Z]?)
+identificador [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?)
 inteiro [0-9]+
 real [0-9]+(\.[0-9]+)?
 booleano (false)|(true)

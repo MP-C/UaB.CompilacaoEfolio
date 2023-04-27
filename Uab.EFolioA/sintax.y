@@ -90,8 +90,7 @@
 %token  INTEIRO
 %token	REAL
 %token  BOOLEANO
-
-%start input
+%start  input
 
 /*          Associatividade de operadores         */
 %left  MAIS MENOS

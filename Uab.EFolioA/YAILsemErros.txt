@@ -1,7 +1,25 @@
 # START
 int v[];
-int v[a];
-int v[10];
-int v[a+2];
-int v[a+2]; # comentario
+int v_1[10];
+int v_as[a];
+int v_AS[a+2];
+int v_A1[a+2];
+int v_a1[a+2];
+int v_a_1[a+2];
+int v_a_2_[a+2];
+int a_1[a+2];
+int D_1[a+2];
+int D_a1[a+2];
 # FIM
+
+structs {
+#comentario
+nome { int a; };
+}
+# comentario com espaco
+#comentario sem espaco
+        #comentario com tab
+structs {
+    point1D {float x,y;};
+    point2D {float x,y,z;};
+}# FIM
