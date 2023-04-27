@@ -5,4 +5,6 @@ In the context of the Compilation course in the 3rd year, 2nd semester of the Co
 For informational purposes, the following information is included:
 
 - AF1, how it was resolved
-- AF2, and how it was resolved.
+- AF2, and how it was resolved
+- AF3, not resolved
+- EFolio A, instructions and how should be compiled

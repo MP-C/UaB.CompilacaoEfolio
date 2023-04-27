@@ -14,3 +14,16 @@ int D_a1[a+2]={1,2,3};
 int b[a+2]=gen(1,9);
 int b_1[a+2]=gen(0,9);
 int b1[a+2]=gen(2,0);
+
+# START
+int v[];
+int v_1[10];
+int v_as[a];
+int v_AS[a+2];
+int v_A1[a+2];
+int v_a1[a+2];
+int v_a_1[a+2];
+int v_a_2_[a+2];
+int a_1[a+2];
+int D_1[a+2];
+int D_a1[a+2];
