@@ -244,6 +244,10 @@ gerador:
 	GEN ABREPARENT vetor_listas FECHAPARENT PV
     ;
 
+
+/***	ESTAMOS AQUI GONÇALO!!			***/
+
+
 atribuicao:
         IDENT IGUAL MMV expressao PV {$$ = le_var($1);}
 ;
