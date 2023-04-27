@@ -1,3 +1,12 @@
+structs {a1asd{int x y
+} }
+
+structs #início
+ point2D { x,y;}; # point2D é composta por 2 reais x e y
+ point3D {float}; # point3D por 3 reais x, y e z
+ pointND {[]}     ###### pointnD é um vetor de reais
+}
+
 struct{
  # definição das estruturas
 }

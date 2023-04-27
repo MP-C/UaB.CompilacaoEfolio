@@ -1,3 +1,4 @@
+/* versao 26.04.23 */
 %option noyywrap
 %{
 
@@ -6,8 +7,8 @@
     /*
         Incluir definicoes criadas pelo bison e exportadas para um ficheiro".h"
     */
-    #include "sintax.hpp"
-    using namespace std;
+
+    #include "sintax.h"
     // Caracteres invalidos
     void yyerror(char *s);
 %}
@@ -16,25 +17,26 @@ divisaoImpossivel [^0]
 espaco [ \S]
 paragrafo [\r\n]
 comentario (#.*)
-identificador [_a-zA-Z]+([0-9]?|[_a-zA-Z]?)
+identificador [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?)
 inteiro [0-9]+
 real [0-9]+(\.[0-9]+)?
-booleano (^\W?false)|(^\W?true)
+booleano (false)|(true)
 
 %%
 
 "int"   { return INT;}
-"float"    { return FLOAT; }
+"float" { return FLOAT; }
 "bool"  {return BOOL;}
 
 
-"if"    { return SE;}
-"else"  { return SENAO; }
-"while" { return ENQUANTO; }
-"for"   { return PARA; }
-"structs" { return ESTRUCT; }
-"const" { return CONST; }
-"main" { return MAIN;}
+"if"            { return SE; }
+"else"          { return SENAO; }
+"while"         { return ENQUANTO; }
+"for"           { return PARA; }
+"structs"       { return ESTRUCT; }
+"const"         { return CONST; }
+"main"          { return MAIN; }
+"local"         { return LOCAL; }
 "global"        { return GLOBAL; }
 "write"         { return ESCREVE; }
 "write_all"     { return ESCREVETUDO; }
@@ -44,12 +46,15 @@ booleano (^\W?false)|(^\W?true)
 "read_string"   { return LESTRING; }
 "pow"           { return EXPOENTE; }
 "square_root"   { return RAIZ; }
+"gen"           { return GEN; }
 
 ","	{ return(VIRGULA); }
 "{"	{ return(ABRECHAVETA); }
 "}"	{ return(FECHACHAVETA); }
 "("	{ return(ABREPARENT); }
 ")"	{ return(FECHAPARENT); }
+"[" { return(ABREVETOR); }
+"]" { return(FECHAVETOR); }
 "="	{ return(IGUAL); }
 ";"	{ return(PV); }
 "<"|">"|"<="|">="|"!="|"=="	{ return(OCONDICIONAL); }
@@ -59,13 +64,13 @@ booleano (^\W?false)|(^\W?true)
 
 {comentario}    { return(COMENTARIO);}
 {espaco}
-{paragrafo}           { return(PARAGRAFO); }
+{paragrafo}     { return(PARAGRAFO); }
 {inteiro}       { return(INTEIRO); }
 {real}          { return(REAL); }
 {booleano}      { return(BOOLEANO); }
 
 {identificador}{0,31} {strcpy(yylval.nome_var,yytext); return(IDENT); }
 
-. { yyerror("caracter nao esperado"); }
+. { yyerror("caractere inesperado"); }
 
 %%

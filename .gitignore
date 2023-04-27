@@ -29,7 +29,7 @@
 *.dylib
 
 # Executables
-*.exe
+#*.exe
 *.out
 *.app
 *.i*86
@@ -50,7 +50,4 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
-/.idea/vcs.xml
-/.idea/UaB.CompilacaoEfolio.iml
-/.idea/modules.xml
-/.idea/.gitignore
+*.ini
