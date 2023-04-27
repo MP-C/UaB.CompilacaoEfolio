@@ -76,6 +76,8 @@
 %token  FECHACHAVETA
 %token  ABREPARENT
 %token  FECHAPARENT
+%token 	ABREVETOR
+%token 	FECHAVETOR
 %token  IGUAL
 %token  PV
 %token  ESPACO
@@ -85,6 +87,8 @@
 %token	OPERADOR
 %token  COMENTARIO
 %token  PARAGRAFO
+%token  LETRAS
+%token  CALCULO
 %token  INTEIRO
 %token	REAL
 %token  BOOLEANO
@@ -99,15 +103,15 @@
 %%
 
 input:
-        input linha
+	input linha
 	|   %empty
 	;
 
 linha:
         PARAGRAFO
     |   primeira_camada
-	|   error PARAGRAFO{ yyerrok; }
-	;
+    |   error PARAGRAFO{ yyerrok; }
+    ;
 
 primeira_camada:
         PARAGRAFO
@@ -127,12 +131,12 @@ segunda_camada:
 
 /*      COMENTARIO => [#].* \n  */
 comentario:
-        COMENTARIO {printf("\ncomentario encontrado\n");}PARAGRAFO
-    ;
+        COMENTARIO {printf("\nComentario encontrado\n");}
+	;
 
 
 structs:
-        ESTRUCT {printf("\nstructs encontrado\n");} ABRECHAVETA structs_corpo FECHACHAVETA
+        ESTRUCT {printf("\nStructs encontrado\n");} ABRECHAVETA structs_corpo FECHACHAVETA
     ;
 
 
@@ -162,7 +166,7 @@ funcoes:
         %empty
     ;
 
-/* falta vetores */
+/*          falta vetores       */
 declaracao_atribuicao:
         comentario declaracao_atribuicao
     |   PARAGRAFO declaracao_atribuicao
@@ -176,7 +180,7 @@ atributo:
     |   valor PV
     ;
 
-/* TIPO igual ao mesmo valor int = INTEIRO */
+/*             TIPO igual ao mesmo valor int = INTEIRO        */
 valor:
         INTEIRO
     |   REAL
@@ -208,14 +212,20 @@ dv1:
 
 dv2:
         VIRGULA dv1
-    |   ABREVETOR vetor dv2
+    |   vetor
     |   PV
     ;
 
 /* falta expressões ex: a+2-c */
 vetor:
-        FECHAVETOR
-    |   INTEIRO FECHAVETOR
+        INT IDENT ABREVETOR vetor_tamanho FECHAVETOR PV {printf("\nVetor encontrado\n");}
+    ;
+
+vetor_tamanho:
+	INTEIRO
+    |   LETRAS
+    |   CALCULO
+    |   %empty
     ;
 
 atribuicao:

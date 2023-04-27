@@ -19,6 +19,8 @@ paragrafo [\r\n]
 comentario (#.*)
 identificador [_a-zA-Z]+([0-9]?|[_a-zA-Z]?)
 inteiro [0-9]+
+letras [_a-zA-Z]+
+calculo ([a-zA-Z]*\d*\s*[-+*\/]\s*[a-zA-Z]*\d*)
 real [0-9]+(\.[0-9]+)?
 booleano (false)|(true)
 
@@ -64,6 +66,8 @@ booleano (false)|(true)
 {comentario}    { return(COMENTARIO);}
 {espaco}
 {paragrafo}     { return(PARAGRAFO); }
+{letras}        { return(LETRAS); }
+{calculo}       { return(CALCULO); }
 {inteiro}       { return(INTEIRO); }
 {real}          { return(REAL); }
 {booleano}      { return(BOOLEANO); }

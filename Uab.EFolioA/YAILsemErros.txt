@@ -1,5 +1,15 @@
-structs { #início
-  pointND {float x[];}; # pointnD é um vetor de reais
-  pointND {bool x[2];}; # pointnD é um vetor de reais
-  pointND {int x[2];}; # pointnD é um vetor de reais
+structs {
+#comentario
+nome { int a; };
 }
+
+# comentario com espaco
+#comentario sem espaco
+        #comentario com tab
+
+structs {
+    point1D {float x,y;};
+    point2D {float x,y,z;};
+}
+
+ #FIM
