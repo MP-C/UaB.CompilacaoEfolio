@@ -18,3 +18,5 @@ globale{
 }
 # funções
 int a;
+
+int v_2[+];

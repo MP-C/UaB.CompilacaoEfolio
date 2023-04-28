@@ -78,18 +78,19 @@ extern int yydebug;
     FECHAPARENT = 284,
     ABREVETOR = 285,
     FECHAVETOR = 286,
-    ASPAS = 287,
-    IGUAL = 288,
-    PV = 289,
-    ESPACO = 290,
-    OCONDICIONAL = 291,
-    OPERADOR = 292,
-    COMENTARIO = 293,
-    PARAGRAFO = 294,
-    INTEIRO = 295,
-    REAL = 296,
-    BOOLEANO = 297,
-    SINAL = 298
+    IGUAL = 287,
+    PV = 288,
+    ESPACO = 289,
+    OCONDICIONAL = 290,
+    MAIS = 291,
+    MENOS = 292,
+    OPERADOR = 293,
+    COMENTARIO = 294,
+    PARAGRAFO = 295,
+    INTEIRO = 296,
+    REAL = 297,
+    BOOLEANO = 298,
+    SINAL = 299
   };
 #endif
 /* Tokens.  */
@@ -122,18 +123,19 @@ extern int yydebug;
 #define FECHAPARENT 284
 #define ABREVETOR 285
 #define FECHAVETOR 286
-#define ASPAS 287
-#define IGUAL 288
-#define PV 289
-#define ESPACO 290
-#define OCONDICIONAL 291
-#define OPERADOR 292
-#define COMENTARIO 293
-#define PARAGRAFO 294
-#define INTEIRO 295
-#define REAL 296
-#define BOOLEANO 297
-#define SINAL 298
+#define IGUAL 287
+#define PV 288
+#define ESPACO 289
+#define OCONDICIONAL 290
+#define MAIS 291
+#define MENOS 292
+#define OPERADOR 293
+#define COMENTARIO 294
+#define PARAGRAFO 295
+#define INTEIRO 296
+#define REAL 297
+#define BOOLEANO 298
+#define SINAL 299
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -142,14 +144,10 @@ union YYSTYPE
 #line 43 "sintax.y"
 
         char nome_var[33];
-        /*char nome_structs[33];
-        char nome_const[33];
-        char nome_global[33];
-      	char nome_local[33];*/
         int tipoint;
      
 
-#line 153 "sintax.h"
+#line 151 "sintax.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

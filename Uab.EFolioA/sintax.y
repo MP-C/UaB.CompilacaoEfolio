@@ -214,25 +214,31 @@ dv2:
 
 /* falta expressões ex: a+2-c */
 vetor:
-        ABREVETOR vetor_corpo FECHAVETOR PV {printf("Vetor encontrado\n");}
+        ABREVETOR vetor_corpo FECHAVETOR PV 			{printf("Vetor encontrado\n");}
     |   ABREVETOR vetor_corpo FECHAVETOR IGUAL ABRECHAVETA vetor_listas FECHACHAVETA PV {printf("Vetor encontrado\n");}
-    |   ABREVETOR vetor_corpo FECHAVETOR IGUAL gerador PV {printf("Vetor encontrado\n");}
+    |   ABREVETOR vetor_corpo FECHAVETOR IGUAL gerador PV 	{printf("Vetor encontrado\n");}
     ;
 
 vetor_corpo:
-	vetor_variavel {printf("Vetor simples encontrado\n");}
-    |   vetor_variavel OPERADOR vetor_variavel vetor_corpo_extra {printf("Vetor calculo encontrado\n");}
-    |   %empty   {printf("Vetor vazio encontrado\n");}
-    ;
-
-vetor_corpo_extra:
-        OPERADOR vetor_variavel vetor_corpo_extra
-    | 	%empty
+	vetor_variavel 	{printf("Vetor simples encontrado\n");}
+    |   vetor_variavel calculos vetor_variavel vetor_corpo_extra {printf("Vetor com calculo encontrado\n");}
+    |   %empty   	{printf("Vetor vazio encontrado\n");}
     ;
 
 vetor_variavel:
         IDENT
     |   INTEIRO
+    ;
+
+calculos:
+   	MAIS
+    |   MENOS
+    |   OPERADOR
+    ;
+
+vetor_corpo_extra:
+        calculos vetor_variavel vetor_corpo_extra
+    | 	%empty
     ;
 
 vetor_listas:
