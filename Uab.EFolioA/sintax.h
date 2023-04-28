@@ -71,26 +71,28 @@ extern int yydebug;
     MAIN = 277,
     LOCAL = 278,
     GEN = 279,
-    VIRGULA = 280,
-    ABRECHAVETA = 281,
-    FECHACHAVETA = 282,
-    ABREPARENT = 283,
-    FECHAPARENT = 284,
-    ABREVETOR = 285,
-    FECHAVETOR = 286,
-    IGUAL = 287,
-    PV = 288,
-    ESPACO = 289,
-    OCONDICIONAL = 290,
-    MAIS = 291,
-    MENOS = 292,
-    OPERADOR = 293,
-    COMENTARIO = 294,
-    PARAGRAFO = 295,
-    INTEIRO = 296,
-    REAL = 297,
-    BOOLEANO = 298,
-    SINAL = 299
+    SIZE = 280,
+    RESIZE = 281,
+    VIRGULA = 282,
+    ABRECHAVETA = 283,
+    FECHACHAVETA = 284,
+    ABREPARENT = 285,
+    FECHAPARENT = 286,
+    ABREVETOR = 287,
+    FECHAVETOR = 288,
+    IGUAL = 289,
+    PV = 290,
+    ESPACO = 291,
+    OCONDICIONAL = 292,
+    MAIS = 293,
+    MENOS = 294,
+    OPERADOR = 295,
+    COMENTARIO = 296,
+    PARAGRAFO = 297,
+    INTEIRO = 298,
+    REAL = 299,
+    BOOLEANO = 300,
+    SINAL = 301
   };
 #endif
 /* Tokens.  */
@@ -116,26 +118,28 @@ extern int yydebug;
 #define MAIN 277
 #define LOCAL 278
 #define GEN 279
-#define VIRGULA 280
-#define ABRECHAVETA 281
-#define FECHACHAVETA 282
-#define ABREPARENT 283
-#define FECHAPARENT 284
-#define ABREVETOR 285
-#define FECHAVETOR 286
-#define IGUAL 287
-#define PV 288
-#define ESPACO 289
-#define OCONDICIONAL 290
-#define MAIS 291
-#define MENOS 292
-#define OPERADOR 293
-#define COMENTARIO 294
-#define PARAGRAFO 295
-#define INTEIRO 296
-#define REAL 297
-#define BOOLEANO 298
-#define SINAL 299
+#define SIZE 280
+#define RESIZE 281
+#define VIRGULA 282
+#define ABRECHAVETA 283
+#define FECHACHAVETA 284
+#define ABREPARENT 285
+#define FECHAPARENT 286
+#define ABREVETOR 287
+#define FECHAVETOR 288
+#define IGUAL 289
+#define PV 290
+#define ESPACO 291
+#define OCONDICIONAL 292
+#define MAIS 293
+#define MENOS 294
+#define OPERADOR 295
+#define COMENTARIO 296
+#define PARAGRAFO 297
+#define INTEIRO 298
+#define REAL 299
+#define BOOLEANO 300
+#define SINAL 301
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -147,7 +151,7 @@ union YYSTYPE
         int tipoint;
      
 
-#line 151 "sintax.h"
+#line 155 "sintax.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

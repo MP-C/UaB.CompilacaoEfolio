@@ -26,19 +26,28 @@ int v_a1[a+2]={1,2,3};
 int v_a_1[a+2]={1,2,3};
 int v_a_2_[a+2]={1,2,3};
 
-# ERROS a partir daqui
-int vc_A1[a*2]={1,2,3};
-int vc_a1[a-2]={1,2,3};
-int vc_a_1[a/2]={1,2,3};
-int vc_a_2_[a+2]={1,2,3};
-
+#Vetores
+int vcal_A1[a*2]={1,2,3};
+int vcal_a1[a-2]={1,2,3};
+int vcal_a_1[a/2]={1,2,3};
+int vcal_a_2_[a+2]={1,2,3};
 int b_1[a+2]={1,2,3};
 int C_1[a+2]={1,2,3};
 int D_a1[a+2]={1,2,3};
 
-int e[a+2]=gen(1,9);
+# geradores
+int e[a+1]=gen(1,9);
 int e_1[a+2]=gen(0,9);
-int e1[a+2]=gen(2,0);
-int F[a+2]=gen(1,9);
-int F_1[a+2]=gen(0,9);
-int F1[a+2]=gen(2,0);
+int e1[a+3]=gen(2,0);
+int e[a+4] = gen (0,1);
+int e_2[a+5] = gen (9,-1);
+int e2[10] = gen (2,0);
+int Fcal[a*2]=gen(1,9);
+int Fcal_1[a-2]=gen(0,9);
+int Fcal1[a/2]=gen(2,0);
+
+# ERROS a partir daqui
+size(v);
+resize(v,2);
+size(v3);
+resize(v3,1);

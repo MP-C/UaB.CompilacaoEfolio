@@ -71,6 +71,8 @@
 %token  MAIN
 %token  LOCAL
 %token	GEN
+%token	SIZE
+%token	RESIZE
 
 %token  VIRGULA
 %token  ABRECHAVETA
@@ -162,7 +164,9 @@ main:
     ;
 
 funcoes:
-        %empty
+	SIZE ABREPARENT IDENT FECHAPARENT PV 			{printf("Metodo SIZE encontrado\n");}
+    |   RESIZE ABREPARENT IDENT VIRGULA INTEIRO FECHAPARENT PV 	{printf("Metodo RESIZE encontrado\n");}
+    |   %empty
     ;
 
 declaracao_atribuicao:
@@ -247,10 +251,13 @@ vetor_listas:
     ;
 
 gerador:
-	GEN ABREPARENT vetor_listas FECHAPARENT PV
+	GEN ABREPARENT INTEIRO VIRGULA sinal INTEIRO FECHAPARENT {printf("Gerador encontrado\n");}
     ;
 
-
+sinal:
+        MENOS
+   | %empty
+   ;
 /***	ESTAMOS AQUI GONÇALO!!			***/
 
 
@@ -283,7 +290,7 @@ condicionais:
 ;
 
 
-X:      PARAGRAFO X
+X:      X
     |   %empty
     ;
 

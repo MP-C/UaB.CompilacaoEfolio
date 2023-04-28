@@ -20,3 +20,11 @@ globale{
 int a;
 
 int v_2[+];
+int v[[2];
+int v[2]];
+size();
+resize(v,n);
+resize(v,);
+resize(,n);
+resize(1,v);
+resize(1,2);
