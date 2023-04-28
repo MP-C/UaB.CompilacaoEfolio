@@ -28,7 +28,6 @@ booleano (false)|(true)
 "float" { return FLOAT; }
 "bool"  {return BOOL;}
 
-
 "if"            { return SE; }
 "else"          { return SENAO; }
 "while"         { return ENQUANTO; }
@@ -47,6 +46,8 @@ booleano (false)|(true)
 "pow"           { return EXPOENTE; }
 "square_root"   { return RAIZ; }
 "gen"           { return GEN; }
+"size"          { return SIZE; }
+"resize"        { return RESIZE; }
 
 ","	{ return(VIRGULA); }
 "{"	{ return(ABRECHAVETA); }
@@ -62,12 +63,12 @@ booleano (false)|(true)
 "-"	{ return(MENOS); }
 "*"|"/"	{ return (OPERADOR); }
 
-{comentario}    { return(COMENTARIO);}
+{comentario}  { return(COMENTARIO);}
 {espaco}
-{paragrafo}     { return(PARAGRAFO); }
-{inteiro}       { return(INTEIRO); }
-{real}          { return(REAL); }
-{booleano}      { return(BOOLEANO); }
+{paragrafo}   { return(PARAGRAFO); }
+{inteiro}     { return(INTEIRO); }
+{real}        { return(REAL); }
+{booleano}    { return(BOOLEANO); }
 
 {identificador}{0,31} {strcpy(yylval.nome_var,yytext); return(IDENT); }
 
