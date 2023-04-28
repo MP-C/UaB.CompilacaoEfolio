@@ -71,7 +71,6 @@ booleano (false)|(true)
 {booleano}    { return(BOOLEANO); }
 
 {identificador}{0,31} {strcpy(yylval.nome_var,yytext); return(IDENT); }
-
 . { yyerror("caractere inesperado"); }
 
 %%

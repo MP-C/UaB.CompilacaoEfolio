@@ -1,7 +1,7 @@
 %{
  	#include <stdio.h>
-    #include <string.h>
-    #include <stdlib.h>
+    	#include <string.h>
+   	#include <stdlib.h>
 
 	/* A funcao yyparse() gerada pelo bison vai automaticamente chamar a funcao
 	   yylex() do flex.
@@ -18,7 +18,7 @@
 	*/
 
 	extern int yylex( void );
-    extern FILE *yyin;
+	extern FILE *yyin;
 
 	void yyerror(char *s);
 	int count_error=0;
@@ -27,6 +27,7 @@
        Vamos guardar o nome da variavel numa estrutura com 100 posicoes
        em que cada identificador podera ter 32 caracteres + 1 para \0
     */
+
     struct {
         char nome [33];
     }
@@ -44,7 +45,8 @@
      }
 
 %token<nome_var>	IDENT
-%type<tipoint>dv1
+%token<nome_var>	IDENTFUNC
+%type<tipoint>primeira_variavel
 %type<tipoint>atribuicao
 
 %token	INT
@@ -86,6 +88,7 @@
 %token  MAIS
 %token  MENOS
 %token	OPERADOR
+%token  TEXTOWRITE
 %token  COMENTARIO
 %token  PARAGRAFO
 %token  INTEIRO
@@ -117,19 +120,20 @@ primeira_camada:
     |   structs
     |   constante
     |   global
-    |   decla_varia
-    |   funcoes_internas
+    |   main
     |   segunda_camada
     ;
 
 segunda_camada:
-        PARAGRAFO
+        declara_variavel
     |   comentario
-    |   main
-    |   funcoes
+    |   metodos
+    |   chama_funcao segunda_camada
+    |	declara_funcao
+    |   %empty
     ;
 
-/*      COMENTARIO => [#].* \n         */
+/*       COMENTARIO => [#].* \n         */
 comentario:
         COMENTARIO {printf("Comentario encontrado\n");}
 	;
@@ -140,8 +144,10 @@ structs:
 
 structs_corpo:
         PARAGRAFO structs_corpo
-    |   IDENT ABRECHAVETA decla_varia FECHACHAVETA PV structs_corpo
     |   comentario structs_corpo
+    |   IDENT ABRECHAVETA declara_variavel FECHACHAVETA PV structs_corpo
+    |   vetor
+    |   structs  {printf("structs_in_structs encontrado\n");}
     |   %empty
     ;
 
@@ -150,17 +156,57 @@ constante:
         CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA{printf("Constante encontrada\n");}
     ;
 
+declaracao_atribuicao:
+        comentario declaracao_atribuicao
+    |   PARAGRAFO declaracao_atribuicao
+    |   tipo IDENT IGUAL atributo declaracao_atribuicao
+    |   tipo IDENT IGUAL metodos PV declaracao_atribuicao /* int x = read();*/
+    |   IDENT IGUAL metodos PV declaracao_atribuicao /* x = read(); */
+    |   %empty
+    ;
+
+atributo:
+       valor PV
+    |  valor VIRGULA IDENT IGUAL atributo
+    ;
+
+valor:
+        INTEIRO
+    |   REAL
+    |   BOOLEANO
+    ;
+
 /*          GLOBAL => global { declar_varia }       */
 global:
-        GLOBAL ABRECHAVETA decla_varia FECHACHAVETA {printf("Global encontrado\n");}
+        GLOBAL ABRECHAVETA declara_variavel FECHACHAVETA {printf("Global encontrado\n");}
+    ;
+
+declara_variavel:
+        tipo primeira_variavel
+    ;
+
+tipo:
+        INT
+    |   FLOAT
+    |   BOOL
+    ;
+
+primeira_variavel:
+        IDENT segundo_termo       {$$ = encontra_var($1,1);}
+    ;
+
+segundo_termo:
+        VIRGULA primeira_variavel
+    |   vetor
+    |   PV
     ;
 
 /*          MAIN => main () bool { corpo_main }     */
 main:
-        MAIN ABREPARENT FECHAPARENT BOOL ABRECHAVETA instrucoes FECHACHAVETA segunda_camada {printf("\nmain encontrado\n");}
+        MAIN ABREPARENT FECHAPARENT BOOL ABRECHAVETA instrucoes FECHACHAVETA segunda_camada {printf("\nMain encontrado\n");}
     ;
 
-funcoes_internas:
+metodos:
 	size
     |   resize
     |	expoente
@@ -181,10 +227,13 @@ expoente:
     ;
 
 exponte_variavel:
-	INTEIRO
-    |   IDENT
-    |   IDENT
-    |   structs_in_structs
+	ident_ou_inteiro
+    |   calculos
+/*  |   structs_in_structs*/
+    ;
+
+calculos:
+        ident_ou_inteiro operacoes ident_ou_inteiro  {printf("Calculos encontrados\n");}
     ;
 
 raiz:
@@ -196,54 +245,42 @@ raiz_variavel:
     |   EXPOENTE
     ;
 
-declaracao_atribuicao:
-        comentario declaracao_atribuicao
-    |   PARAGRAFO declaracao_atribuicao
-    |   tipo IDENT IGUAL atributo declaracao_atribuicao
-    |   %empty
+ident_ou_inteiro:
+        IDENT
+    |   INTEIRO
     ;
 
-atributo:
-        valor VIRGULA IDENT IGUAL atributo
-    |   valor PV
+operacoes:
+   	MAIS
+    |   MENOS
+    |   OPERADOR
     ;
 
-/*             TIPO igual ao mesmo valor int = INTEIRO        */
-valor:
-        INTEIRO
-    |   REAL
-    |   BOOLEANO
-    ;
+write:
+	ESCREVE ABREPARENT IDENT FECHAPARENT PV
+;
 
-instrucoes:
-        decla_varia
-    |   constante
-    |   atribuicao
-    |   condicionais
-    |   ciclos
-    ;
+write_all:
+	ESCREVETUDO ABREPARENT IDENT FECHAPARENT PV
+;
 
-decla_varia:
-        tipo dv1
-    ;
+write_string:
+	ESCREVESTRING ABREPARENT IDENT FECHAPARENT PV
+;
 
-tipo:
-        INT
-    |   FLOAT
-    |   BOOL
-    ;
+read:
+	LE ABREPARENT FECHAPARENT PV
+;
 
-dv1:
-        IDENT dv2       {$$ = encontra_var($1,1);}
-    ;
+read_all:
+	LETUDO ABREPARENT FECHAPARENT PV
+;
 
-dv2:
-        VIRGULA dv1
-    |   vetor
-    |   PV
-    ;
+read_string:
+	LESTRING ABREPARENT FECHAPARENT PV
+;
 
-/* falta expressões ex: a+2-c */
+/*             Exemplo: TIPO igual ao mesmo valor int = INTEIRO        */
 vetor:
         ABREVETOR vetor_corpo FECHAVETOR PV 			{printf("Vetor encontrado\n");}
     |   ABREVETOR vetor_corpo FECHAVETOR IGUAL ABRECHAVETA vetor_listas FECHACHAVETA PV {printf("Vetor encontrado\n");}
@@ -251,24 +288,13 @@ vetor:
     ;
 
 vetor_corpo:
-	vetor_variavel 	{printf("Vetor com variavel encontrado\n");}
-    |   vetor_variavel calculos vetor_variavel vetor_corpo_extra {printf("Vetor com calculo encontrado\n");}
-    |   %empty   	{printf("Vetor vazio encontrado\n");}
-    ;
-
-vetor_variavel:
-        IDENT
-    |   INTEIRO
-    ;
-
-calculos:
-   	MAIS
-    |   MENOS
-    |   OPERADOR
+	ident_ou_inteiro 	{printf("Vetor com variavel encontrado\n");}
+    |   calculos vetor_corpo_extra {printf("Vetor com calculo encontrado\n");}
+    |   %empty   		{printf("Vetor vazio encontrado\n");}
     ;
 
 vetor_corpo_extra:
-        calculos vetor_variavel vetor_corpo_extra
+        operacoes ident_ou_inteiro vetor_corpo_extra
     | 	%empty
     ;
 
@@ -283,20 +309,13 @@ gerador:
 
 sinal:
         MENOS
-   | %empty
+   |    %empty
    ;
-/***	ESTAMOS AQUI GONÇALO!!			***/
 
-
+/***	ESTAMOS AQUI!!!		***/
 atribuicao:
-        IDENT IGUAL MMV expressao PV {$$ = le_var($1);}
+        IDENT IGUAL expressao PV {$$ = le_var($1);}
 ;
-
-MMV:
-        MAIS
-    |   MENOS
-    |   %empty
-    ;
 
 expressao:
         INTEIRO
@@ -304,31 +323,29 @@ expressao:
     |   BOOLEANO
     |   IDENT
     |   ABREPARENT expressao FECHAPARENT
-    |   expressao CALC expressao %prec SINAL
+    |   expressao operacoes expressao %prec SINAL
     ;
 
-CALC:   MAIS
-    |   MENOS
-    |   OPERADOR
-    ;
 
 condicionais:
         SE ABREPARENT expressao OCONDICIONAL expressao FECHAPARENT X ABRECHAVETA Y FECHACHAVETA X SENAO X ABRECHAVETA Y FECHACHAVETA {printf("\ncondicao if-else Ok"); } /* output para debug */
 ;
 
 
-X:      X
+X:
+	X
     |   %empty
     ;
 
-Y:      X instrucoes Y
+Y:
+	X instrucoes Y
     |   X
     ;
 
 
 ciclos:
         ENQUANTO ABREPARENT expressao OCONDICIONAL expressao FECHAPARENT X ABRECHAVETA Y FECHACHAVETA {printf("\nciclo while OK");} /* output para debug */
-    |   PARA ABREPARENT atribuicao expressao OCONDICIONAL expressao PV IDENT IGUAL MMV expressao FECHAPARENT X ABRECHAVETA Y FECHACHAVETA {printf("\nciclo for Ok");} /* output para debug */
+    |   PARA ABREPARENT atribuicao expressao OCONDICIONAL expressao PV IDENT IGUAL     expressao FECHAPARENT X ABRECHAVETA Y FECHACHAVETA {printf("\nciclo for Ok");} /* output para debug */
 
 %%
 
