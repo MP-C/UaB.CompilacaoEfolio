@@ -28,3 +28,8 @@ resize(v,);
 resize(,n);
 resize(1,v);
 resize(1,2);
+pow(a,d);
+pow(1,m);
+pow(d,1);
+raiz(1w);
+raiz(q);

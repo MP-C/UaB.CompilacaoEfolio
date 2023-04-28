@@ -46,8 +46,11 @@ int Fcal[a*2]=gen(1,9);
 int Fcal_1[a-2]=gen(0,9);
 int Fcal1[a/2]=gen(2,0);
 
-# ERROS a partir daqui
 size(v);
 resize(v,2);
 size(v3);
 resize(v3,1);
+
+# ERROS a partir daqui
+pow(1,8);
+raiz(8);

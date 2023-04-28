@@ -26,8 +26,6 @@
     /* Ponto 6 - Verificar se a variavel foi declarada anteriormente
        Vamos guardar o nome da variavel numa estrutura com 100 posicoes
        em que cada identificador podera ter 32 caracteres + 1 para \0
-       para o exercicio em causa estas reservas sao sufecientes
-       Fonte - Pedro Freire - Sebenta flex-bison
     */
     struct {
         char nome [33];
@@ -66,8 +64,8 @@
 %token	LE
 %token	LETUDO
 %token	LESTRING
-%token	EXPOENTE
 %token	RAIZ
+%token	EXPOENTE
 %token  MAIN
 %token  LOCAL
 %token	GEN
@@ -104,8 +102,8 @@
 
 input:
 	input linha
-	|   %empty
-	;
+    |   %empty
+    ;
 
 linha:
         PARAGRAFO
@@ -119,8 +117,9 @@ primeira_camada:
     |   structs
     |   constante
     |   global
-    |   segunda_camada
     |   decla_varia
+    |   funcoes_internas
+    |   segunda_camada
     ;
 
 segunda_camada:
@@ -130,16 +129,14 @@ segunda_camada:
     |   funcoes
     ;
 
-/*      COMENTARIO => [#].* \n  */
+/*      COMENTARIO => [#].* \n         */
 comentario:
         COMENTARIO {printf("Comentario encontrado\n");}
 	;
 
-
 structs:
         ESTRUCT {printf("Structs encontrado\n");} ABRECHAVETA structs_corpo FECHACHAVETA
     ;
-
 
 structs_corpo:
         PARAGRAFO structs_corpo
@@ -148,7 +145,7 @@ structs_corpo:
     |   %empty
     ;
 
-/*      CONST => const {declaracao_atribuicao}\n    */
+/*      CONST => const {declaracao_atribuicao}      */
 constante:
         CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA{printf("Constante encontrada\n");}
     ;
@@ -163,10 +160,40 @@ main:
         MAIN ABREPARENT FECHAPARENT BOOL ABRECHAVETA instrucoes FECHACHAVETA segunda_camada {printf("\nmain encontrado\n");}
     ;
 
-funcoes:
-	SIZE ABREPARENT IDENT FECHAPARENT PV 			{printf("Metodo SIZE encontrado\n");}
-    |   RESIZE ABREPARENT IDENT VIRGULA INTEIRO FECHAPARENT PV 	{printf("Metodo RESIZE encontrado\n");}
+funcoes_internas:
+	size
+    |   resize
+    |	expoente
+    |	raiz
     |   %empty
+    ;
+
+size:
+	SIZE ABREPARENT IDENT FECHAPARENT PV {printf("Metodo SIZE encontrado\n");}
+    ;
+
+resize:
+	RESIZE ABREPARENT IDENT VIRGULA INTEIRO FECHAPARENT PV {printf("Metodo RESIZE encontrado\n");}
+    ;
+
+expoente:
+	EXPOENTE ABREPARENT exponte_variavel VIRGULA exponte_variavel FECHAPARENT PV {printf("Metodo EXPOENTE encontrado\n");}
+    ;
+
+exponte_variavel:
+	INTEIRO
+    |   IDENT
+    |   IDENT
+    |   structs_in_structs
+    ;
+
+raiz:
+        RAIZ ABREPARENT raiz_variavel  FECHAPARENT PV {printf("Metodo RAIZ encontrado\n");}
+    ;
+
+raiz_variavel:
+	INTEIRO
+    |   EXPOENTE
     ;
 
 declaracao_atribuicao:
@@ -224,7 +251,7 @@ vetor:
     ;
 
 vetor_corpo:
-	vetor_variavel 	{printf("Vetor simples encontrado\n");}
+	vetor_variavel 	{printf("Vetor com variavel encontrado\n");}
     |   vetor_variavel calculos vetor_variavel vetor_corpo_extra {printf("Vetor com calculo encontrado\n");}
     |   %empty   	{printf("Vetor vazio encontrado\n");}
     ;
