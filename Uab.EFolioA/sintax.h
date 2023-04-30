@@ -58,43 +58,45 @@ extern int yydebug;
     SENAO = 264,
     ENQUANTO = 265,
     PARA = 266,
-    ESTRUCT = 267,
-    CONST = 268,
-    GLOBAL = 269,
-    ESCREVE = 270,
-    ESCREVETUDO = 271,
-    ESCREVESTRING = 272,
-    LE = 273,
-    LETUDO = 274,
-    LESTRING = 275,
-    RAIZ = 276,
-    EXPOENTE = 277,
-    MAIN = 278,
-    LOCAL = 279,
-    GEN = 280,
-    SIZE = 281,
-    RESIZE = 282,
-    VIRGULA = 283,
-    ABRECHAVETA = 284,
-    FECHACHAVETA = 285,
-    ABREPARENT = 286,
-    FECHAPARENT = 287,
-    ABREVETOR = 288,
-    FECHAVETOR = 289,
-    IGUAL = 290,
-    PV = 291,
-    ESPACO = 292,
-    OCONDICIONAL = 293,
-    MAIS = 294,
-    MENOS = 295,
-    OPERADOR = 296,
-    TEXTOWRITE = 297,
-    COMENTARIO = 298,
-    PARAGRAFO = 299,
-    INTEIRO = 300,
-    REAL = 301,
-    BOOLEANO = 302,
-    SINAL = 303
+    OU = 267,
+    E = 268,
+    ESTRUCT = 269,
+    CONST = 270,
+    GLOBAL = 271,
+    ESCREVE = 272,
+    ESCREVETUDO = 273,
+    ESCREVESTRING = 274,
+    LE = 275,
+    LETUDO = 276,
+    LESTRING = 277,
+    RAIZ = 278,
+    EXPOENTE = 279,
+    MAIN = 280,
+    LOCAL = 281,
+    GEN = 282,
+    SIZE = 283,
+    RESIZE = 284,
+    VIRGULA = 285,
+    ABRECHAVETA = 286,
+    FECHACHAVETA = 287,
+    ABREPARENT = 288,
+    FECHAPARENT = 289,
+    ABREVETOR = 290,
+    FECHAVETOR = 291,
+    IGUAL = 292,
+    PV = 293,
+    ESPACO = 294,
+    OCONDICIONAL = 295,
+    MAIS = 296,
+    MENOS = 297,
+    OPERADOR = 298,
+    TEXTOWRITE = 299,
+    COMENTARIO = 300,
+    PARAGRAFO = 301,
+    INTEIRO = 302,
+    REAL = 303,
+    BOOLEANO = 304,
+    SINAL = 305
   };
 #endif
 /* Tokens.  */
@@ -107,55 +109,57 @@ extern int yydebug;
 #define SENAO 264
 #define ENQUANTO 265
 #define PARA 266
-#define ESTRUCT 267
-#define CONST 268
-#define GLOBAL 269
-#define ESCREVE 270
-#define ESCREVETUDO 271
-#define ESCREVESTRING 272
-#define LE 273
-#define LETUDO 274
-#define LESTRING 275
-#define RAIZ 276
-#define EXPOENTE 277
-#define MAIN 278
-#define LOCAL 279
-#define GEN 280
-#define SIZE 281
-#define RESIZE 282
-#define VIRGULA 283
-#define ABRECHAVETA 284
-#define FECHACHAVETA 285
-#define ABREPARENT 286
-#define FECHAPARENT 287
-#define ABREVETOR 288
-#define FECHAVETOR 289
-#define IGUAL 290
-#define PV 291
-#define ESPACO 292
-#define OCONDICIONAL 293
-#define MAIS 294
-#define MENOS 295
-#define OPERADOR 296
-#define TEXTOWRITE 297
-#define COMENTARIO 298
-#define PARAGRAFO 299
-#define INTEIRO 300
-#define REAL 301
-#define BOOLEANO 302
-#define SINAL 303
+#define OU 267
+#define E 268
+#define ESTRUCT 269
+#define CONST 270
+#define GLOBAL 271
+#define ESCREVE 272
+#define ESCREVETUDO 273
+#define ESCREVESTRING 274
+#define LE 275
+#define LETUDO 276
+#define LESTRING 277
+#define RAIZ 278
+#define EXPOENTE 279
+#define MAIN 280
+#define LOCAL 281
+#define GEN 282
+#define SIZE 283
+#define RESIZE 284
+#define VIRGULA 285
+#define ABRECHAVETA 286
+#define FECHACHAVETA 287
+#define ABREPARENT 288
+#define FECHAPARENT 289
+#define ABREVETOR 290
+#define FECHAVETOR 291
+#define IGUAL 292
+#define PV 293
+#define ESPACO 294
+#define OCONDICIONAL 295
+#define MAIS 296
+#define MENOS 297
+#define OPERADOR 298
+#define TEXTOWRITE 299
+#define COMENTARIO 300
+#define PARAGRAFO 301
+#define INTEIRO 302
+#define REAL 303
+#define BOOLEANO 304
+#define SINAL 305
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 56 "sintax.y"
+#line 46 "sintax.y"
 
         char nome_var[33];
         int tipoint;
      
 
-#line 159 "sintax.h"
+#line 163 "sintax.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

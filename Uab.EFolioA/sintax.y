@@ -2,6 +2,7 @@
  	#include <stdio.h>
     	#include <string.h>
    	#include <stdlib.h>
+   	#include "lex.yy.c"
 
 	/* A funcao yyparse() gerada pelo bison vai automaticamente chamar a funcao
 	   yylex() do flex.
@@ -33,6 +34,9 @@
     }
     vars[100];
 
+    int debug=0;
+    void debuf(char*);
+
     int vars_preenchidas=0;
     int le_var(const char *nome);
     int encontra_var(const char *nome, int adicionar);
@@ -57,6 +61,8 @@
 %token	SENAO
 %token	ENQUANTO
 %token	PARA
+%token  OU
+%token  E
 %token	ESTRUCT
 %token	CONST
 %token	GLOBAL
@@ -125,7 +131,8 @@ primeira_camada:
     ;
 
 segunda_camada:
-        declara_variavel
+	PARAGRAFO
+    |   declara_variavel
     |   comentario
     |   metodos
     |   chama_funcao segunda_camada
@@ -203,8 +210,57 @@ segundo_termo:
 
 /*          MAIN => main () bool { corpo_main }     */
 main:
-        MAIN ABREPARENT FECHAPARENT BOOL ABRECHAVETA instrucoes FECHACHAVETA segunda_camada {printf("\nMain encontrado\n");}
+        MAIN ABREPARENT FECHAPARENT BOOL ABRECHAVETA funcao_corpo FECHACHAVETA segunda_camada {printf("\nMain encontrado\n");}
     ;
+
+funcao_corpo:
+	PARAGRAFO
+    |	comentario
+    |	expressao
+    |   condicional
+    |   write
+    |   %empty
+    ;
+
+
+expressao: IDENT igual;
+
+igual:
+        IGUAL expressao_continuacao // a = ..
+    |   IGUAL OPERADOR expressao_continuacao // a =+ ..
+    |	OPERADOR OPERADOR // a++
+    ;
+
+expressao_continuacao:
+        valores OPERADOR expressao_continuacao
+    |   valores PV
+    ;
+
+valores:
+        INTEIRO
+    |   REAL
+    |   BOOLEANO
+    |   IDENT
+    ;
+
+condicional:
+    SE ABREPARENT condicoes FECHAPARENT ABRECHAVETA funcao_corpo FECHACHAVETA
+    ;
+
+condicoes:
+    |   IDENT OCONDICIONAL valores ou_e
+    |   IDENT OCONDICIONAL valores
+    ;
+
+ou_e:
+        OU condicoes
+    |   E condicoes
+    ;
+
+// isto é só para conseguir correr
+declara_funcao: %empty;
+instrucoes: %empty;
+chama_funcao: %empty;
 
 metodos:
 	size
@@ -407,4 +463,11 @@ int encontra_var(const char *nome, int adicionar) {
 		return i;
 	}
     return -1;
+}
+
+/* funcao para apresentar debug */
+void apresenta_debug(char* str){
+	if(debug==1) {
+		printf("%s",str);
+	}
 }

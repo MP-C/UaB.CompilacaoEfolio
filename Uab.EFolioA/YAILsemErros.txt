@@ -1,4 +1,0 @@
-main() bool {
-    int n;
-    int asd = size();
-}
