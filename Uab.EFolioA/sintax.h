@@ -85,18 +85,19 @@ extern int yydebug;
     FECHAVETOR = 291,
     IGUAL = 292,
     PV = 293,
-    ESPACO = 294,
-    OCONDICIONAL = 295,
-    MAIS = 296,
-    MENOS = 297,
-    OPERADOR = 298,
-    TEXTOWRITE = 299,
-    COMENTARIO = 300,
-    PARAGRAFO = 301,
-    INTEIRO = 302,
-    REAL = 303,
-    BOOLEANO = 304,
-    SINAL = 305
+    ASPAS = 294,
+    COMPARATIVOS = 295,
+    EXCLAMACAO = 296,
+    MAIS = 297,
+    MENOS = 298,
+    OPERADOR = 299,
+    TEXTOWRITE = 300,
+    COMENTARIO = 301,
+    PARAGRAFO = 302,
+    INTEIRO = 303,
+    REAL = 304,
+    BOOLEANO = 305,
+    SINAL = 306
   };
 #endif
 /* Tokens.  */
@@ -136,30 +137,31 @@ extern int yydebug;
 #define FECHAVETOR 291
 #define IGUAL 292
 #define PV 293
-#define ESPACO 294
-#define OCONDICIONAL 295
-#define MAIS 296
-#define MENOS 297
-#define OPERADOR 298
-#define TEXTOWRITE 299
-#define COMENTARIO 300
-#define PARAGRAFO 301
-#define INTEIRO 302
-#define REAL 303
-#define BOOLEANO 304
-#define SINAL 305
+#define ASPAS 294
+#define COMPARATIVOS 295
+#define EXCLAMACAO 296
+#define MAIS 297
+#define MENOS 298
+#define OPERADOR 299
+#define TEXTOWRITE 300
+#define COMENTARIO 301
+#define PARAGRAFO 302
+#define INTEIRO 303
+#define REAL 304
+#define BOOLEANO 305
+#define SINAL 306
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 46 "sintax.y"
+#line 61 "sintax.y"
 
         char nome_var[33];
         int tipoint;
      
 
-#line 163 "sintax.h"
+#line 165 "sintax.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

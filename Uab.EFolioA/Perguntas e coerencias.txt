@@ -1,0 +1,58 @@
+Questões a rever URGENTE:
+
+1)%empty não devia ser "global" e chamar-se de "VAZIA" ?
+2)Para que serve então o {espaco} e, lex.l ?
+3)lex.l => não devia ser "lexical.l" ?
+
+4)Quantos ficheiros devemos ter no fim do programa estar a funcionar?
+
+5)Colocar comentarios ao longo do código?
+
+6)Token por ordem alfabética ou igual ao que está no lex.l ?
+
+7)em operações temos mais, menos e operador, mas operador é mais, menos, multiplica e divide => Faz sentido manter assim?
+
+8)Isto pode ser absorvido pelas funções já existentes?
+declara_funcao: %empty;
+instrucoes: %empty;
+chama_funcao: %empty;
+
+9)dentro de main tem write..mas tb deveria ter qualquer um dos outros metodos read? writeAll (...), certo?
+10) então, e será que se deveria ter o dentro de main_corpo a parte correspondente com metodos?
+
+11) falta aspas e elemento vazio para se considerar if ( a != ''), certo?
+
+12) Em funções corpo faltam todos os ciclos (While e for), certo?
+13) as funções IF / Else estão ambas incompletas, correto?
+
+14) qual a diferença entre funçõe e local? => temos local?
+
+15) chama função não pode estar junto de declara_função e as 2 serem apenas uma "função";
+Dado que são 2 coisas que podem estar declaradas dentro de main unicamente, não?
+
+16) o que siginifca isto?
+expressao:
+        valores		/* valores = Valor | IDENT */
+    |   ABREPARENT expressao FECHAPARENT
+    |   expressao operacoes expressao %prec SINAL
+
+17) é preciso abrir ficheiro e escrever resultados num outro ficheiro segundo o enunciado!
+Isto é para ser feito ao mesmo tempo que os erros são detetados?
+
+18) proposta  expressão chamar-se de argumento, e condição ciclo while chamar-se de expressão
+
+19) FAZER O PONTO!
+Para aceder a cada campo da estrutura usa-se o operador ‘.’ (ponto). Exemplo:
+    point2D p;
+    p.x → campo x da variável to tipo point2D p;
+    Para estruturas dentro de estruturas, o princípio é igual:
+
+20) colocar tokens e lexico.l por ordem alfabetica? Fazer indice de cada parte do código para as funções gerais?
+
+21) if( (a+1) >3) Cenario com mais do que um parenteses
+
+
+MELHORIAS:
+1) Standardização e nomes apropriados
+    valor é um tipo_variavel em regex, logo, não é um valor, mas um atributo ? uma identificação?
+2) funcoes_corpo?

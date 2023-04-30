@@ -12,7 +12,7 @@
 	   Como ambos os ficheiros sao compilados de forma independente para so'
 	   depois serem ligados (linked), o ficheiro ".y" precisa de ter definida a
 	   funcao yylex() para nao dar erro de compilacao.
-	   Infelizmente precisamos que o bison corra antes do flex (para gerar o
+	   Infelizmente precisamos ques o bison corra antes do flex (para gerar o
 	   ficheiro ".tab.h" com os %tokens e algumas outras definicoes). Entao
 	   declaramos essa funcao do flex como sendo "definida noutro ficheiro fonte",
 	   ou seja, "externa":
@@ -31,11 +31,26 @@
 
     struct {
         char nome [33];
+        char tipo [6];
+        char local [8];
     }
     vars[100];
 
     int debug=0;
     void debuf(char*);
+
+    /* código nosso e de nózes */
+    void bashInfo(char*);
+    void adiciona_var(const char*, const char*, const char*);
+    int existe_var(const char*, const char*, const char*);
+    void apresenta_debug(const char*);
+
+    /* TODO :  APAGAR ESTE COMENTARIO ?!?!?  - - */
+    /*int debug=0;*/
+    int variaveis_criadas=0;
+
+    //printf("Todo o output serve como identificador");
+    /* apartir daqui já é do Deus dará */
 
     int vars_preenchidas=0;
     int le_var(const char *nome);
@@ -53,10 +68,11 @@
 %type<tipoint>primeira_variavel
 %type<tipoint>atribuicao
 
+/* Tipos */
 %token	INT
 %token	FLOAT
 %token	BOOL
-
+/* Caracteristicas e metodos da linguagem YAIL */
 %token	SE
 %token	SENAO
 %token	ENQUANTO
@@ -79,7 +95,7 @@
 %token	GEN
 %token	SIZE
 %token	RESIZE
-
+/* Caracteristicas de uma linguagem de programação */
 %token  VIRGULA
 %token  ABRECHAVETA
 %token  FECHACHAVETA
@@ -89,8 +105,9 @@
 %token 	FECHAVETOR
 %token  IGUAL
 %token  PV
-%token  ESPACO
-%token  OCONDICIONAL
+%token  ASPAS
+%token  COMPARATIVOS
+%token  EXCLAMACAO
 %token  MAIS
 %token  MENOS
 %token	OPERADOR
@@ -101,7 +118,6 @@
 %token	REAL
 %token  BOOLEANO
 %start  input
-
 /*          Associatividade de operadores         */
 %left  MAIS MENOS
 %left  OPERADOR
@@ -109,86 +125,57 @@
 
 %%
 
-input:
+input: /* Para começar a ler um ficheiro */
 	input linha
     |   %empty
     ;
 
-linha:
+linha: /* Para ser lida cada linha */
         PARAGRAFO
     |   primeira_camada
     |   error PARAGRAFO{ yyerrok; }
     ;
 
+/* Atribuição do esquema geral de um programa em YAIL */
 primeira_camada:
         PARAGRAFO
     |   comentario
-    |   structs
-    |   constante
-    |   global
-    |   main
+    |   structs {printf("Structs encontrado\n");}
+    |   constante {printf("Constante encontrado\n");}
+    |   global {printf("Global encontrado\n");}
+    |   main  {printf("Main encontrado\n");}  /* TODO: funcao não deveria estar tb identificada neste nivel?
+    |   funcao */
     |   segunda_camada
     ;
 
 segunda_camada:
-	PARAGRAFO
-    |   declara_variavel
-    |   comentario
-    |   metodos
+	PARAGRAFO segunda_camada
+    |   comentario segunda_camada
+    |   declara_variavel segunda_camada
     |   chama_funcao segunda_camada
-    |	declara_funcao
+    |	declara_funcao segunda_camada
+    |   metodos segunda_camada
     |   %empty
     ;
 
-/*       COMENTARIO => [#].* \n         */
-comentario:
+comentario: /* COMENTARIO => [#].* \n, pois começam com o símbolo # e vão até ao fim da linh        */
         COMENTARIO {printf("Comentario encontrado\n");}
 	;
 
-structs:
-        ESTRUCT {printf("Structs encontrado\n");} ABRECHAVETA structs_corpo FECHACHAVETA
+structs: /* ESTRUCT => Definição das estruturas   */
+        ESTRUCT ABRECHAVETA structs_corpo FECHACHAVETA
     ;
 
 structs_corpo:
         PARAGRAFO structs_corpo
     |   comentario structs_corpo
     |   IDENT ABRECHAVETA declara_variavel FECHACHAVETA PV structs_corpo
-    |   vetor
-    |   structs  {printf("structs_in_structs encontrado\n");}
+    |   structs  {printf("Estruturas dentro de estruturas encontrado\n");}
+    |   vetor	 /* int v [] */
     |   %empty
     ;
 
-/*      CONST => const {declaracao_atribuicao}      */
-constante:
-        CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA{printf("Constante encontrada\n");}
-    ;
-
-declaracao_atribuicao:
-        comentario declaracao_atribuicao
-    |   PARAGRAFO declaracao_atribuicao
-    |   tipo IDENT IGUAL atributo declaracao_atribuicao
-    |   tipo IDENT IGUAL metodos PV declaracao_atribuicao /* int x = read();*/
-    |   IDENT IGUAL metodos PV declaracao_atribuicao /* x = read(); */
-    |   %empty
-    ;
-
-atributo:
-       valor PV
-    |  valor VIRGULA IDENT IGUAL atributo
-    ;
-
-valor:
-        INTEIRO
-    |   REAL
-    |   BOOLEANO
-    ;
-
-/*          GLOBAL => global { declar_varia }       */
-global:
-        GLOBAL ABRECHAVETA declara_variavel FECHACHAVETA {printf("Global encontrado\n");}
-    ;
-
-declara_variavel:
+declara_variavel: /* para determinar quando se inicia uma variavel com um tipo, nome (ou vários nomes) e valor (ou varios valores) ou vetor */
         tipo primeira_variavel
     ;
 
@@ -208,136 +195,7 @@ segundo_termo:
     |   PV
     ;
 
-/*          MAIN => main () bool { corpo_main }     */
-main:
-        MAIN ABREPARENT FECHAPARENT BOOL ABRECHAVETA funcao_corpo FECHACHAVETA segunda_camada {printf("\nMain encontrado\n");}
-    ;
-
-funcao_corpo:
-	PARAGRAFO
-    |	comentario
-    |	expressao
-    |   condicional
-    |   write
-    |   %empty
-    ;
-
-
-expressao: IDENT igual;
-
-igual:
-        IGUAL expressao_continuacao // a = ..
-    |   IGUAL OPERADOR expressao_continuacao // a =+ ..
-    |	OPERADOR OPERADOR // a++
-    ;
-
-expressao_continuacao:
-        valores OPERADOR expressao_continuacao
-    |   valores PV
-    ;
-
-valores:
-        INTEIRO
-    |   REAL
-    |   BOOLEANO
-    |   IDENT
-    ;
-
-condicional:
-    SE ABREPARENT condicoes FECHAPARENT ABRECHAVETA funcao_corpo FECHACHAVETA
-    ;
-
-condicoes:
-    |   IDENT OCONDICIONAL valores ou_e
-    |   IDENT OCONDICIONAL valores
-    ;
-
-ou_e:
-        OU condicoes
-    |   E condicoes
-    ;
-
-// isto é só para conseguir correr
-declara_funcao: %empty;
-instrucoes: %empty;
-chama_funcao: %empty;
-
-metodos:
-	size
-    |   resize
-    |	expoente
-    |	raiz
-    |   %empty
-    ;
-
-size:
-	SIZE ABREPARENT IDENT FECHAPARENT PV {printf("Metodo SIZE encontrado\n");}
-    ;
-
-resize:
-	RESIZE ABREPARENT IDENT VIRGULA INTEIRO FECHAPARENT PV {printf("Metodo RESIZE encontrado\n");}
-    ;
-
-expoente:
-	EXPOENTE ABREPARENT exponte_variavel VIRGULA exponte_variavel FECHAPARENT PV {printf("Metodo EXPOENTE encontrado\n");}
-    ;
-
-exponte_variavel:
-	ident_ou_inteiro
-    |   calculos
-/*  |   structs_in_structs*/
-    ;
-
-calculos:
-        ident_ou_inteiro operacoes ident_ou_inteiro  {printf("Calculos encontrados\n");}
-    ;
-
-raiz:
-        RAIZ ABREPARENT raiz_variavel  FECHAPARENT PV {printf("Metodo RAIZ encontrado\n");}
-    ;
-
-raiz_variavel:
-	INTEIRO
-    |   EXPOENTE
-    ;
-
-ident_ou_inteiro:
-        IDENT
-    |   INTEIRO
-    ;
-
-operacoes:
-   	MAIS
-    |   MENOS
-    |   OPERADOR
-    ;
-
-write:
-	ESCREVE ABREPARENT IDENT FECHAPARENT PV
-;
-
-write_all:
-	ESCREVETUDO ABREPARENT IDENT FECHAPARENT PV
-;
-
-write_string:
-	ESCREVESTRING ABREPARENT IDENT FECHAPARENT PV
-;
-
-read:
-	LE ABREPARENT FECHAPARENT PV
-;
-
-read_all:
-	LETUDO ABREPARENT FECHAPARENT PV
-;
-
-read_string:
-	LESTRING ABREPARENT FECHAPARENT PV
-;
-
-/*             Exemplo: TIPO igual ao mesmo valor int = INTEIRO        */
-vetor:
+vetor:  /* Exemplo: TIPO igual ao mesmo valor int = INTEIRO        */
         ABREVETOR vetor_corpo FECHAVETOR PV 			{printf("Vetor encontrado\n");}
     |   ABREVETOR vetor_corpo FECHAVETOR IGUAL ABRECHAVETA vetor_listas FECHACHAVETA PV {printf("Vetor encontrado\n");}
     |   ABREVETOR vetor_corpo FECHAVETOR IGUAL gerador PV 	{printf("Vetor encontrado\n");}
@@ -360,33 +218,242 @@ vetor_listas:
     ;
 
 gerador:
-	GEN ABREPARENT INTEIRO VIRGULA sinal INTEIRO FECHAPARENT {printf("Gerador encontrado\n");}
+	GEN ABREPARENT INTEIRO VIRGULA INTEIRO FECHAPARENT {printf("Gerador encontrado\n");}
     ;
 
-sinal:
-        MENOS
-   |    %empty
-   ;
+constante:  /* CONST => const {declaracao_atribuicao}, pois é a definição das constantes */
+        CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA
+    ;
 
-/***	ESTAMOS AQUI!!!		***/
-atribuicao:
-        IDENT IGUAL expressao PV {$$ = le_var($1);}
-;
+declaracao_atribuicao:
+        PARAGRAFO declaracao_atribuicao 		  /* >> 	    */
+    |   comentario declaracao_atribuicao                  /* # comment      */
+    |   tipo IDENT IGUAL atributo declaracao_atribuicao	  /* int abc = 0;   */
+    |   tipo IDENT IGUAL metodos PV declaracao_atribuicao /* int x = read();*/
+    |   IDENT IGUAL metodos PV declaracao_atribuicao      /* x = read();    */
+    |   %empty
+    ;
+
+atributo:
+       valor PV				  /* 1;     */
+    |  valor VIRGULA IDENT IGUAL atributo /* 2, a = */
+    ;
+
+valor:
+        INTEIRO		/* [-]?[0-9]+ 		 */
+    |   REAL		/* [-]?[0-9]+(\.[0-9]+)? */
+    |   BOOLEANO	/* (false)|(true)	 */
+    ;
+
+global: /* GLOBAL => global { declar_varia }, pois é a definição das variáveis globais       */
+        GLOBAL ABRECHAVETA declara_variavel FECHACHAVETA
+    ;
+
+main:	/* MAIN => main () bool { corpo_main }     */
+        MAIN ABREPARENT FECHAPARENT BOOL ABRECHAVETA funcoes_corpo FECHACHAVETA segunda_camada
+    	/* |   funcao TODO : faz sentido se for para agrupar o declara_funcao e chama_funcao */
+    ;
+
+funcoes_corpo:
+	PARAGRAFO
+    |	comentario
+    |	expressao
+    |   condicional
+    |   write 	 /* TODO : METODOS ? é isso que se quer dizer ?*/
+    |   %empty
+    ;
 
 expressao:
-        INTEIRO
-    |   REAL
-    |   BOOLEANO
+	IDENT expressao_equivalencia
+    ;
+
+expressao_equivalencia:
+        IGUAL expressao_continuacao 		/* a = ..  */
+    |   IGUAL OPERADOR expressao_continuacao    /* a =+ .. */
+    |	OPERADOR OPERADOR 			/* a++ | a-- | a** | a// */
+    ;
+
+expressao_continuacao:
+        valores OPERADOR expressao_continuacao
+    |   valores PV
+    ;
+
+valores:
+        valor  /* valor = INTEIRO, FLOAT, BOOLEANO */
     |   IDENT
+    ;
+
+condicional: /* Se e/ou  Senão*/
+	SE ABREPARENT condicoes FECHAPARENT ABRECHAVETA funcoes_corpo FECHACHAVETA {printf("condicional Se encontrado\n");}
+    ;
+
+condicoes:
+        IDENT COMPARATIVOS valores ou_e
+    |   IDENT COMPARATIVOS valores
+    ;
+
+ou_e:
+        OU condicoes
+    |   E condicoes
+    ;
+
+// TODO: APAGAR O que está aqui?
+// isto é só para conseguir correr
+/*declara_funcao: %empty;
+instrucoes: %empty;
+chama_funcao: %empty;*/
+////////////////////////////////
+
+//TODO : chama_funcao e declara funcao podem ser unidas, ou não?
+chama_funcao:
+	IDENT ABREPARENT parametros FECHAPARENT PV PARAGRAFO {printf("Chama funcao encontrada\n");}
+    |	%empty
+    ;
+
+parametros:
+        parametro
+   |    parametros VIRGULA parametro
+   ;
+
+parametro:
+        ident_ou_inteiro
+    |   %empty
+    ;
+
+ident_ou_inteiro:
+        IDENT 		/* [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?) */
+    |   INTEIRO		/* [-]?[0-9]+ */
+    ;
+
+declara_funcao:
+	IDENT ABREPARENT parametros FECHAPARENT tipo ABRECHAVETA instrucoes FECHACHAVETA PARAGRAFO {printf("Declara funcao encontrada\n");}
+    |   %empty
+    ;
+
+instrucoes:
+    	PARAGRAFO instrucoes
+    |   comentario
+    |   declara_variavel instrucoes
+    |	chama_funcao
+    |   metodos
+    |   atribuicao
+    |   condicional
+    |   ciclos
+    |   %empty
+    ;
+
+
+metodos:
+	size
+    |   resize
+    |	expoente
+    |	raiz
+    |  	write
+    |	write_all
+    |	write_string
+    |	read
+    |	read_all
+    |	read_string
+    |   %empty
+    ;
+
+size:
+	SIZE ABREPARENT IDENT FECHAPARENT PV {printf("Metodo SIZE encontrado\n");}
+    ;
+
+resize:
+	RESIZE ABREPARENT IDENT VIRGULA INTEIRO FECHAPARENT PV {printf("Metodo RESIZE encontrado\n");}
+    ;
+
+expoente:
+	EXPOENTE ABREPARENT exponte_variavel VIRGULA exponte_variavel FECHAPARENT PV {printf("Metodo EXPOENTE encontrado\n");}
+    ;
+
+exponte_variavel:
+	ident_ou_inteiro
+    |   calculos
+    ;
+
+calculos:
+        ident_ou_inteiro operacoes ident_ou_inteiro  {printf("Calculos encontrados\n");}
+    ;
+
+operacoes:
+   	MAIS
+    |   MENOS
+    |   OPERADOR
+    ;
+
+raiz:
+        RAIZ ABREPARENT raiz_variavel FECHAPARENT PV {printf("Metodo RAIZ encontrado\n");}
+    ;
+
+raiz_variavel:
+	INTEIRO
+    |   EXPOENTE
+    ;
+
+write:
+	ESCREVE ABREPARENT IDENT FECHAPARENT PV {printf("Metodo write encontrado\n");}
+    ;
+
+write_all:
+	ESCREVETUDO ABREPARENT IDENT FECHAPARENT PV {printf("Metodo write_all encontrado\n");}
+    ;
+
+write_string:
+	ESCREVESTRING ABREPARENT IDENT FECHAPARENT PV {printf("Metodo write_string encontrado\n");}
+    ;
+
+read:
+	LE ABREPARENT FECHAPARENT PV {printf("Metodo read encontrado\n");}
+    ;
+
+read_all:
+	LETUDO ABREPARENT FECHAPARENT PV {printf("Metodo read_all encontrado\n");}
+    ;
+
+read_string:
+	LESTRING ABREPARENT FECHAPARENT PV {printf("Metodo read_string encontrado\n");}
+    ;
+
+ciclos: /* Para determinar os ciclos While e For */
+	 {printf("Ciclo While encontrados\n");}
+	ENQUANTO ABREPARENT ciclo_condicional_while FECHAPARENT ABRECHAVETA instrucoes FECHACHAVETA {printf("Ciclo While encontrados\n");}
+    |   PARA ABREPARENT ciclo_condicional_for  FECHAPARENT  ABRECHAVETA instrucoes FECHACHAVETA {printf("Ciclo For encontrados\n");}
+    |   %empty
+    ;
+
+ciclo_condicional_while: /* Para determinar os condicional */
+	IDENT COMPARATIVOS IDENT {printf("Comparacao entre variavaies encontrado");}
+    |   IDENT COMPARATIVOS valor /* Inteiro | Real | Booleano */ {printf("Comparacao entre variavel e valor encontrado");}
+    |   IDENT IGUAL IGUAL valor /* Para validar igualdade exata com valor */ {printf("Comparacao igualdade exata encontrado");}
+    |   IDENT EXCLAMACAO IGUAL valor /* Inteiro | Real | Booleano */ {printf("Comparacao entre diferenca de valor encontrado");}
+    |   %empty
+    ;
+
+ciclo_condicional_for:
+    	IDENT VIRGULA valor VIRGULA ident_ou_inteiro VIRGULA valor
+    ;
+
+/***	ESTAMOS AQUI!!!		***/
+
+// Codigo do colega
+//TODO : comentado pois isto não faz sentido dado que a nossa é expressao e equivalencia e expressao continuacao, o que representa isto
+atribuicao:
+        IDENT IGUAL expressao PV {$$ = le_var($1);}
+   ;
+
+/*
+expressao:
+        valores		// valores = Valor | IDENT
     |   ABREPARENT expressao FECHAPARENT
     |   expressao operacoes expressao %prec SINAL
     ;
 
-
 condicionais:
-        SE ABREPARENT expressao OCONDICIONAL expressao FECHAPARENT X ABRECHAVETA Y FECHACHAVETA X SENAO X ABRECHAVETA Y FECHACHAVETA {printf("\ncondicao if-else Ok"); } /* output para debug */
+        SE ABREPARENT expressao COMPARATIVOS expressao FECHAPARENT X ABRECHAVETA Y FECHACHAVETA X SENAO X ABRECHAVETA Y FECHACHAVETA {printf("\ncondicional if-else Ok"); }
 ;
-
 
 X:
 	X
@@ -397,33 +464,41 @@ Y:
 	X instrucoes Y
     |   X
     ;
-
-
 ciclos:
-        ENQUANTO ABREPARENT expressao OCONDICIONAL expressao FECHAPARENT X ABRECHAVETA Y FECHACHAVETA {printf("\nciclo while OK");} /* output para debug */
-    |   PARA ABREPARENT atribuicao expressao OCONDICIONAL expressao PV IDENT IGUAL     expressao FECHAPARENT X ABRECHAVETA Y FECHACHAVETA {printf("\nciclo for Ok");} /* output para debug */
-
+        ENQUANTO ABREPARENT expressao COMPARATIVOS expressao FECHAPARENT X ABRECHAVETA Y FECHACHAVETA {printf("Ciclo while encontrado\n");}
+    |   PARA ABREPARENT atribuicao expressao COMPARATIVOS expressao PV IDENT IGUAL expressao FECHAPARENT X ABRECHAVETA Y FECHACHAVETA {printf("\nCiclo for encontrado ");}
+    ;
+*/
 %%
 
 
 /* Funcao main para leitura do ficheiro a compilar*/
 int main(int argc, char** argv) {
-	yyin = fopen(argv[1], "r");
+	if (argc<2) {
+		bashInfo(argv[0]);
+    } else if (argc < 2 && argv[1]=="-d") {
+		debug=1;
+		yyin= fopen(argv[2],"r");
+    } else {
+		yyin = fopen(argv[1], "r");
+    }
 
 	if (NULL != yyin) {
 
 		yyparse();
 		fclose(yyin);
 		if (count_error == 0) {
-			printf("\nParabens ! Nao foram encontrados erros. \n\n");
+			printf("\nPrograma sem erros.\n\n");
 		}
-		else {
-			printf("\n Existe(m) %d erro(s) no ficheiro. \n\n", count_error);
+		else if(count_error == 1){
+			printf("\nExiste %d erro no ficheiro. \n\n", count_error);
+		} else {
+			printf("\nExistem %d erros no ficheiro. \n\n", count_error);
 		}
 	}
 	else {
 		printf("\n Impossivel abrir o ficheiro: %s", argv[1]);
-        printf("\n A forma a usar: programa ficheiro.extensao\n");
+        bashInfo(argv[0]);
 	}
 }
 
@@ -463,6 +538,14 @@ int encontra_var(const char *nome, int adicionar) {
 		return i;
 	}
     return -1;
+}
+
+/* funcao para apresentar info de funcionamento do EfolioA */
+void bashInfo(char* argumento) {
+    printf("\n");
+    printf("funcionamento: %s [ -d <ficheiro> | <ficheiro> ]\n", argumento);
+    printf("\t-d\t\tLigar debug. Ouput de instruções válidas lidas.\n");
+    printf("\t<ficheiro>\tFicheiro em linguagem YAIL\n");
 }
 
 /* funcao para apresentar debug */

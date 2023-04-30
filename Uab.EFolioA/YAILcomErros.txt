@@ -1,24 +1,29 @@
-structs {a1asd{int x y
+structs {
+    a1asd{int x y
 } }
 
 structs #início
- point2D { x,y;}; # point2D é composta por 2 reais x e y
- point3D {float}; # point3D por 3 reais x, y e z
+ point2D { x,y; }; # point2D é composta por 2 reais x e y
+ point2D { x;y, }; # point2D é composta por 2 reais x e y
+ point3D { float }; # point3D por 3 reais x, y e z
+ point3D { tni }; # point3D por 3 reais x, y e z
  pointND {[]}     ###### pointnD é um vetor de reais
 }
 
 struct{
- # definição das estruturas
+ # definição # # # # # estruturas
 }
-constt{
- # definição das constantes
-}
-globale{
- # definição das variáveis globais
-}
+constt{}
+const ()
+const ({})
+
+#GLOBAL
+globale{)
+globale(}
+
+
 # funções
 int a;
-
 int v_2[+];
 int v[[2];
 int v[2]];
@@ -33,3 +38,6 @@ pow(1,m);
 pow(d,1);
 raiz(1w);
 raiz(q);
+
+# constantes
+    const { int jkl = 100; float mno = 20,20; }
