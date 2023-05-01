@@ -1,11 +1,5 @@
+# coment
+
 main () bool {
-    local { int ns};
-    local { int n};
-    local { int as;};
-    if((a==2 or b==2) or 1!=b) {
-        #asdasd
-    } else {
-        #comentário
-    }
 
 }

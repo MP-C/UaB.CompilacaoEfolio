@@ -28,9 +28,22 @@ structs {
 
 }#cenas
 
+# constante
+const { }
+const { int abc = 100; }
+const { float abc = 100; }
+const { bool abc = 100; }
+const { bool f = false; }
+const { bool ghi = true; }
+const {
+    #comentarios
+    int max = 100;
+}
 const {
     int max = 100;
 }
+
+
 
 #global {
     #int a,s;
@@ -38,6 +51,24 @@ const {
 #}
 
 main () bool {
+    int a;
+    int a, b;
+    int e, f, g;
+    float m;
+    bool result;
+    a = 1;
+    a =+ 2;
+    a =- 2;
+    a =* 2;
+    a =/ 2;
+    a++;
+    b--;
+    c**;
+    d//;
+    int a++;
+    int b--;
+    int c**;
+    int d//;
     local { int ns};
     local { int n};
     local { int as;};

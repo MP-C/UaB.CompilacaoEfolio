@@ -16,15 +16,10 @@ Para aceder a cada campo da estrutura usa-se o operador ‘.’ (ponto). Exemplo
 TOKENS = A lex.l
 
 MELHORIAS:
-1)%empty não devia ser "global" e chamar-se de "VAZIA" ?
-vazio:
-    %empty
-    ;
-
+1)Nao passam certas linhas em que não existem v+arios paragrafos seguidos
 6)Token por ordem alfabética ou igual ao que está no lex.l ou como está ?
 
 1) Standardização e nomes apropriados
     valor é um tipo_variavel em regex, logo, não é um valor, mas um atributo ? uma identificação?
-
 
 2) funcoes_corpo?

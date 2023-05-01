@@ -147,6 +147,7 @@ primeira_camada: // Atribuição do esquema geral de um programa em YAIL
     |   constante {printf("Constante encontrado\n");}
     |   global {printf("Global encontrado\n");}
     |   main {printf("Main encontrado\n");}
+    |   expressao {printf("expressao encontrado\n");}
     ;
 
 segunda_camada:
@@ -226,7 +227,7 @@ gerador:
     ;
 
 constante:  // CONST => const {declaracao_atribuicao}, pois é a definição das constantes
-        CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA
+        CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA PARAGRAFO
     ;
 
 declaracao_atribuicao:
@@ -259,12 +260,13 @@ main:	// MAIN => main () bool { corpo_main }
 
 expressao:
 	IDENT expressao_equivalencia
+    |	INT IDENT OPERADOR OPERADOR PV
     ;
 
 expressao_equivalencia:
         IGUAL expressao_continuacao 		// a = ..
     |   IGUAL OPERADOR expressao_continuacao    // a =+ ..
-    |	OPERADOR OPERADOR 			// a++ | a-- | a** | a//
+    |	OPERADOR OPERADOR PV			// a++ | a-- | a** | a//
     ;
 
 expressao_continuacao:
@@ -323,7 +325,7 @@ instrucoes:
     |   declara_variavel instrucoes
     |	chama_funcao instrucoes
     |   metodos instrucoes
-    |   atribuicao instrucoes
+    |   expressao instrucoes
     |   condicional instrucoes
     |   ciclos instrucoes
     |   local instrucoes {printf("Local encontrado\n");}
@@ -403,15 +405,13 @@ condicional_for:
     ;
 
 local:
-	LOCAL ABRECHAVETA tipo IDENT FECHACHAVETA PV PARAGRAFO
-    |	LOCAL ABRECHAVETA tipo IDENT PV FECHACHAVETA PV PARAGRAFO
+	LOCAL ABRECHAVETA declara_variavel FECHACHAVETA PV PARAGRAFO
+	LOCAL ABRECHAVETA declara_variavel PV FECHACHAVETA PV PARAGRAFO
+    |	LOCAL ABRECHAVETA expressao FECHACHAVETA PV PARAGRAFO
+    |	LOCAL ABRECHAVETA expressao PV FECHACHAVETA PV PARAGRAFO
     ;
 
-atribuicao:
-        IDENT IGUAL expressao PV {$$ = le_var($1);}
-   ;
-
-/***	ESTAMOS AQUI!!!		***/
+//***	ESTAMOS AQUI!!!
 
 /*
 expressao:

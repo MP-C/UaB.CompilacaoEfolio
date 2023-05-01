@@ -114,35 +114,14 @@ structs{#início
 # constante
 const { }
 const { int abc = 100; }
-const { float de = 10,10; }
 const { bool f = false; }
 const { bool ghi = true; }
-const { int jkl = 100, float aaa = 20,20; }
-const { int mno = 100, bool bbb = false; }
-const { int pqr = 100, bool ccc = true; }
-const { stu = 100, float ddd = 20,20; }
-const { vwx = 100, eee = 20,20; }
-const { x = 100, fff = true, hhh = 12,12; }
-const { z = 100, ggg = false; }
 const {
     int max = 100;
 }
 
-const { # comentario dento de const
-    int j = square_root(pow);
-    int k = square_root(pow(q.x+e.a,8)+pow(1,8));
-    int l = square_root(pow(q.x+e.1,8),2);
-    int m = write();
-    int n = write_all();
-    int o = write_string();
-    int p = read();
-    int q = read_all();
-    int r = read_string();
-}
-const {
-    pow(1,8);
-    square_root(8);
-}
+
+
 
 #Constante
 const {intabc=0;}
