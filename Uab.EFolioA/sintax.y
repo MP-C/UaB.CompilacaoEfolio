@@ -130,7 +130,7 @@ input: // Para começar a ler um ficheiro
     ;
 
 vazio:
-	%empty
+	%prec empty // Substitui a traducao do simbolo de percentagem
     ;
 
 fim_linha:
@@ -164,7 +164,7 @@ segunda_camada:
 
 comentario: /* COMENTARIO => [#].* \n, pois começam com o símbolo # e vão até ao fim da linh        */
         COMENTARIO {printf("Comentario encontrado\n");}
-	;
+    ;
 
 structs: /* ESTRUCT => Definição das estruturas   */
         ESTRUCT ABRECHAVETA structs_corpo FECHACHAVETA
@@ -179,7 +179,7 @@ structs_corpo:
     |   vazio
     ;
 
-declara_variavel: // para determinar quando se inicia uma variavel com um tipo, nome (ou vários nomes) e valor (ou varios valores) ou vetor
+declara_variavel: // Para determinar quando se inicia uma variavel com um tipo, nome (ou vários nomes) e valor (ou varios valores) ou vetor
         tipo primeira_variavel
     ;
 
@@ -434,29 +434,28 @@ local:
 int main(int argc, char** argv) {
 	if (argc<2) {
 		bashInfo(argv[0]);
-    } else if (argc < 2 && argv[1]=="-d") {
+	} else if (argc < 2 && argv[1]=="-d") {
 		debug=1;
 		yyin= fopen(argv[2],"r");
-    } else {
+	} else {
 		yyin = fopen(argv[1], "r");
-    }
+	}
 
 	if (NULL != yyin) {
-
 		yyparse();
 		fclose(yyin);
 		if (count_error == 0) {
-			printf("\nPrograma sem erros.\n\n");
+			printf("\nPrograma sem erros.\n \n");
 		}
 		else if(count_error == 1){
-			printf("\nExiste %d erro no ficheiro. \n\n", count_error);
+			printf("\nExiste %d erro no ficheiro. \n \n", count_error);
 		} else {
-			printf("\nExistem %d erros no ficheiro. \n\n", count_error);
+			printf("\nExistem %d erros no ficheiro. \n \n", count_error);
 		}
 	}
 	else {
 		printf("\n Impossivel abrir o ficheiro: %s", argv[1]);
-        bashInfo(argv[0]);
+		bashInfo(argv[0]);
 	}
 }
 
@@ -466,7 +465,7 @@ void yyerror(char *s) {
 	fprintf(stderr,"%s\n",s); /* output para debug */
 }
 
-/* funcao para leitura de variaveis, permite verificar se variavel já foi declarada */
+/* Funcao para leitura de variaveis, permite verificar se variavel já foi declarada */
 int le_var(const char *nome) {
 	int i;
 

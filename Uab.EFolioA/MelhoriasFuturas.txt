@@ -1,9 +1,5 @@
-MELHORIAS:
-1)Nao passam certas linhas em que não existem v+arios paragrafos seguidos
-2)Token por ordem alfabética ou igual ao que está no lex.l ou como está ?
-3) Standardização e nomes apropriados
-    valor é um tipo_variavel em regex, logo, não é um valor, mas um atributo ? uma identificação?
-4) funcoes_corpo?
-5) excluir do regex IDENT a possibilidade de escrever INT; Float ou Bool =identificador [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?)
-6) if( (a+1) >3) Cenario com mais do que um parenteses
-7) Tratamento de erros e mensagem certa
+MELHORIAS FUTURAS:
+1) Excluir do regex IDENT a possibilidade de escrever INT; Float ou Bool => identificador [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?)
+2) Tratamento de erros e mensagens certas, com correções de ambiguídades
+ via comando => "win_bison --report=all --warninfgs=all --debug -o %(Filename.cpp)"
+3) Rever problema de números negativos não serem interpretados como subtração
