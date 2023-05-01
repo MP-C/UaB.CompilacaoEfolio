@@ -64,9 +64,7 @@ booleano (false)|(true)
 "\' \'" { return(ASPAS); }
 "<"|">"|"<="|">="|"!="|"=="	{ return(COMPARATIVOS); }
 "!" { return(EXCLAMACAO); }
-"+"	{ return(MAIS); }
-"-"	{ return(MENOS); }
-"+"|"-"|"*"|"/"	{ return (OPERADOR); }
+"+"|"-"|"*"|"/"|"%"	{ return (OPERADOR); }
 
 {comentario}  { return(COMENTARIO);}
 {espaco}

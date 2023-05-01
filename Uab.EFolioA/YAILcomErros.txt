@@ -40,4 +40,4 @@ raiz(1w);
 raiz(q);
 
 # constantes
-    const { int jkl = 100; float mno = 20,20; }
+const { int jkl = 100; float mno = 20,20; }

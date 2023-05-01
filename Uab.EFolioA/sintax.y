@@ -118,8 +118,7 @@
 %token	REAL
 %token  BOOLEANO
 %start  input
-/*          Associatividade de operadores         */
-%left  MAIS MENOS
+/* Associatividade de operadores */
 %left  OPERADOR
 %nonassoc  SINAL
 
@@ -138,22 +137,20 @@ linha: /* Para ser lida cada linha */
 
 /* Atribuição do esquema geral de um programa em YAIL */
 primeira_camada:
-        PARAGRAFO
+        PARAGRAFO {printf("Paragrafo encontrado\n");}
     |   comentario
     |   structs {printf("Structs encontrado\n");}
     |   constante {printf("Constante encontrado\n");}
     |   global {printf("Global encontrado\n");}
-    |   main  {printf("Main encontrado\n");}  /* TODO: funcao não deveria estar tb identificada neste nivel?
-    |   funcao */
-    |   segunda_camada
+    |   main  {printf("Main encontrado\n");}
+    |   ENQUANTO ABREPARENT FECHAPARENT ABRECHAVETA FECHACHAVETA PARAGRAFO {printf("while encontrado\n");}
     ;
 
 segunda_camada:
 	PARAGRAFO segunda_camada
     |   comentario segunda_camada
-    |   declara_variavel segunda_camada
     |   chama_funcao segunda_camada
-    |	declara_funcao segunda_camada
+    |   declara_variavel segunda_camada
     |   metodos segunda_camada
     |   %empty
     ;
@@ -208,7 +205,7 @@ vetor_corpo:
     ;
 
 vetor_corpo_extra:
-        operacoes ident_ou_inteiro vetor_corpo_extra
+        OPERADOR ident_ou_inteiro vetor_corpo_extra
     | 	%empty
     ;
 
@@ -250,17 +247,7 @@ global: /* GLOBAL => global { declar_varia }, pois é a definição das variáve
     ;
 
 main:	/* MAIN => main () bool { corpo_main }     */
-        MAIN ABREPARENT FECHAPARENT BOOL ABRECHAVETA funcoes_corpo FECHACHAVETA segunda_camada
-    	/* |   funcao TODO : faz sentido se for para agrupar o declara_funcao e chama_funcao */
-    ;
-
-funcoes_corpo:
-	PARAGRAFO
-    |	comentario
-    |	expressao
-    |   condicional
-    |   write 	 /* TODO : METODOS ? é isso que se quer dizer ?*/
-    |   %empty
+        MAIN ABREPARENT FECHAPARENT BOOL ABRECHAVETA instrucoes FECHACHAVETA declara_funcao
     ;
 
 expressao:
@@ -284,12 +271,12 @@ valores:
     ;
 
 condicional: /* Se e/ou  Senão*/
-	SE ABREPARENT condicoes FECHAPARENT ABRECHAVETA funcoes_corpo FECHACHAVETA {printf("condicional Se encontrado\n");}
+	SE ABREPARENT condicoes FECHAPARENT ABRECHAVETA intrucoes FECHACHAVETA {printf("condicional Se encontrado\n");}
     ;
 
 condicoes:
-        IDENT COMPARATIVOS valores ou_e
-    |   IDENT COMPARATIVOS valores
+        IDENT COMPARATIVOS valores ou_e {printf("Comparacao entre variavel e/ou valor encontrado");} /* Inteiro | Real | Booleano */
+    |   IDENT COMPARATIVOS valores {printf("Comparacao entre variavaies encontrado");}
     ;
 
 ou_e:
@@ -297,14 +284,6 @@ ou_e:
     |   E condicoes
     ;
 
-// TODO: APAGAR O que está aqui?
-// isto é só para conseguir correr
-/*declara_funcao: %empty;
-instrucoes: %empty;
-chama_funcao: %empty;*/
-////////////////////////////////
-
-//TODO : chama_funcao e declara funcao podem ser unidas, ou não?
 chama_funcao:
 	IDENT ABREPARENT parametros FECHAPARENT PV PARAGRAFO {printf("Chama funcao encontrada\n");}
     |	%empty
@@ -312,13 +291,13 @@ chama_funcao:
 
 parametros:
         parametro
-   |    parametros VIRGULA parametro
+   |    parametro VIRGULA parametros
    ;
 
 parametro:
-        ident_ou_inteiro
-    |   %empty
-    ;
+	IDENT IDENT
+   |   	%empty
+   ;
 
 ident_ou_inteiro:
         IDENT 		/* [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?) */
@@ -332,16 +311,16 @@ declara_funcao:
 
 instrucoes:
     	PARAGRAFO instrucoes
-    |   comentario
+    |   comentario instrucoes
     |   declara_variavel instrucoes
-    |	chama_funcao
-    |   metodos
-    |   atribuicao
-    |   condicional
-    |   ciclos
+    |	chama_funcao instrucoes
+    |   metodos instrucoes
+    |   atribuicao instrucoes
+    |   condicional instrucoes
+    |   ciclos instrucoes
+    |   local_variavel
     |   %empty
     ;
-
 
 metodos:
 	size
@@ -375,13 +354,7 @@ exponte_variavel:
     ;
 
 calculos:
-        ident_ou_inteiro operacoes ident_ou_inteiro  {printf("Calculos encontrados\n");}
-    ;
-
-operacoes:
-   	MAIS
-    |   MENOS
-    |   OPERADOR
+        ident_ou_inteiro OPERADOR ident_ou_inteiro  {printf("Calculos encontrados\n");}
     ;
 
 raiz:
@@ -418,31 +391,24 @@ read_string:
     ;
 
 ciclos: /* Para determinar os ciclos While e For */
-	 {printf("Ciclo While encontrados\n");}
-	ENQUANTO ABREPARENT ciclo_condicional_while FECHAPARENT ABRECHAVETA instrucoes FECHACHAVETA {printf("Ciclo While encontrados\n");}
-    |   PARA ABREPARENT ciclo_condicional_for  FECHAPARENT  ABRECHAVETA instrucoes FECHACHAVETA {printf("Ciclo For encontrados\n");}
+	ENQUANTO ABREPARENT condicoes FECHAPARENT ABRECHAVETA instrucoes FECHACHAVETA {printf("Ciclo While encontrados\n");}
+    |   PARA ABREPARENT condicional_for  FECHAPARENT  ABRECHAVETA instrucoes FECHACHAVETA {printf("Ciclo For encontrados\n");}
     |   %empty
     ;
 
-ciclo_condicional_while: /* Para determinar os condicional */
-	IDENT COMPARATIVOS IDENT {printf("Comparacao entre variavaies encontrado");}
-    |   IDENT COMPARATIVOS valor /* Inteiro | Real | Booleano */ {printf("Comparacao entre variavel e valor encontrado");}
-    |   IDENT IGUAL IGUAL valor /* Para validar igualdade exata com valor */ {printf("Comparacao igualdade exata encontrado");}
-    |   IDENT EXCLAMACAO IGUAL valor /* Inteiro | Real | Booleano */ {printf("Comparacao entre diferenca de valor encontrado");}
-    |   %empty
-    ;
-
-ciclo_condicional_for:
+condicional_for:
     	IDENT VIRGULA valor VIRGULA ident_ou_inteiro VIRGULA valor
     ;
 
-/***	ESTAMOS AQUI!!!		***/
+local_variavel:
+	LOCAL ABRECHAVETAS declara_variavel FECHACHAVETAS
+    ;
 
-// Codigo do colega
-//TODO : comentado pois isto não faz sentido dado que a nossa é expressao e equivalencia e expressao continuacao, o que representa isto
 atribuicao:
         IDENT IGUAL expressao PV {$$ = le_var($1);}
    ;
+
+/***	ESTAMOS AQUI!!!		***/
 
 /*
 expressao:
@@ -549,8 +515,8 @@ void bashInfo(char* argumento) {
 }
 
 /* funcao para apresentar debug */
-void apresenta_debug(char* str){
+/*void apresenta_debug(char* str){
 	if(debug==1) {
 		printf("%s",str);
 	}
-}
+}*/
