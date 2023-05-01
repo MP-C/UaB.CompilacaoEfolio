@@ -4,7 +4,7 @@ structs {
     a { float w ;};
     a { bool e ;};
     a1 { int r, t; };
-}#cenas
+}
 
 # constante
 const { }
@@ -17,13 +17,11 @@ const {
     #comentarios
     int max = 100;
 }
+const {
+    int max = 100;
+}
 
 main () bool {
-    int a;
-    int a, b;
-    int e, f, g;
-    float m;
-    bool result;
     a = 1;
     a =+ 2;
     a =- 2;
@@ -33,16 +31,79 @@ main () bool {
     b--;
     c**;
     d//;
-    int a++;
-    int b--;
-    int c**;
-    int d//;
+    b=a%d;
     g=10*10;
     g = 10 * 10;
     a= e*a;
     e= 11*a;
     d= e*12;
-    local { int ns};
-    local { int n};
+    local { int ns;};
+    local { int n;};
     local { int as;};
+    local {int a,b,c;};
+    local {
+        int a,b,c;
+        float e;
+        bool x;
+    };
+    local {int a = 2;};
+    local {
+        int a = 2;
+        };
+
+
+    if(a) {
+        while(1) {
+            if(a) {
+                for(a,2,10,1) {
+                    #com
+                    if(b) {
+                    }
+                }
+            } else if(2){
+             a = 2;
+            } else if(a==2) {
+                #coiso
+            } else {
+             a = read(); #ok já tou a ber
+
+            }
+        }
+    }
+    if((a==2 or b==2) or 1!=b) {
+        #asdasd
+    } else {
+        #comentário
+    }
+    if(x==1){
+        #if-inside
+    }
+    if( (a>2) >3){
+        #v[]={1,2,3};
+    }else{
+        #int y = 0;
+    }
+        for(i,2,n,1){
+           while( t > 0){
+
+           }
+           while( t > 0){
+           }
+               while( t > 0){
+           }
+        }
+
+        while( t > 0){
+            for(i,2,n,1){
+          }
+            for(i,2,n,1){
+              while( t > 0){
+                }
+            }
+            for(i,2,n,1){
+          }
+            for(i,2,n,1){
+          }
+        }
+
 }

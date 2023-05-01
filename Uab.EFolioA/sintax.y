@@ -133,6 +133,11 @@ vazio:
 	%empty
     ;
 
+fim_linha:
+	PARAGRAFO
+    |   vazio
+    ;
+
 programa: // Para ser lida cada linha
         PARAGRAFO
     |   primeira_camada
@@ -225,7 +230,7 @@ gerador:
     ;
 
 constante:  // CONST => const {declaracao_atribuicao}, pois é a definição das constantes
-        CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA PARAGRAFO
+        CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA fim_linha
     ;
 
 declaracao_atribuicao:
@@ -253,45 +258,59 @@ global: // GLOBAL => global { declar_varia }, pois é a definição das variáve
     ;
 
 main:	// MAIN => main () bool { corpo_main }
-        MAIN ABREPARENT FECHAPARENT BOOL ABRECHAVETA instrucoes FECHACHAVETA
+        MAIN ABREPARENT FECHAPARENT BOOL ABRECHAVETA instrucoes FECHACHAVETA declara_funcao
     ;
 
 expressao:
 	IDENT expressao_equivalencia {printf("Expressao encontrada\n");}
-    |	INT IDENT OPERADOR OPERADOR PV {printf("Expressao operador encontrado\n");}
     ;
 
 expressao_equivalencia:
         IGUAL expressao_continuacao 		// a = ..
     |   IGUAL OPERADOR expressao_continuacao    // a =+ ..
-    |	IGUAL calculos PV			// g = 10 * 10;
-    |	OPERADOR OPERADOR PV			// a++ | a-- | a** | a//
+    |	IGUAL calculos PV fim_linha		// g = 10 * 10;
+    |	OPERADOR OPERADOR PV fim_linha		// a++ | a-- | a** | a//
     ;
 
 expressao_continuacao:
         valores OPERADOR expressao_continuacao
-    |   valores PV
+    |   valores PV fim_linha
+    |	metodos
     ;
 
 valores:
-        valor  // valor = INTEIRO, FLOAT, BOOLEANO
-    |   IDENT	// a
-    |   IDENT PF IDENT	// q.x
+        valor  			// valor = INTEIRO, FLOAT, BOOLEANO
+    |   IDENT 			// a
+    |   IDENT PF IDENT		// q.x
     |   IDENT PF IDENT PF IDENT // q.p.x
     ;
 
-condicional: /* Se e/ou  Senão*/
-	SE ABREPARENT condicoes FECHAPARENT ABRECHAVETA instrucoes FECHACHAVETA {printf("condicional Se encontrado\n");}
+condicional: // Se e/ou  Senão
+	SE ABREPARENT condicoes_inicio FECHAPARENT ABRECHAVETA instrucoes FECHACHAVETA senao {printf("Condicional SE encontrado\n");}
     ;
 
-condicoes:
-        IDENT COMPARATIVOS valores ou_e {printf("Comparacao entre variavel e/ou valor encontrado");} /* Inteiro | Real | Booleano */
-    |   IDENT COMPARATIVOS valores {printf("Comparacao entre variavaies encontrado");}
+condicoes_inicio:
+	condicoes_resto
+    |	ABREPARENT condicoes_resto FECHAPARENT e_ou condicoes_inicio
+    |  	ABREPARENT condicoes_resto FECHAPARENT COMPARATIVOS condicoes_inicio
     ;
 
-ou_e:
-        OU condicoes
-    |   E condicoes
+condicoes_resto:
+        valores COMPARATIVOS valores e_ou condicoes_resto
+    |   valores COMPARATIVOS valores
+    |	valores
+    ;
+
+e_ou:
+	E
+    |	OU
+    ;
+
+senao:
+	fim_linha
+    |	SENAO condicional {printf("Condicional SENAO encontrado\n");}
+    | 	SENAO ABRECHAVETA instrucoes FECHACHAVETA {printf("Condicional SENAO encontrado\n");}
+    | 	vazio
     ;
 
 chama_funcao:
@@ -304,7 +323,7 @@ parametros:
    ;
 
 parametro:
-	IDENT IDENT
+	tipo IDENT
    |   	vazio
    ;
 
@@ -314,7 +333,7 @@ ident_ou_inteiro:
     ;
 
 declara_funcao:
-	IDENT ABREPARENT parametros FECHAPARENT tipo ABRECHAVETA instrucoes FECHACHAVETA PARAGRAFO {printf("Declara funcao encontrada\n");}
+	IDENT ABREPARENT parametros FECHAPARENT tipo ABRECHAVETA instrucoes FECHACHAVETA fim_linha {printf("Declara funcao encontrada\n");}
     |   vazio
     ;
 
@@ -396,50 +415,20 @@ read_string:
     ;
 
 ciclos: /* Para determinar os ciclos While e For */
-	ENQUANTO ABREPARENT condicoes FECHAPARENT ABRECHAVETA instrucoes FECHACHAVETA {printf("Ciclo While encontrados\n");}
-    |   PARA ABREPARENT condicional_for  FECHAPARENT  ABRECHAVETA instrucoes FECHACHAVETA {printf("Ciclo For encontrados\n");}
+	ENQUANTO ABREPARENT condicoes_inicio FECHAPARENT ABRECHAVETA instrucoes FECHACHAVETA {printf("Ciclo While encontrados\n");}
+    |   PARA ABREPARENT condicao_for  FECHAPARENT  ABRECHAVETA instrucoes FECHACHAVETA {printf("Ciclo For encontrados\n");}
     ;
 
-condicional_for:
+condicao_for:
     	IDENT VIRGULA valor VIRGULA ident_ou_inteiro VIRGULA valor
     ;
 
 local:
-	LOCAL ABRECHAVETA declara_variavel FECHACHAVETA PV PARAGRAFO
-	LOCAL ABRECHAVETA declara_variavel PV FECHACHAVETA PV PARAGRAFO
-    |	LOCAL ABRECHAVETA expressao FECHACHAVETA PV PARAGRAFO
-    |	LOCAL ABRECHAVETA expressao PV FECHACHAVETA PV PARAGRAFO
+	LOCAL ABRECHAVETA fim_linha declara_variavel fim_linha FECHACHAVETA PV
+    |	LOCAL ABRECHAVETA fim_linha declaracao_atribuicao fim_linha FECHACHAVETA PV
     ;
 
-//***	ESTAMOS AQUI!!!
-
-/*
-expressao:
-        valores		// valores = Valor | IDENT
-    |   ABREPARENT expressao FECHAPARENT
-    |   expressao operacoes expressao %prec SINAL
-    ;
-
-condicionais:
-        SE ABREPARENT expressao COMPARATIVOS expressao FECHAPARENT X ABRECHAVETA Y FECHACHAVETA X SENAO X ABRECHAVETA Y FECHACHAVETA {printf("\ncondicional if-else Ok"); }
-;
-
-X:
-	X
-    |   vazio
-    ;
-
-Y:
-	X instrucoes Y
-    |   X
-    ;
-ciclos:
-        ENQUANTO ABREPARENT expressao COMPARATIVOS expressao FECHAPARENT X ABRECHAVETA Y FECHACHAVETA {printf("Ciclo while encontrado\n");}
-    |   PARA ABREPARENT atribuicao expressao COMPARATIVOS expressao PV IDENT IGUAL expressao FECHAPARENT X ABRECHAVETA Y FECHACHAVETA {printf("\nCiclo for encontrado ");}
-    ;
-*/
 %%
-
 
 /* Funcao main para leitura do ficheiro a compilar*/
 int main(int argc, char** argv) {

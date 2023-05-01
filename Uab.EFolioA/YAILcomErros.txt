@@ -79,7 +79,16 @@ main() bool{
     int e*a;
     int 11*a;
     int e*12;
-   }
+    local { int ns};
+    local { int n};
+    local { int as};
+    local {int a,b,c};
+    int a;
+    int a, b; #isto da erro tem de ser local{int a, b;}
+    int e, f, g; #nao tens decalracoes assim dentro das funcoes
+    float m;
+    bool result;
+}
 
 # constantes
 const { int jkl = 100; float mno = 20,20; }
