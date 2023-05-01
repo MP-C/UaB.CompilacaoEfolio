@@ -75,5 +75,11 @@ pow(d,1);
 raiz(1w);
 raiz(q);
 
+main() bool{
+    int e*a;
+    int 11*a;
+    int e*12;
+   }
+
 # constantes
 const { int jkl = 100; float mno = 20,20; }

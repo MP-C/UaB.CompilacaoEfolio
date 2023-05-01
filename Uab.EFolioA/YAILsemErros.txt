@@ -1,5 +1,4 @@
 # coment
-
-main () bool {
-
-}
+calculH4(int s ) bool {
+    int a;
+};

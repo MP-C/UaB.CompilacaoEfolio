@@ -147,7 +147,7 @@ primeira_camada: // Atribuição do esquema geral de um programa em YAIL
     |   constante {printf("Constante encontrado\n");}
     |   global {printf("Global encontrado\n");}
     |   main {printf("Main encontrado\n");}
-    |   expressao {printf("expressao encontrado\n");}
+    |   declara_funcao {printf("Funcao declarada encontrada\n");}
     ;
 
 segunda_camada:
@@ -259,13 +259,14 @@ main:	// MAIN => main () bool { corpo_main }
     ;
 
 expressao:
-	IDENT expressao_equivalencia
-    |	INT IDENT OPERADOR OPERADOR PV
+	IDENT expressao_equivalencia {printf("Expressao encontrada\n");}
+    |	INT IDENT OPERADOR OPERADOR PV {printf("Expressao operador encontrado\n");}
     ;
 
 expressao_equivalencia:
         IGUAL expressao_continuacao 		// a = ..
     |   IGUAL OPERADOR expressao_continuacao    // a =+ ..
+    |	IGUAL calculos PV			// g = 10 * 10;
     |	OPERADOR OPERADOR PV			// a++ | a-- | a** | a//
     ;
 
@@ -327,6 +328,7 @@ instrucoes:
     |   metodos instrucoes
     |   expressao instrucoes
     |   condicional instrucoes
+    |   calculos PV instrucoes
     |   ciclos instrucoes
     |   local instrucoes {printf("Local encontrado\n");}
     |   vazio
