@@ -2,7 +2,6 @@
  	#include <stdio.h>
     	#include <string.h>
    	#include <stdlib.h>
-   	#include "lex.yy.c"
 
 	/* A funcao yyparse() gerada pelo bison vai automaticamente chamar a funcao
 	   yylex() do flex.
@@ -43,7 +42,7 @@
     void bashInfo(char*);
     void adiciona_var(const char*, const char*, const char*);
     int existe_var(const char*, const char*, const char*);
-    void apresenta_debug(const char*);
+    void apresenta_debug(char*);
 
     /* TODO :  APAGAR ESTE COMENTARIO ?!?!?  - - */
     /*int debug=0;*/
@@ -271,7 +270,7 @@ valores:
     ;
 
 condicional: /* Se e/ou  Senão*/
-	SE ABREPARENT condicoes FECHAPARENT ABRECHAVETA intrucoes FECHACHAVETA {printf("condicional Se encontrado\n");}
+	SE ABREPARENT condicoes FECHAPARENT ABRECHAVETA instrucoes FECHACHAVETA {printf("condicional Se encontrado\n");}
     ;
 
 condicoes:
@@ -401,7 +400,7 @@ condicional_for:
     ;
 
 local_variavel:
-	LOCAL ABRECHAVETAS declara_variavel FECHACHAVETAS
+	LOCAL ABRECHAVETA declara_variavel FECHACHAVETA
     ;
 
 atribuicao:
@@ -515,8 +514,8 @@ void bashInfo(char* argumento) {
 }
 
 /* funcao para apresentar debug */
-/*void apresenta_debug(char* str){
+void apresenta_debug(char* str){
 	if(debug==1) {
 		printf("%s",str);
 	}
-}*/
+}

@@ -8,5 +8,5 @@
 rm sintax.c sintax.h lex.yy.c
 bison -dy sintax.y -o sintax.c
 flex lex.l
-gcc sintax.c -o efolioA
+gcc sintax.c lex.yy.c -o efolioA
 ./efolioA YAILsemErros.txt
