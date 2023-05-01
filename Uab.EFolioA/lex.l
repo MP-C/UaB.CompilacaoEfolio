@@ -25,9 +25,9 @@ booleano (false)|(true)
 
 %%
 
-"int"   { return INT;}
-"float" { return FLOAT; }
-"bool"  {return BOOL;}
+"int"           { return INT;}
+"float"         { return FLOAT; }
+"bool"          {return BOOL;}
 
 "if"            { return SE; }
 "else"          { return SENAO; }
@@ -52,18 +52,18 @@ booleano (false)|(true)
 "size"          { return SIZE; }
 "resize"        { return RESIZE; }
 
-","	{ return(VIRGULA); }
-"{"	{ return(ABRECHAVETA); }
-"}"	{ return(FECHACHAVETA); }
-"("	{ return(ABREPARENT); }
-")"	{ return(FECHAPARENT); }
-"[" { return(ABREVETOR); }
-"]" { return(FECHAVETOR); }
-"="	{ return(IGUAL); }
-";"	{ return(PV); }
-"\' \'" { return(ASPAS); }
+","	            { return(VIRGULA); }
+"{"	            { return(ABRECHAVETA); }
+"}"	            { return(FECHACHAVETA); }
+"("	            { return(ABREPARENT); }
+")"	            { return(FECHAPARENT); }
+"["             { return(ABREVETOR); }
+"]"             { return(FECHAVETOR); }
+"="	            { return(IGUAL); }
+";"	            { return(PV); }
+"."             { return(PF); }
+"!"             { return(EXCLAMACAO); }
 "<"|">"|"<="|">="|"!="|"=="	{ return(COMPARATIVOS); }
-"!" { return(EXCLAMACAO); }
 "+"|"-"|"*"|"/"|"%"	{ return (OPERADOR); }
 
 {comentario}  { return(COMENTARIO);}

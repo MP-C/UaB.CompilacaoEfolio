@@ -1,0 +1,8 @@
+structs {
+    # structs
+    a { int x ;};
+    a1 { int x, y; };
+    point 3D {int x,y,z;}; #estrutruracom2variavel
+    int v_AS[a+2];
+    int v[];
+}

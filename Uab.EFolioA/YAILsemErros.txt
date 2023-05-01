@@ -1,1 +1,5 @@
-while(){}
+structs {
+    a { int x;};
+    int v_AS[a+2];
+    int v[];
+}#cenas
