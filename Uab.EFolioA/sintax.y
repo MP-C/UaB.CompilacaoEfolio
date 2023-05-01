@@ -146,7 +146,7 @@ primeira_camada: // Atribuição do esquema geral de um programa em YAIL
     |   structs {printf("Structs encontrado\n");}
     |   constante {printf("Constante encontrado\n");}
     |   global {printf("Global encontrado\n");}
-    |   main  {printf("Main encontrado\n");}
+    |   main {printf("Main encontrado\n");}
     ;
 
 segunda_camada:
@@ -207,6 +207,10 @@ vetor_corpo:
     |   vazio   		{printf("Vetor vazio encontrado\n");}
     ;
 
+calculos:
+        ident_ou_inteiro OPERADOR ident_ou_inteiro  {printf("Calculos encontrados\n");}
+    ;
+
 vetor_corpo_extra:
         OPERADOR ident_ou_inteiro vetor_corpo_extra
     | 	vazio
@@ -221,7 +225,6 @@ gerador:
 	GEN ABREPARENT INTEIRO VIRGULA INTEIRO FECHAPARENT {printf("Gerador encontrado\n");}
     ;
 
-constante:  // CONST => const {declaracao_atribuicao}, pois é a definição das constantes
 constante:  // CONST => const {declaracao_atribuicao}, pois é a definição das constantes
         CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA
     ;
@@ -323,7 +326,7 @@ instrucoes:
     |   atribuicao instrucoes
     |   condicional instrucoes
     |   ciclos instrucoes
-    |   local_variavel instrucoes
+    |   local instrucoes {printf("Local encontrado\n");}
     |   vazio
     ;
 
@@ -355,10 +358,6 @@ expoente:
 exponte_variavel:
 	ident_ou_inteiro
     |   calculos
-    ;
-
-calculos:
-        ident_ou_inteiro OPERADOR ident_ou_inteiro  {printf("Calculos encontrados\n");}
     ;
 
 raiz:
@@ -403,8 +402,9 @@ condicional_for:
     	IDENT VIRGULA valor VIRGULA ident_ou_inteiro VIRGULA valor
     ;
 
-local_variavel:
-	LOCAL ABRECHAVETA declara_variavel FECHACHAVETA
+local:
+	LOCAL ABRECHAVETA tipo IDENT FECHACHAVETA PV PARAGRAFO
+    |	LOCAL ABRECHAVETA tipo IDENT PV FECHACHAVETA PV PARAGRAFO
     ;
 
 atribuicao:

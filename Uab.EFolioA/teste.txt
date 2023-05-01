@@ -1,8 +1,50 @@
+
+
 structs {
     # structs
-    a { int x ;};
-    a1 { int x, y; };
-    point 3D {int x,y,z;}; #estrutruracom2variavel
-    int v_AS[a+2];
-    int v[];
+    a { int q ;};
+    a { float w ;};
+    a { bool e ;};
+    a1 { int r, t; };
+    #point 3D {int y,u,i;}; # estrutrur a com 2 variavel
+
+    #b { int v[]; };
+    #b { int v[2]; };
+    #b { int v[2+a]; };
+    #b { int v[2+1]; };
+    #b { int v[2+1*2]; };
+
+    #c { int vetor [] = {1};};
+    #c { int vetor [] = {1,2};};
+    #c { int vetor [] = {1};};
+    #c { int vetor [] = {1};};
+    #c { int v_2[10] = {1,2};};
+    #c { int v_b[a] = {1,2,3};};
+    #c { int v_bb[a+2] = {1,2,3};};
+    #c { int v_B1[a+2] = {1,2};};
+    #c { int v_b1[a+2] = {2,3};};
+    #c { int v_b_3[a+2] = {1,2,3};};
+    #c { int v_b_4_[a+2] = {1,2,3};};
+
+}#cenas
+
+const {
+    int max = 100;
+}
+
+#global {
+    #int a,s;
+    #int v[];
+#}
+
+main () bool {
+    local { int ns};
+    local { int n};
+    local { int as;};
+    if((a==2 or b==2) or 1!=b) {
+        #asdasd
+    } else {
+        #comentário
+    }
+
 }
