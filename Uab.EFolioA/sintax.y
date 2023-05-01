@@ -65,7 +65,6 @@
 %token<nome_var>	IDENT
 %token<nome_var>	IDENTFUNC
 %type<tipoint>primeira_variavel
-%type<tipoint>atribuicao
 
 /* Tipos */
 %token INT
@@ -126,7 +125,7 @@
 %%
 
 input: // Para começar a ler um ficheiro
-	input linha
+	input programa
     |   vazio
     ;
 
@@ -134,7 +133,7 @@ vazio:
 	%empty
     ;
 
-linha: // Para ser lida cada linha
+programa: // Para ser lida cada linha
         PARAGRAFO
     |   primeira_camada
     |   error PARAGRAFO{ yyerrok; }

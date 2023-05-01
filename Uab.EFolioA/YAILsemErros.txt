@@ -1,4 +1,5 @@
-# coment
-calculH4(int s ) bool {
-    int a;
-};
+main () bool {
+    while ((a==2 or b==2) or 1!=b) {
+
+    }
+}
