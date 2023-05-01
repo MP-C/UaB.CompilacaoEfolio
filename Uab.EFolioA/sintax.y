@@ -146,7 +146,6 @@ primeira_camada: // Atribuição do esquema geral de um programa em YAIL
     |   constante {printf("Constante encontrado\n");}
     |   global {printf("Global encontrado\n");}
     |   main {printf("Main encontrado\n");}
-    |   declara_funcao {printf("Funcao declarada encontrada\n");}
     ;
 
 segunda_camada:

@@ -1,5 +1,48 @@
-main () bool {
-    while ((a==2 or b==2) or 1!=b) {
+structs {
+    # structs
+    a { int q ;};
+    a { float w ;};
+    a { bool e ;};
+    a1 { int r, t; };
+}#cenas
 
-    }
+# constante
+const { }
+const { int abc = 100; }
+const { float abc = 100; }
+const { bool abc = 100; }
+const { bool f = false; }
+const { bool ghi = true; }
+const {
+    #comentarios
+    int max = 100;
+}
+
+main () bool {
+    int a;
+    int a, b;
+    int e, f, g;
+    float m;
+    bool result;
+    a = 1;
+    a =+ 2;
+    a =- 2;
+    a =* 2;
+    a =/ 2;
+    a++;
+    b--;
+    c**;
+    d//;
+    int a++;
+    int b--;
+    int c**;
+    int d//;
+    g=10*10;
+    g = 10 * 10;
+    a= e*a;
+    e= 11*a;
+    d= e*12;
+    local { int ns};
+    local { int n};
+    local { int as;};
 }

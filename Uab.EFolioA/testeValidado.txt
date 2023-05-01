@@ -1,13 +1,11 @@
-
-
 structs {
     # structs
     a { int q ;};
     a { float w ;};
     a { bool e ;};
     a1 { int r, t; };
-    #point 3D {int y,u,i;}; # estrutrur a com 2 variavel
 
+    #point 3D {int y,u,i;}; # estrutrur a com 2 variavel
     #b { int v[]; };
     #b { int v[2]; };
     #b { int v[2+a]; };
