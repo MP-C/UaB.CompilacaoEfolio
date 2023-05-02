@@ -1,4 +1,4 @@
-/* versao 26.04.23 */
+/* versao 30.04.23 */
 %option noyywrap
 %{
 
@@ -13,25 +13,28 @@
     void yyerror(char *s);
 %}
 
+textoWrite [^"]+
 divisaoImpossivel [^0]
 espaco [ \S]
 paragrafo [\r\n]
 comentario (#.*)
 identificador [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?)
-inteiro [0-9]+
-real [0-9]+(\.[0-9]+)?
+inteiro [-]?[0-9]+
+real [-]?[0-9]+(\.[0-9]+)?
 booleano (false)|(true)
 
 %%
 
-"int"   { return INT;}
-"float" { return FLOAT; }
-"bool"  {return BOOL;}
+"int"           { return INT;}
+"float"         { return FLOAT; }
+"bool"          {return BOOL;}
 
 "if"            { return SE; }
 "else"          { return SENAO; }
 "while"         { return ENQUANTO; }
 "for"           { return PARA; }
+"or"            { return OU; }
+"and"           { return E; }
 "structs"       { return ESTRUCT; }
 "const"         { return CONST; }
 "main"          { return MAIN; }
@@ -49,19 +52,19 @@ booleano (false)|(true)
 "size"          { return SIZE; }
 "resize"        { return RESIZE; }
 
-","	{ return(VIRGULA); }
-"{"	{ return(ABRECHAVETA); }
-"}"	{ return(FECHACHAVETA); }
-"("	{ return(ABREPARENT); }
-")"	{ return(FECHAPARENT); }
-"[" { return(ABREVETOR); }
-"]" { return(FECHAVETOR); }
-"="	{ return(IGUAL); }
-";"	{ return(PV); }
-"<"|">"|"<="|">="|"!="|"=="	{ return(OCONDICIONAL); }
-"+"	{ return(MAIS); }
-"-"	{ return(MENOS); }
-"*"|"/"	{ return (OPERADOR); }
+","	            { return(VIRGULA); }
+"{"	            { return(ABRECHAVETA); }
+"}"	            { return(FECHACHAVETA); }
+"("	            { return(ABREPARENT); }
+")"	            { return(FECHAPARENT); }
+"["             { return(ABREVETOR); }
+"]"             { return(FECHAVETOR); }
+"="	            { return(IGUAL); }
+";"	            { return(PV); }
+"."             { return(PF); }
+"!"             { return(EXCLAMACAO); }
+"<"|">"|"<="|">="|"!="|"=="	{ return(COMPARATIVOS); }
+"+"|"-"|"*"|"/"|"%"	{ return (OPERADOR); }
 
 {comentario}  { return(COMENTARIO);}
 {espaco}
@@ -69,9 +72,9 @@ booleano (false)|(true)
 {inteiro}     { return(INTEIRO); }
 {real}        { return(REAL); }
 {booleano}    { return(BOOLEANO); }
+{textoWrite}  { return(TEXTOWRITE); }
 
 {identificador}{0,31} {strcpy(yylval.nome_var,yytext); return(IDENT); }
-
 . { yyerror("caractere inesperado"); }
 
 %%
