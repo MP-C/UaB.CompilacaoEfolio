@@ -34,8 +34,21 @@ structs {
     d { int vtamanho_com_1[a / 2] = {1,2,3}; }; # vetor com divisão
     d { int vtamanho_com_1[a + 2] = {1,2,3}; }; # vetor com soma
 
+    # geradores
+    g { int vetor [] =gen(1,9);};
+    g { int g[10]=gen(1,9);};
+    g { int g[a + 1] = gen(1,9);};
+    g { int g_1[a + 2] = gen(0,9);};
+    g { int g1[a + 3] = gen(2,0);};
+    g { int g[a + 4] = gen(0,1);};
+    g { int g_2[a + 5] = gen(9,-1);}; # decrementar
+    g { int g2[10] = gen(2,0);};
+    g { int Gcalculo[a * 2] = gen(1,9);};
+    g { int Gcalculo1[a / 2] = gen(2,0);};
+    g { int Gcalculo_1[a - 2] = gen(0,9);};
+
     point3D {int y,u,i;}; # estrutrur a com 2 variavel
-    point2D { float x; };
+    point3D { float x; };
     point3D { bool x,y,z;};
     point3D { float x,y,z;};
     point3D { int x,y,z;};
@@ -45,11 +58,25 @@ structs {
 
 # constante
 const { }
+const { int abc = 0;}
 const { int abc = 100; }
 const { float abc = 100; }
 const { bool abc = 100; }
 const { bool f = false; }
 const { bool ghi = true; }
+const { float def = size(s);}
+const { float def = resize(r,1);}
+const { float def = pow(a+2,1);}
+
+const { float def = pow(2,2);}
+const { float def = pow(a,1);}
+const { float def = resize(r,1);}
+const { float def = square_root(8);}
+const { float def = square_root(8);}
+const { float def = square_root(r +1);}
+const { float def = square_root(2 + s);}
+const { float def = square_root(2 + 2);}
+const { float def = square_root(g + s);}
 const {
     #comentarios
     int max = 100;
@@ -57,7 +84,28 @@ const {
 const {
     int max = 100;
 }
+const { float def = square_root(pow(2,2) +1);}
+const { float def = square_root(pow(2,1)+1);}
 
+
+global {
+    int a;
+    int a,s;
+    int a,s,s;
+    int v[];
+}
+
+global{
+    # comentario
+}
+
+global { float def = pow(a,1);}
+global { float def = pow(a + 2,1);}
+global { float def = square_root(8);}
+global { float def = square_root(pow(2,2) + 1);}
+global { float def = square_root(pow(2,2+1) + 1);}
+global { float def = square_root(pow(q.x - p.x, 2) + 1);}
+global { float def = square_root(pow(q.x - p.x,2) + pow(q.y - p.y,2) + 1);}
 
 main () bool {
     a = 1;
@@ -160,4 +208,59 @@ main () bool {
             }
         }
     }
+
+    while( p < 0){
+         int a;
+         a = 2;
+         # comentario while
+
+    }
+
+    while( x > 0 ) {
+        x =+ 1000;
+    }
+
+    while( x > 0 ) {
+        x =- 1000;
+    }
+
+    while( s >= 12.23){
+        x =- 1000;
+    }
+
+    while( s <= 12.23){
+        x =- 1000;
+    }
+
+    while( j != false){
+        # comment
+    }
+
+    while( p < 0){
+        # comment
+    }
+
+    while( r <= 12){
+        # comment
+    }
+
+    while( i == true){
+        # comment
+    }
+    while( j != false){
+        # comment
+    }
+
+    while( j != 1){
+        # comment
+    }
+
+    while( j != 1.2){
+        # comment
+    }
+
+    while( s <= 12.23){
+         # comment
+    }
+
 }

@@ -110,15 +110,17 @@
 %token EXCLAMACAO
 %token COMPARATIVOS
 %token OPERADOR
+%token OPERADORLOGICO
 
 %token COMENTARIO
 %token PARAGRAFO
 %token INTEIRO
 %token REAL
 %token BOOLEANO
-%start  input
+%start input
 
 /* Associatividade de operadores */
+%precedence OPERADOR
 %left  OPERADOR
 %nonassoc  SINAL
 
@@ -139,8 +141,7 @@ fim_linha:
     ;
 
 programa: // Para ser lida cada linha
-        PARAGRAFO
-    |   primeira_camada
+        primeira_camada
     |   error PARAGRAFO{ yyerrok; }
     ;
 
@@ -253,10 +254,18 @@ valor:
     |   BOOLEANO	// (false)|(true)
     ;
 
-global: // GLOBAL => global { declar_varia }, pois é a definição das variáveis globais
-        GLOBAL ABRECHAVETA declara_variavel FECHACHAVETA
+global: // GLOBAL => global { com_global_corpo_proprio }, pois é a definição das variáveis globais
+        GLOBAL ABRECHAVETA global_corpo FECHACHAVETA
     ;
 
+global_corpo:
+	PARAGRAFO global_corpo
+    |	comentario global_corpo
+    |	declara_variavel global_corpo
+    |	tipo IDENT IGUAL metodos global_corpo
+    |	expressao global_corpo
+    |	vazio
+    ;
 main:	// MAIN => main () bool { corpo_main }
         MAIN ABREPARENT FECHAPARENT BOOL ABRECHAVETA instrucoes FECHACHAVETA declara_funcao
     ;
@@ -266,8 +275,8 @@ expressao:
     ;
 
 expressao_equivalencia:
-        IGUAL expressao_continuacao 		// a = ..
-    |   IGUAL OPERADOR expressao_continuacao    // a =+ ..
+        IGUAL expressao_continuacao 		// a = ...
+    |   IGUAL OPERADOR expressao_continuacao    // a =+ ...
     |	IGUAL calculos PV fim_linha		// g = 10 * 10;
     |	OPERADOR OPERADOR PV fim_linha		// a++ | a-- | a** | a//
     ;
@@ -279,8 +288,14 @@ expressao_continuacao:
     ;
 
 valores:
+        ABREPARENT valores_dentro FECHAPARENT	// (INTEIRO, FLOAT, BOOLEANO)
+    |   ABREPARENT valores_dentro FECHAPARENT 	// (q) (q.x) (q.p.x)
+    |   valores_dentro
+    ;
+
+valores_dentro:
         valor  			// valor = INTEIRO, FLOAT, BOOLEANO
-    |   IDENT 			// a
+    |   IDENT 			// q
     |   IDENT PF IDENT		// q.x
     |   IDENT PF IDENT PF IDENT // q.p.x
     ;
@@ -289,15 +304,17 @@ condicional: // Se e/ou  Senão
 	SE ABREPARENT condicoes_inicio FECHAPARENT ABRECHAVETA instrucoes FECHACHAVETA senao {printf("Condicional SE encontrado\n");}
     ;
 
-condicoes_inicio:
+condicoes_inicio: // exemplo: if(condicoes_inicio)
 	condicoes_resto
     |	ABREPARENT condicoes_resto FECHAPARENT e_ou condicoes_inicio
     |  	ABREPARENT condicoes_resto FECHAPARENT COMPARATIVOS condicoes_inicio
     ;
 
-condicoes_resto:
+condicoes_resto: // exemplo: if(condicoes_inicio, condicoes_resto)
         valores COMPARATIVOS valores e_ou condicoes_resto
     |   valores COMPARATIVOS valores
+    |   valores OPERADORLOGICO valores e_ou condicoes_resto
+    |   valores OPERADORLOGICO valores
     |	valores
     ;
 
@@ -317,16 +334,6 @@ chama_funcao:
 	IDENT ABREPARENT parametros FECHAPARENT PV {printf("Chama funcao encontrada\n");}
     ;
 
-parametros:
-        parametro
-   |    parametro VIRGULA parametros
-   ;
-
-parametro:
-	tipo IDENT
-   |   	vazio
-   ;
-
 ident_ou_inteiro:
         IDENT 		// [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?)
     |   INTEIRO		// [-]?[0-9]+
@@ -336,6 +343,16 @@ declara_funcao:
 	IDENT ABREPARENT parametros FECHAPARENT tipo ABRECHAVETA instrucoes FECHACHAVETA fim_linha {printf("Declara funcao encontrada\n");}
     |   vazio
     ;
+
+parametros:
+        parametro
+   |    parametro VIRGULA parametros
+   ;
+
+parametro:
+	tipo IDENT
+   |   	vazio
+   ;
 
 instrucoes:
     	PARAGRAFO instrucoes
@@ -351,67 +368,70 @@ instrucoes:
     |   vazio
     ;
 
-metodos:
-	size
-    |   resize
-    |	expoente
-    |	raiz
-    |  	write
-    |	write_all
-    |	write_string
-    |	read
-    |	read_all
-    |	read_string
+metodos: // Para cada método, pode ficar mais facil tratar os ponto e virgulas aqui
+	size PV
+    |   resize PV
+    |	expoente PV
+    |	raiz PV
+    |  	write PV
+    |	write_all PV
+    |	write_string PV
+    |	read PV
+    |	read_all PV
+    |	read_string PV
     ;
 
 size:
-	SIZE ABREPARENT IDENT FECHAPARENT PV {printf("Metodo SIZE encontrado\n");}
+	SIZE ABREPARENT IDENT FECHAPARENT {printf("Metodo SIZE encontrado\n");}
     ;
 
 resize:
-	RESIZE ABREPARENT IDENT VIRGULA INTEIRO FECHAPARENT PV {printf("Metodo RESIZE encontrado\n");}
+	RESIZE ABREPARENT IDENT VIRGULA INTEIRO FECHAPARENT {printf("Metodo RESIZE encontrado\n");}
     ;
 
 expoente:
-	EXPOENTE ABREPARENT exponte_variavel VIRGULA exponte_variavel FECHAPARENT PV {printf("Metodo EXPOENTE encontrado\n");}
+	EXPOENTE ABREPARENT exponte_raiz_variavel VIRGULA exponte_raiz_variavel FECHAPARENT {printf("Metodo EXPOENTE encontrado\n");}
     ;
 
-exponte_variavel:
-	ident_ou_inteiro
-    |   calculos
+exponte_raiz_variavel:
+	ident_ou_inteiro exponte_raiz_extra
+    |	expoente exponte_raiz_extra
+    |	raiz exponte_raiz_extra
+    |   calculos exponte_raiz_extra
+    |   valores exponte_raiz_extra
+    ;
+
+exponte_raiz_extra:
+       OPERADOR exponte_raiz_variavel
+    |  vazio
     ;
 
 raiz:
-        RAIZ ABREPARENT raiz_variavel FECHAPARENT PV {printf("Metodo RAIZ encontrado\n");}
-    ;
-
-raiz_variavel:
-	INTEIRO
-    |   EXPOENTE
+        RAIZ ABREPARENT exponte_raiz_variavel FECHAPARENT {printf("Metodo RAIZ encontrado\n");}
     ;
 
 write:
-	ESCREVE ABREPARENT IDENT FECHAPARENT PV {printf("Metodo write encontrado\n");}
+	ESCREVE ABREPARENT IDENT FECHAPARENT {printf("Metodo write encontrado\n");}
     ;
 
 write_all:
-	ESCREVETUDO ABREPARENT IDENT FECHAPARENT PV {printf("Metodo write_all encontrado\n");}
+	ESCREVETUDO ABREPARENT IDENT FECHAPARENT {printf("Metodo write_all encontrado\n");}
     ;
 
 write_string:
-	ESCREVESTRING ABREPARENT IDENT FECHAPARENT PV {printf("Metodo write_string encontrado\n");}
+	ESCREVESTRING ABREPARENT IDENT FECHAPARENT {printf("Metodo write_string encontrado\n");}
     ;
 
 read:
-	LE ABREPARENT FECHAPARENT PV {printf("Metodo read encontrado\n");}
+	LE ABREPARENT FECHAPARENT {printf("Metodo read encontrado\n");}
     ;
 
 read_all:
-	LETUDO ABREPARENT FECHAPARENT PV {printf("Metodo read_all encontrado\n");}
+	LETUDO ABREPARENT FECHAPARENT {printf("Metodo read_all encontrado\n");}
     ;
 
 read_string:
-	LESTRING ABREPARENT FECHAPARENT PV {printf("Metodo read_string encontrado\n");}
+	LESTRING ABREPARENT FECHAPARENT {printf("Metodo read_string encontrado\n");}
     ;
 
 ciclos: /* Para determinar os ciclos While e For */
@@ -430,33 +450,31 @@ local:
 
 %%
 
+
 /* Funcao main para leitura do ficheiro a compilar*/
 int main(int argc, char** argv) {
 	if (argc<2) {
 		bashInfo(argv[0]);
-	} else if (argc < 2 && argv[1]=="-d") {
-		debug=1;
-		yyin= fopen(argv[2],"r");
 	} else {
 		yyin = fopen(argv[1], "r");
-	}
-
-	if (NULL != yyin) {
-		yyparse();
-		fclose(yyin);
-		if (count_error == 0) {
-			printf("\nPrograma sem erros.\n \n");
+		if (NULL != yyin) {
+			yyparse();
+			fclose(yyin);
+			if (count_error == 0) {
+				printf("\nPrograma sem erros.\n \n");
+			}
+			else if(count_error == 1){
+				printf("\nExiste %d erro no ficheiro. \n \n", count_error);
+			} else {
+				printf("\nExistem %d erros no ficheiro. \n \n", count_error);
+			}
 		}
-		else if(count_error == 1){
-			printf("\nExiste %d erro no ficheiro. \n \n", count_error);
-		} else {
-			printf("\nExistem %d erros no ficheiro. \n \n", count_error);
+		else {
+			printf("\n Impossivel abrir o ficheiro: %s", argv[1]);
+			bashInfo(argv[0]);
 		}
 	}
-	else {
-		printf("\n Impossivel abrir o ficheiro: %s", argv[1]);
-		bashInfo(argv[0]);
-	}
+	return 0;
 }
 
 /* Contangem de erros encontrados, com ativação yylineno seria possivel colocar em que se encontrou o erro */
@@ -500,14 +518,7 @@ int encontra_var(const char *nome, int adicionar) {
 /* funcao para apresentar info de funcionamento do EfolioA */
 void bashInfo(char* argumento) {
     printf("\n");
-    printf("funcionamento: %s [ -d <ficheiro> | <ficheiro> ]\n", argumento);
-    printf("\t-d\t\tLigar debug. Ouput de instruções válidas lidas.\n");
-    printf("\t<ficheiro>\tFicheiro em linguagem YAIL\n");
-}
-
-/* funcao para apresentar debug */
-void apresenta_debug(char* str){
-	if(debug==1) {
-		printf("%s",str);
-	}
+    printf("funcionamento: %s <ficheiro>\n", argumento);
+    printf("\n");
+    printf(" <ficheiro>\tFicheiro em linguagem YAIL\n");
 }
