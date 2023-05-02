@@ -1,0 +1,172 @@
+structs {
+    a1asd{int x y
+    # geradores
+    int g[10] = gen(1,9);
+    int g[a + 1] = gen(1,9);
+    int g_1[a + 2] = gen(0,9);
+    int g1[a + 3] = gen(2,0);
+    int g[a + 4] = gen(0,1);
+    int g_2[a + 5] = gen(9,-1); # decrementar
+    int g2[10] = gen(2,0);
+    int Gcalculo[a * 2] = gen(1,9);
+    int Gcalculo1[a / 2] = gen(2,0);
+    int Gcalculo_1[a - 2] = gen(0,9);
+}
+int g[10] = gen(1,9);
+int g[a + 1] = gen(1,9);
+
+structs #início
+ point2D { x,y; }; # point2D é composta por 2 reais x e y
+ point2D { x;y, }; # point2D é composta por 2 reais x e y
+ point3D { float }; # point3D por 3 reais x, y e z
+ point3D { tni }; # point3D por 3 reais x, y e z
+ pointND {[]}     ###### pointnD é um vetor de reais
+}
+struct{
+ # definição # # # # # estruturas
+}
+
+# constantes
+const { int jkl = 100; float mno = 20,20; }
+const {
+    pow(1,8);
+    square_root(8);
+}
+const { float def = square_root(2,s);}
+const { float def = square_root(2,2);}
+const { float def = square_root(g,s);}
+const { float def = square_root(pow(2),1);}
+const { float def = square_root(1, pow(2));}
+const { float def = square_root(pow(2+1),1);}
+const { float def = square_root(pow((q.x-p.x),2),1);}
+const { float def = square_root(pow((q.x-p.x),2)+pow((q.y-p.y),2),1);}
+const { float def = resize(r,1);}
+const {intabc=0;}
+const {intabc=0,float=2.3;}
+const { float def = square_root(pow(2),1);}
+const { float def = square_root(pow(2 + 1),1);}
+const { float def = square_root(pow((q.x - p.x),2) + 1);}
+const { float def = square_root(pow((q.x - p.x), 2)+pow((q.y - p.y),2) + 1);}
+constt{}
+const ()
+const ({})
+const { float de = 10,10; }
+const { int jkl = 100, float aaa = 20,20; }
+const { int mno = 100, bool bbb = false; }
+const { int pqr = 100, bool ccc = true; }
+const { stu = 100, float ddd = 20,20; }
+const { vwx = 100, eee = 20,20; }
+const { x = 100, fff = true, hhh = 12,12; }
+const { z = 100, ggg = false; }
+const { int jkl = 100, float aaa = 20.20; }
+const { int mno = 100, bool bbb = false; }
+const { int pqr = 100, bool ccc = true; }
+const { stu = 100, float ddd = 20.20; }
+const { vwx = 100, eee = 20.20; }
+const { x = 100, fff = true, hhh = 12.12; }
+const { z = 100, ggg = false; }
+const { # comentario dento de const
+    int j = square_root(pow);
+    int k = square_root(pow(q.x+e.a,8)+pow(1,8));
+    int l = square_root(pow(q.x+e.1,8),2);
+    int m = write();
+    int n = write_all();
+    int o = write_string();
+    int p = read();
+    int q = read_all();
+    int r = read_string();
+}
+
+#GLOBAL
+globale{)
+globale(}
+
+# Global expressa com erros
+global { float def = resize(r,1);}
+global { float def = pow(a,1);}
+global { float def = pow(a + 2,1);}
+global { float def = square_root(8);}
+global { float def = square_root(r,1);}
+global { float def = square_root(pow(2,2), 1);}
+global { float def = square_root(pow(2+1), 1);}
+global { float def = square_root(pow((q.x - p.x),2), 1);}
+global { float def = square_root(pow((q.x - p.x),2)+pow((q.y - p.y),2) + 1);}
+
+# funções
+int a;
+int v_2[+];
+int v[[2];
+int v[2]];
+size();
+resize(v,n);
+resize(v,);
+resize(,n);
+resize(1,v);
+resize(1,2);
+pow(a,d);
+pow(1,m);
+pow(d,1);
+raiz(1w);
+raiz(q);
+
+main() bool{
+    int e*a;
+    int 11*a;
+    int e*12;
+    local { int ns};
+    local { int n};
+    local { int as};
+    local {int a,b,c};
+    int a;
+    int a, b; #isto da erro tem de ser local{int a, b;}
+    int e, f, g; #nao tens decalracoes assim dentro das funcoes
+    float m;
+    bool result;
+
+    while( x > 0 ) {
+        x -= 1000;
+    }
+
+    while( s += 12.23){
+        x -= 1000;
+    }
+
+    while( s -= 12.23){
+        x -= 1000;
+    }
+
+    while( s >= 12.23){
+        x -= 1000;
+    }
+
+    while( j != false){
+        # comment
+    }
+
+    while( p < 0){
+        # comment
+    }
+
+    while( r <= 12){
+        # comment
+    }
+
+    while( i == true){
+        # comment
+    }
+    while( j != false){
+        # comment
+    }
+
+    while( j != 1){
+        # comment
+    }
+
+    while( j != 1.2){
+        # comment
+    }
+
+    while( s <= 12.23){
+         # comment
+    }
+}
