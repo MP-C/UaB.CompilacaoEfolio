@@ -1,7 +1,8 @@
 %{
  	#include <stdio.h>
-    	#include <string.h>
+    #include <string.h>
    	#include <stdlib.h>
+   	#include "lex.yy.c"
 
 	/* A funcao yyparse() gerada pelo bison vai automaticamente chamar a funcao
 	   yylex() do flex.
@@ -23,11 +24,10 @@
 	void yyerror(char *s);
 	int count_error=0;
 
-    /* Ponto 6 - Verificar se a variavel foi declarada anteriormente
-       Vamos guardar o nome da variavel numa estrutura com 100 posicoes
-       em que cada identificador podera ter 32 caracteres + 1 para \0
-    */
-
+	/*
+		Estrutura para guardar variáveis com
+		nome, tipo e local onde foi declarada
+	*/
     struct {
         char nome [33];
         char tipo [6];
@@ -36,6 +36,7 @@
     vars[100];
 
     int debug=0;
+    char* msg;
     void debuf(char*);
 
     /* código nosso e de nózes */
@@ -63,7 +64,6 @@
      }
 
 %token<nome_var>	IDENT
-%token<nome_var>	IDENTFUNC
 %type<tipoint>primeira_variavel
 
 /* Tipos */
@@ -122,6 +122,7 @@
 /* Associatividade de operadores */
 %precedence OPERADOR
 %left  OPERADOR
+%right COMENTARIO
 %nonassoc  SINAL
 
 %%
@@ -152,32 +153,28 @@ primeira_camada: // Atribuição do esquema geral de um programa em YAIL
     |   constante {printf("Constante encontrado\n");}
     |   global {printf("Global encontrado\n");}
     |   main {printf("Main encontrado\n");}
+    | 	vazio
     ;
 
-segunda_camada:
-	PARAGRAFO segunda_camada
-    |   comentario segunda_camada
-    |   chama_funcao segunda_camada
-    |   declara_variavel segunda_camada
-    |   metodos segunda_camada
-    |   vazio
-    ;
-
-comentario: /* COMENTARIO => [#].* \n, pois começam com o símbolo # e vão até ao fim da linh        */
+comentario: // COMENTARIO => [#].* \n, pois começam com o símbolo # e vão até ao fim da linha
         COMENTARIO {printf("Comentario encontrado\n");}
     ;
 
-structs: /* ESTRUCT => Definição das estruturas   */
-        ESTRUCT ABRECHAVETA structs_corpo FECHACHAVETA
+structs: // ESTRUCT => Definição das estruturas
+        ESTRUCT ABRECHAVETA structs_corpo FECHACHAVETA primeira_camada
     ;
 
 structs_corpo:
         PARAGRAFO structs_corpo
     |   comentario structs_corpo
     |   IDENT ABRECHAVETA declara_variavel FECHACHAVETA PV structs_corpo
-    |   structs  {printf("Estruturas dentro de estruturas encontrado\n");}
-    |   vetor	 // int v []
+    |   structs_structs  structs_corpo {printf("Estruturas dentro de estruturas encontrado\n");}
+    |   vetor structs_corpo	 // int v []
     |   vazio
+    ;
+
+structs_structs:
+	IDENT ABRECHAVETA IDENT primeira_variavel FECHACHAVETA PV
     ;
 
 declara_variavel: // Para determinar quando se inicia uma variavel com um tipo, nome (ou vários nomes) e valor (ou varios valores) ou vetor
@@ -197,7 +194,8 @@ primeira_variavel:
 segundo_termo:
         VIRGULA primeira_variavel
     |   vetor
-    |   PV
+    |   PV fim_linha
+    |	PV fim_linha declara_variavel
     ;
 
 vetor:  // Exemplo: TIPO igual ao mesmo valor int = INTEIRO
@@ -238,8 +236,8 @@ declaracao_atribuicao:
         PARAGRAFO declaracao_atribuicao 		  // >>
     |   comentario declaracao_atribuicao                  // # comment
     |   tipo IDENT IGUAL atributo declaracao_atribuicao	  // int abc = 0;
-    |   tipo IDENT IGUAL metodos PV declaracao_atribuicao // int x = read();
-    |   IDENT IGUAL metodos PV declaracao_atribuicao      // x = read();
+    |   tipo IDENT IGUAL metodos declaracao_atribuicao    // int x = read();
+    |   IDENT IGUAL metodos declaracao_atribuicao         // x = read();
     |   vazio
     ;
 
@@ -331,7 +329,11 @@ senao:
     ;
 
 chama_funcao:
-	IDENT ABREPARENT parametros FECHAPARENT PV {printf("Chama funcao encontrada\n");}
+	IDENT ABREPARENT parametros_sem_tipo FECHAPARENT PV {printf("Chama funcao encontrada\n");}
+    ;
+parametros_sem_tipo:
+	IDENT parametros_sem_tipo // (a)
+    |	VIRGULA IDENT parametros_sem_tipo // (a,b,c)
     ;
 
 ident_ou_inteiro:
@@ -340,7 +342,9 @@ ident_ou_inteiro:
     ;
 
 declara_funcao:
-	IDENT ABREPARENT parametros FECHAPARENT tipo ABRECHAVETA instrucoes FECHACHAVETA fim_linha {printf("Declara funcao encontrada\n");}
+	PARAGRAFO declara_funcao
+    |	comentario declara_funcao
+    |	IDENT ABREPARENT parametros FECHAPARENT tipo ABRECHAVETA instrucoes FECHACHAVETA fim_linha declara_funcao {printf("Declara funcao encontrada\n");}
     |   vazio
     ;
 

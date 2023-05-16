@@ -13,7 +13,6 @@
     void yyerror(char *s);
 %}
 
-textoWrite [^"]+
 divisaoImpossivel [^0]
 espaco [ \S]
 paragrafo [\r\n]
@@ -64,15 +63,14 @@ booleano (false)|(true)
 "."             { return(PF); }
 "!"             { return(EXCLAMACAO); }
 "<"|">"|"<="|">="|"!="|"=="	{ return(COMPARATIVOS); }
-"+"|"-"|"*"|"/"|"%"	{ return (OPERADOR); }
+"+"|"-"|"*"|"/"|"%"	        { return (OPERADOR); }
 
-{comentario}  { return(COMENTARIO);}
+{comentario}  { return(COMENTARIO); }
 {espaco}
 {paragrafo}   { return(PARAGRAFO); }
 {inteiro}     { return(INTEIRO); }
 {real}        { return(REAL); }
 {booleano}    { return(BOOLEANO); }
-{textoWrite}  { return(TEXTOWRITE); }
 
 {identificador}{0,31} {strcpy(yylval.nome_var,yytext); return(IDENT); }
 . { yyerror("caractere inesperado"); }
