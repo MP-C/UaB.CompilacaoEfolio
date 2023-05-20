@@ -6,5 +6,7 @@ For informational purposes, the following information is included:
 
 - AF1, how it was resolved
 - AF2, and how it was resolved
-- AF3, not resolved
+- AF3, done
+- AF4, 1-3 are done
 - EFolio A, instructions and how should be compiled
+- EFolio B, instructions, correction and evaluated + how to compiled
