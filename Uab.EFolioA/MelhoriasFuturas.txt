@@ -1,0 +1,77 @@
+MELHORIAS FUTURAS:
+1) Excluir do regex IDENT a possibilidade de escrever INT; Float ou Bool => identificador [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?)
+
+2) Tratamento de erros e mensagens certas, com correções de ambiguídades
+ via comando => "win_bison --report=all --warninfgs=all --debug -o %(Filename.cpp)"
+
+3) Rever problema de números negativos não serem interpretados como subtração
+
+4) Assimilar diferenças ou associar:
+        GLOBAL ABRECHAVETA declara_variavel FECHACHAVETA fim_linha
+        CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA fim_linha
+
+5) Corretivo quanto aos comparativos algébricos para fazer funcionar na ordem correta :
+"+="|"-="|"*="|"/="|"%="    { return (OPERADORLOGICO); }
+
+
+
+
+Outros testes globais futuros:
+
+# Constante
+const {intabc=0;}
+const {intabc=0,float=2.3;}
+const { float def = square_root(pow(2),1);}
+const { float def = square_root(pow(2 + 1),1);}
+const { float def = square_root(pow((q.x - p.x),2) + 1);}
+const { float def = square_root(pow((q.x - p.x), 2)+pow((q.y - p.y),2) + 1);}
+
+
+main() bool{
+
+    int n;
+    int a1 = size();
+    int a2 = size(v);
+    int a3 = resize(v,2);
+    int a4 = size(v3);
+    int a5 = resize(v3,1);
+
+    while( p < 0){
+        # comment
+    }
+    while( r <= 12){
+        # comment
+    }
+    while( s =< 12.23){
+        # comment
+    }
+    while( i == true){
+        # comment
+    }
+    while( j != false){
+        # comment
+    }
+
+    while( j != 1){
+        # comment
+    }
+
+    while( j != 1.2){
+        # comment
+    }
+
+    for(i,2,n,1){
+        #  comentario for 1
+        for(2,1.0,n,1.2){
+            #  comentario for 2
+            while( n > 0){
+                #  comentario While
+            }
+        }
+    }
+}
+
+#funcoes
+#distance2D (Point2Dp,Point2Dq) float{
+    #intx=1;
+#}
