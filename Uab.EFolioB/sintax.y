@@ -151,7 +151,6 @@ primeira_camada: // Atribuição do esquema geral de um programa em YAIL
     | 	vazio
     ;
 
-
 comentario: // COMENTARIO => [#].* \n, pois começam com o símbolo # e vão até ao fim da linha
         COMENTARIO {printf("Comentario encontrado\n");}
     ;
@@ -163,14 +162,13 @@ structs: // ESTRUCT => Definição das estruturas
 structs_corpo:
         PARAGRAFO structs_corpo
     |   comentario structs_corpo
+    |   structs_dentro_struct structs_corpo {printf("Estruturas dentro de estruturas encontrado\n");}
     |   IDENT ABRECHAVETA declara_variavel FECHACHAVETA PV structs_corpo
-    |   structs_structs  structs_corpo {printf("Estruturas dentro de estruturas encontrado\n");}
-    |   vetor structs_corpo	 // int v []
+    |   vetor structs_corpo  {printf("Vetor dentro de estruturas encontrado\n");}  // int v []
     |   vazio
     ;
 
-
-structs_structs:
+structs_dentro_struct:
 	IDENT ABRECHAVETA IDENT primeira_variavel FECHACHAVETA PV
     ;
 

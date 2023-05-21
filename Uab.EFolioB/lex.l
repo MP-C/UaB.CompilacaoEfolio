@@ -63,7 +63,14 @@ booleano (false)|(true)
 "."             { return(PF); }
 "!"             { return(EXCLAMACAO); }
 "<"|">"|"<="|">="|"!="|"=="	{ return(COMPARATIVOS); }
-"+"|"-"|"*"|"/"|"%"	        { return (OPERADOR); }
+"+" { return (MAIS); }
+"-" { return (MENOS); }
+"*" { return (MULTIPLICA); }
+"/" { return (DIV); }
+"%" { return (MODULO); }
+"++"" { return (INCREMENTO)}
+"--"" { return (DECREMENTO)}
+"+"|"-"|"*"|"/"|"%"	{ return (OPERADOR); }
 
 {comentario}  { return(COMENTARIO); }
 {espaco}
