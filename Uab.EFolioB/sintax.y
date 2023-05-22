@@ -24,10 +24,7 @@
 	void yyerror(char *s);
 	int count_error=0;
 
-	/*
-		Estrutura para guardar variáveis com
-		nome, tipo e local onde foi declarada
-	*/
+	/* Estrutura para guardar variáveis com nome, tipo e local onde foi declarada */
     struct {
         char nome [33];
         char tipo [6];
@@ -38,19 +35,15 @@
     int debug=0;
     char* msg;
     void debuf(char*);
-
-    /* código nosso e de nózes */
     void bashInfo(char*);
     void adiciona_var(const char*, const char*, const char*);
+
     int existe_var(const char*, const char*, const char*);
     void apresenta_debug(char*);
 
     /* TODO :  APAGAR ESTE COMENTARIO ?!?!?  - - */
     /*int debug=0;*/
     int variaveis_criadas=0;
-
-    //printf("Todo o output serve como identificador");
-    /* apartir daqui já é do Deus dará */
 
     int vars_preenchidas=0;
     int le_var(const char *nome);
@@ -63,7 +56,7 @@
         int tipoint;
      }
 
-%token<nome_var>	IDENT
+%token<nome_var> IDENT
 %type<tipoint>primeira_variavel
 
 /* Tipos */
@@ -78,7 +71,7 @@
 %token PARA
 %token OU
 %token E
-%token ESTRUCT
+%token ESTRUTURA
 %token CONST
 %token MAIN
 %token LOCAL
@@ -111,7 +104,6 @@
 %token COMPARATIVOS
 %token OPERADOR
 %token OPERADORLOGICO
-
 %token COMENTARIO
 %token PARAGRAFO
 %token INTEIRO
@@ -119,12 +111,21 @@
 %token BOOLEANO
 %start input
 
+//%token MAIS /* TODO : OPERADOR SUBSTITUIR NOME E CODIGO */
+%token MENOS
+%token MULTIPLICA
+%token DIVIDE
+%token MODULO
+%token INCREMENTO
+%token DECREMENTO
+
+%token empty
+
 /* Associatividade de operadores */
-%precedence OPERADOR
+%precedence MENOS
 %left  OPERADOR
 %right COMENTARIO
-%nonassoc  SINAL
-
+/*%nonassoc  SINAL */
 %%
 
 input: // Para começar a ler um ficheiro
@@ -144,7 +145,7 @@ programa: // Para ser lida cada linha
 primeira_camada: // Atribuição do esquema geral de um programa em YAIL
         PARAGRAFO primeira_camada {printf("Paragrafo primeira camada encontrado\n");}
     |   comentario primeira_camada {printf("Comentario de primeira camada encontrado\n");}
-    |   structs {printf("Structs encontrado\n");}
+    |   estructs {printf("Estruturas encontrado\n");}
     |   constante {printf("Constante encontrado\n");}
     |   global {printf("Global encontrado\n");}
     |   main {printf("Main encontrado\n");}
@@ -155,38 +156,52 @@ comentario: // COMENTARIO => [#].* \n, pois começam com o símbolo # e vão at�
         COMENTARIO {printf("Comentario encontrado\n");}
     ;
 
-structs: // ESTRUCT => Definição das estruturas
-        ESTRUCT ABRECHAVETA structs_corpo FECHACHAVETA primeira_camada
+
+// Início Structure
+estructs: // ESTRUTURA => Definição das estruturas
+        ESTRUTURA ABRECHAVETA estruct_corpo FECHACHAVETA primeira_camada
     ;
 
-structs_corpo:
-        PARAGRAFO structs_corpo
-    |   comentario structs_corpo
-    |   structs_dentro_struct structs_corpo {printf("Estruturas dentro de estruturas encontrado\n");}
-    |   IDENT ABRECHAVETA declara_variavel FECHACHAVETA PV structs_corpo
-    |   vetor structs_corpo  {printf("Vetor dentro de estruturas encontrado\n");}  // int v []
+estruct_corpo:
+        PARAGRAFO estruct_corpo
+    |   comentario estruct_corpo
+/*|   estruct_dentro_estruct estruct_corpo {printf("Estruturas dentro de estruturas encontrado\n");}*/
+    |   IDENT ABRECHAVETA declara_variavel FECHACHAVETA PV estruct_corpo
+    |   vetor estruct_corpo  {printf("Vetor dentro de estruturas encontrado\n");}  // int v []
     |   vazio
     ;
 
-structs_dentro_struct:
+/* NOVO ENUNCIADO efolioB
+estruct_dentro_estruct:
 	IDENT ABRECHAVETA IDENT primeira_variavel FECHACHAVETA PV
+    ;*/
+/*
+estruct_primeiro_termo:
+	tipo variavel_estruct PV
+    ;
+
+estruct_segundo_termo:
+        VIRGULA primeira_variavel
+    |   vetor
+    |   PV
+    ;
+*/
+
+tipo:
+        INT 	// Valores Inteiros
+    |   FLOAT	// Valores Reais
+    |   BOOL	// Valores Boleanos
     ;
 
 declara_variavel: // Para determinar quando se inicia uma variavel com um tipo, nome (ou vários nomes) e valor (ou varios valores) ou vetor
         tipo primeira_variavel
     ;
 
-tipo:
-        INT
-    |   FLOAT
-    |   BOOL
-    ;
-
 primeira_variavel:
-        IDENT segundo_termo       {$$ = encontra_var($1,1);}
+        IDENT segunda_variavel       {$$ = encontra_var($1,1);}
     ;
 
-segundo_termo:
+segunda_variavel:
         VIRGULA primeira_variavel
     |   vetor
     |   PV fim_linha
@@ -198,6 +213,7 @@ fim_linha:
     |   vazio
     ;
 
+// Início Structuras Vetores
 vetor:  // Exemplo: TIPO igual ao mesmo valor int = INTEIRO
         ABREVETOR vetor_corpo FECHAVETOR PV 			{printf("Vetor encontrado\n");}
     |   ABREVETOR vetor_corpo FECHAVETOR IGUAL ABRECHAVETA vetor_listas FECHACHAVETA PV {printf("Vetor encontrado\n");}
@@ -208,6 +224,11 @@ vetor_corpo:
 	ident_ou_inteiro 	{printf("Vetor com variavel encontrado\n");}
     |   calculos vetor_corpo_extra {printf("Vetor com calculo encontrado\n");}
     |   vazio   		{printf("Vetor vazio encontrado\n");}
+    ;
+
+ident_ou_inteiro:
+        IDENT 		// [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?)
+    |   INTEIRO		// [-]?[0-9]+
     ;
 
 calculos:
@@ -227,7 +248,9 @@ vetor_listas:
 gerador:
 	GEN ABREPARENT INTEIRO VIRGULA INTEIRO FECHAPARENT {printf("Gerador encontrado\n");}
     ;
+// Fim de Estruturas
 
+// Início Constante
 constante:  // CONST => const {declaracao_atribuicao}, pois é a definição das constantes
         CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA fim_linha
     ;
@@ -252,6 +275,7 @@ valor:
     |   BOOLEANO	// (false)|(true)
     ;
 
+// Início Global
 global: // GLOBAL => global { com_global_corpo_proprio }, pois é a definição das variáveis globais
         GLOBAL ABRECHAVETA global_corpo FECHACHAVETA
     ;
@@ -264,6 +288,8 @@ global_corpo:
     |	expressao global_corpo
     |	vazio
     ;
+
+// Início Main
 main:	// MAIN => main () bool { corpo_main }
         MAIN ABREPARENT FECHAPARENT BOOL ABRECHAVETA instrucoes FECHACHAVETA declara_funcao
     ;
@@ -336,11 +362,6 @@ parametros_sem_tipo:
     |	VIRGULA IDENT parametros_sem_tipo // (a,b,c)
     ;
 
-ident_ou_inteiro:
-        IDENT 		// [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?)
-    |   INTEIRO		// [-]?[0-9]+
-    ;
-
 declara_funcao:
 	PARAGRAFO declara_funcao
     |	comentario declara_funcao
@@ -358,6 +379,7 @@ parametro:
    |   	vazio
    ;
 
+// Início Instruções
 instrucoes:
     	PARAGRAFO instrucoes
     |   comentario instrucoes

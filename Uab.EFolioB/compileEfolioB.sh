@@ -10,5 +10,5 @@ clear
 rm sintax.c sintax.h lex.yy.c
 bison -dy sintax.y -o sintax.c
 flex lex.l
-gcc sintax.c -o efolioA
-./efolioA YAILsemErros.txt
+gcc sintax.c -o efolioB
+./efolioB YAILsemErros.txt
