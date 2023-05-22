@@ -2,8 +2,7 @@
 +        Constituição do grupo de 5 elementos           +
 +       Grupo  : Alt + C ++ Elite	                    +
 +-------------------------------------------------------+
-+ Compilador construido	em C				            +
-+ 			                                            +
++ Compilador construido	em C :				            +
 + Nome   : Gonçalo Caraça				                +
 + Numero : 2000130					                    +
 +							                            +
@@ -24,8 +23,8 @@
 +-------------------------------------------------------+
 +                 Conteudo da pasta                     +
 +-------------------------------------------------------+
-+  1) compileEfolioA.sh - que substitui a insercao 	    +
-+     individual de cada comando     			        +
++  1) compileEfolioB.sh - que substitui a insercao 	    +
++     individual de cada comando (com BASH instalado)   +
 +  2) lex.l   - ficheiro com especificação lexical   	+
 +  2) README.me - Ficheiro de explicações e conteudo	+
 +  3) RelatorioEquipa.PDF - Realtório final 		    +
@@ -50,12 +49,12 @@
 + para correr o programa                                +
 +    a) $ bison -dy sintatico.y -o sintatico.c		    +
 +    b) $ flex lexico.l			                        +
-+    c) $ gcc sintax.c yy.lex.c -o efolioA		        +
++    c) $ gcc sintax.c yy.lex.c -o efolioB		        +
 + 							                            +
 + Para efeitos de facilidade de execução e de testes,   +
 + foi criado um ficheiro "bash" que executa todos estes +
-+ comandos de forma automatisada "./compileEfolioA.sh"	+
-+   P.S. -o efolioA corresponde ao <nome executavel> é 	+
++ comandos de forma automatisada "./compileEfolioB.sh"	+
++   P.S. -o efolioB corresponde ao <nome executavel> é 	+
 +	opcional, caso não execute ficará com o nome de     +
 + 	ficheiro a.out					                    +
 +-------------------------------------------------------+
@@ -64,17 +63,14 @@
 +-------------------------------------------------------+
 +            Instruções para Utilização                 +
 +-------------------------------------------------------+
-+     $ ./efolioA YAILcomErros.txt			            +
++     $ ./efolioB YAILcomErros.txt			            +
 +  	  sudo apt-get update                               +
-+     $ ./efolioA YAILsemErros.txt			            +
++     $ ./efolioB YAILsemErros.txt			            +
 + 							                            +
 +  <YAILcomErros.txt> pode ser substituido por qualquer	+
-+     outro ficheiro que se pretenda utilizar 		    +
-+                           				            +
-+     $ ./efolioA					                    +
++     $ ./efolioB					                    +
 +   output:						                        +
 +          				                                +
-+     funcionamento: ./efolioA <ficheiro>               +
-+                           				            +
++     funcionamento: ./efolioB <ficheiro>               +
 +      <ficheiro>     Ficheiro em linguagem YAIL    	+
 +-------------------------------------------------------+

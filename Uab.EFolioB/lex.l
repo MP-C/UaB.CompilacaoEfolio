@@ -34,7 +34,7 @@ booleano (false)|(true)
 "for"           { return PARA; }
 "or"            { return OU; }
 "and"           { return E; }
-"structs"       { return ESTRUCT; }
+"structs"       { return ESTRUTURA; }
 "const"         { return CONST; }
 "main"          { return MAIN; }
 "local"         { return LOCAL; }
@@ -62,8 +62,14 @@ booleano (false)|(true)
 ";"	            { return(PV); }
 "."             { return(PF); }
 "!"             { return(EXCLAMACAO); }
+"++"            { return (INCREMENTO); }
+"--"            { return (DECREMENTO); }
+"+"             { return (MAIS); }
+"-"             { return (MENOS); }
+"*"             { return (MULTIPLICA); }
+"/"             { return (DIVIDE); }
+"%"             { return (MODULO); }
 "<"|">"|"<="|">="|"!="|"=="	{ return(COMPARATIVOS); }
-"+"|"-"|"*"|"/"|"%"	        { return (OPERADOR); }
 
 {comentario}  { return(COMENTARIO); }
 {espaco}

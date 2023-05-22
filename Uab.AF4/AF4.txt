@@ -1,0 +1,41 @@
+	1)    a * - (b + c)
+
+#	Op	    Arg1	Arg2	Res
+(0)	+	    b	    c	    T1
+(1)	uminus	T1		T2
+(2)	*	    T2	    a	    T3
+
+
+	2)  - (a + b) * (c + d) + (a + b + c)
+
+#   Op	    Arg1	Arg2	Res
+(0)	+	    a	      b	    T1
+(1)	uminus	T1		T2
+(2)	+	    c	    d	    T3
+(3)	*	    T3	    T2	    T4
+(4)	+	    T1	    c	    T5
+(5)	+	    T4	    T5	    T6
+
+
+
+3)
+
+main () {
+	int i;
+	int a[10];
+	i = 1;
+	while (i <= 10) {
+		a[i] = 0; i = i + 1;
+	}
+}
+
+
+i= 1
+L: T1 = 0
+T2= &a
+T3 = sizeof(int)
+T4 = t3*i
+T5 = t4 + t2
+*t5 = t1
+i=i+1
+If i<= 10 goto L
