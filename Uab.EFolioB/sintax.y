@@ -223,7 +223,7 @@ vetor:  // Exemplo: TIPO igual ao mesmo valor int = INTEIRO
 vetor_corpo:
 	ident_ou_inteiro 	{printf("Vetor com variavel encontrado\n");}
     |   calculos vetor_corpo_extra {printf("Vetor com calculo encontrado\n");}
-    |   vazio   		{printf("Vetor vazio encontrado\n");}
+    |   vazio   {printf("Vetor vazio encontrado\n");}
     ;
 
 ident_ou_inteiro:
@@ -451,14 +451,8 @@ senao:
     | 	vazio
     ;
 
-ciclos: /* Para determinar os ciclos While e For */
-	ENQUANTO ABREPARENT condicoes_inicio FECHAPARENT ABRECHAVETA instrucoes FECHACHAVETA {printf("Ciclo While encontrados\n");}
-    |   PARA ABREPARENT condicao_for  FECHAPARENT  ABRECHAVETA instrucoes FECHACHAVETA {printf("Ciclo For encontrados\n");}
-    ;
 
-condicao_for:
-    	IDENT VIRGULA valor VIRGULA ident_ou_inteiro VIRGULA valor
-    ;
+
 
 declara_funcao:
 	PARAGRAFO declara_funcao

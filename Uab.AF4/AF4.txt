@@ -2,7 +2,7 @@
 
 #	Op	    Arg1	Arg2	Res
 (0)	+	    b	    c	    T1
-(1)	uminus	T1		T2
+(1)	uminus	T1		        T2
 (2)	*	    T2	    a	    T3
 
 

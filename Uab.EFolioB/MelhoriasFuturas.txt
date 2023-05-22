@@ -14,11 +14,13 @@ MELHORIAS FUTURAS:
 "++"            { return (INCREMENTO); }
 "--"            { return (DECREMENTO); }
 
-7) Ordenar funções, e simplificar nomes se possivel
 
 8) Construir zona corrigida para validar tamanhos de vetores
 
-9) SEEGUNDO NOVO ENUNCIADO o ponto "." tem de sair, certo?
+
+7DONE) Ordenar funções, e simplificar nomes se possivel
+
+9DONE) SEEGUNDO NOVO ENUNCIADO o ponto "." tem de sair, certo?
 valores:
         ABREPARENT valores_dentro FECHAPARENT	// (INTEIRO, FLOAT, BOOLEANO)
     |   ABREPARENT valores_dentro FECHAPARENT 	// (q) (q.x) (q.p.x)
