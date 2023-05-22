@@ -3,7 +3,7 @@ structs {
     a { int q ;};
     a { float w ;};
     a { bool e ;};
-    a1 { a r, t; };
+    a1 { bool y, t, r; };
 
     b { int v[]; };
     b { int v[2]; };

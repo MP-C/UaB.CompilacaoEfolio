@@ -102,7 +102,7 @@
 %token ASPAS
 %token EXCLAMACAO
 %token COMPARATIVOS
-%token OPERADOR
+// %token OPERADOR // TODO: PARA APAGAR
 %token OPERADORLOGICO
 %token COMENTARIO
 %token PARAGRAFO
@@ -111,7 +111,7 @@
 %token BOOLEANO
 %start input
 
-//%token MAIS /* TODO : OPERADOR SUBSTITUIR NOME E CODIGO */
+%token MAIS /* TODO : OPERADOR SUBSTITUIR NOME E CODIGO */
 %token MENOS
 %token MULTIPLICA
 %token DIVIDE
@@ -119,13 +119,14 @@
 %token INCREMENTO
 %token DECREMENTO
 
-%token empty
+%token empty /* TODO: ANTES NÃO EXISTIA, AGORA ESTÁ AQUI E TEM QUE ESTAR PARA FUNCIONAR PQ???*/
 
 /* Associatividade de operadores */
-%precedence MENOS
-%left  OPERADOR
+// %precedence MENOS // TODO: PARA QUE SERVE?
+%left  MAIS MENOS
+%left  MULTIPLICA DIVIDE
 %right COMENTARIO
-/*%nonassoc  SINAL */
+/*%nonassoc  SINAL  // TODO: PODE DESAPARECER? O QUE FAZ AQUI?*/
 %%
 
 input: // Para começar a ler um ficheiro
@@ -155,7 +156,6 @@ primeira_camada: // Atribuição do esquema geral de um programa em YAIL
 comentario: // COMENTARIO => [#].* \n, pois começam com o símbolo # e vão até ao fim da linha
         COMENTARIO {printf("Comentario encontrado\n");}
     ;
-
 
 // Início Structure
 estructs: // ESTRUTURA => Definição das estruturas
@@ -188,9 +188,9 @@ estruct_segundo_termo:
 */
 
 tipo:
-        INT 	// Valores Inteiros
-    |   FLOAT	// Valores Reais
-    |   BOOL	// Valores Boleanos
+        INT {printf("Valor INTEIRO encontrado\n");} // Valores Inteiros
+    |   FLOAT {printf("Valor FLOAT encontrado\n");} // Valores Reais
+    |   BOOL {printf("Valor BOLEANO encontrado\n");} // Valores Boleanos
     ;
 
 declara_variavel: // Para determinar quando se inicia uma variavel com um tipo, nome (ou vários nomes) e valor (ou varios valores) ou vetor
@@ -227,16 +227,23 @@ vetor_corpo:
     ;
 
 ident_ou_inteiro:
-        IDENT 		// [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?)
+        IDENT 	{printf("Identificação de variavel encontrado\n");}// [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?)
     |   INTEIRO		// [-]?[0-9]+
     ;
 
 calculos:
-        ident_ou_inteiro OPERADOR ident_ou_inteiro  {printf("Calculos encontrados\n");}
+        ident_ou_inteiro operador ident_ou_inteiro  {printf("Calculos encontrados\n");}
+    ;
+
+operador:
+	MAIS
+    |   MENOS
+    |   MULTIPLICA
+    |   DIVIDE
     ;
 
 vetor_corpo_extra:
-        OPERADOR ident_ou_inteiro vetor_corpo_extra
+        operador ident_ou_inteiro vetor_corpo_extra
     | 	vazio
     ;
 
@@ -248,7 +255,7 @@ vetor_listas:
 gerador:
 	GEN ABREPARENT INTEIRO VIRGULA INTEIRO FECHAPARENT {printf("Gerador encontrado\n");}
     ;
-// Fim de Estruturas
+
 
 // Início Constante
 constante:  // CONST => const {declaracao_atribuicao}, pois é a definição das constantes
@@ -300,13 +307,13 @@ expressao:
 
 expressao_equivalencia:
         IGUAL expressao_continuacao 		// a = ...
-    |   IGUAL OPERADOR expressao_continuacao    // a =+ ...
+    |   operador IGUAL expressao_continuacao    // a =+ ...
     |	IGUAL calculos PV fim_linha		// g = 10 * 10;
-    |	OPERADOR OPERADOR PV fim_linha		// a++ | a-- | a** | a//
+    |	operador operador PV fim_linha		// a++ | a-- | a** | a//
     ;
 
 expressao_continuacao:
-        valores OPERADOR expressao_continuacao
+        valores operador expressao_continuacao
     |   valores PV fim_linha
     |	metodos
     ;
@@ -322,76 +329,6 @@ valores_dentro:
     |   IDENT 			// q
     |   IDENT PF IDENT		// q.x
     |   IDENT PF IDENT PF IDENT // q.p.x
-    ;
-
-condicional: // Se e/ou  Senão
-	SE ABREPARENT condicoes_inicio FECHAPARENT ABRECHAVETA instrucoes FECHACHAVETA senao {printf("Condicional SE encontrado\n");}
-    ;
-
-condicoes_inicio: // exemplo: if(condicoes_inicio)
-	condicoes_resto
-    |	ABREPARENT condicoes_resto FECHAPARENT e_ou condicoes_inicio
-    |  	ABREPARENT condicoes_resto FECHAPARENT COMPARATIVOS condicoes_inicio
-    ;
-
-condicoes_resto: // exemplo: if(condicoes_inicio, condicoes_resto)
-        valores COMPARATIVOS valores e_ou condicoes_resto
-    |   valores COMPARATIVOS valores
-    |   valores OPERADORLOGICO valores e_ou condicoes_resto
-    |   valores OPERADORLOGICO valores
-    |	valores
-    ;
-
-e_ou:
-	E
-    |	OU
-    ;
-
-senao:
-	fim_linha
-    |	SENAO condicional {printf("Condicional SENAO encontrado\n");}
-    | 	SENAO ABRECHAVETA instrucoes FECHACHAVETA {printf("Condicional SENAO encontrado\n");}
-    | 	vazio
-    ;
-
-chama_funcao:
-	IDENT ABREPARENT parametros_sem_tipo FECHAPARENT PV {printf("Chama funcao encontrada\n");}
-    ;
-parametros_sem_tipo:
-	IDENT parametros_sem_tipo // (a)
-    |	VIRGULA IDENT parametros_sem_tipo // (a,b,c)
-    ;
-
-declara_funcao:
-	PARAGRAFO declara_funcao
-    |	comentario declara_funcao
-    |	IDENT ABREPARENT parametros FECHAPARENT tipo ABRECHAVETA instrucoes FECHACHAVETA fim_linha declara_funcao {printf("Declara funcao encontrada\n");}
-    |   vazio
-    ;
-
-parametros:
-        parametro
-   |    parametro VIRGULA parametros
-   ;
-
-parametro:
-	tipo IDENT
-   |   	vazio
-   ;
-
-// Início Instruções
-instrucoes:
-    	PARAGRAFO instrucoes
-    |   comentario instrucoes
-    |   declara_variavel instrucoes
-    |	chama_funcao instrucoes
-    |   metodos instrucoes
-    |   expressao instrucoes
-    |   condicional instrucoes
-    |   calculos PV instrucoes
-    |   ciclos instrucoes
-    |   local instrucoes {printf("Local encontrado\n");}
-    |   vazio
     ;
 
 metodos: // Para cada método, pode ficar mais facil tratar os ponto e virgulas aqui
@@ -428,7 +365,7 @@ exponte_raiz_variavel:
     ;
 
 exponte_raiz_extra:
-       OPERADOR exponte_raiz_variavel
+       operador exponte_raiz_variavel
     |  vazio
     ;
 
@@ -460,6 +397,60 @@ read_string:
 	LESTRING ABREPARENT FECHAPARENT {printf("Metodo read_string encontrado\n");}
     ;
 
+// Início Instruções
+instrucoes:
+    	PARAGRAFO instrucoes
+    |   comentario instrucoes
+    |   declara_variavel instrucoes
+    |   calculos PV instrucoes
+    |   metodos instrucoes
+    |   expressao instrucoes
+    |	chama_funcao instrucoes
+    |   condicional instrucoes
+    |   ciclos instrucoes
+    |   local instrucoes {printf("Local encontrado\n");}
+    |   vazio
+    ;
+
+chama_funcao:
+	IDENT ABREPARENT parametros_sem_tipo FECHAPARENT PV {printf("Chama funcao encontrada\n");}
+    ;
+
+parametros_sem_tipo:
+	IDENT parametros_sem_tipo // (a)
+    |	VIRGULA IDENT parametros_sem_tipo // (a,b,c)
+    ;
+
+condicional: // Se e/ou  Senão. exemplo: if/else,
+	SE ABREPARENT condicoes_inicio FECHAPARENT ABRECHAVETA instrucoes FECHACHAVETA senao {printf("Condicional SE encontrado\n");}
+    ;
+
+condicoes_inicio: // exemplo: if(condicoes_inicio)
+	condicoes_resto
+    |	ABREPARENT condicoes_resto FECHAPARENT e_ou condicoes_inicio
+    |  	ABREPARENT condicoes_resto FECHAPARENT COMPARATIVOS condicoes_inicio
+    ;
+
+condicoes_resto: // exemplo: if(condicoes_inicio, condicoes_resto)
+        valores COMPARATIVOS valores e_ou condicoes_resto
+    |   valores COMPARATIVOS valores
+    |   valores OPERADORLOGICO valores e_ou condicoes_resto
+    |   valores OPERADORLOGICO valores
+    |	valores
+    ;
+
+e_ou:
+	E
+    |	OU
+    ;
+
+senao:
+	fim_linha
+    |	SENAO condicional {printf("Condicional SENAO encontrado\n");}
+    | 	SENAO ABRECHAVETA instrucoes FECHACHAVETA {printf("Condicional SENAO encontrado\n");}
+    | 	vazio
+    ;
+
 ciclos: /* Para determinar os ciclos While e For */
 	ENQUANTO ABREPARENT condicoes_inicio FECHAPARENT ABRECHAVETA instrucoes FECHACHAVETA {printf("Ciclo While encontrados\n");}
     |   PARA ABREPARENT condicao_for  FECHAPARENT  ABRECHAVETA instrucoes FECHACHAVETA {printf("Ciclo For encontrados\n");}
@@ -468,6 +459,23 @@ ciclos: /* Para determinar os ciclos While e For */
 condicao_for:
     	IDENT VIRGULA valor VIRGULA ident_ou_inteiro VIRGULA valor
     ;
+
+declara_funcao:
+	PARAGRAFO declara_funcao
+    |	comentario declara_funcao
+    |	IDENT ABREPARENT parametros FECHAPARENT tipo ABRECHAVETA instrucoes FECHACHAVETA fim_linha declara_funcao {printf("Declara funcao encontrada\n");}
+    |   vazio
+    ;
+
+parametros:
+        parametro
+   |    parametro VIRGULA parametros
+   ;
+
+parametro:
+	tipo IDENT
+   |   	vazio
+   ;
 
 local:
 	LOCAL ABRECHAVETA fim_linha declara_variavel fim_linha FECHACHAVETA PV

@@ -10,31 +10,34 @@ MELHORIAS FUTURAS:
         GLOBAL ABRECHAVETA declara_variavel FECHACHAVETA fim_linha
         CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA fim_linha
 
-5) Corretivo quanto aos comparativos algébricos para fazer funcionar na ordem correta :
-"+="|"-="|"*="|"/="|"%="    { return (OPERADORLOGICO); }
+6) SUBSTITUIR? APAGAR?
+"++"            { return (INCREMENTO); }
+"--"            { return (DECREMENTO); }
 
-CORRIGIR
-"+"|"-"|"*"|"/"|"%"	{ return (OPERADOR); }
+7) Ordenar funções, e simplificar nomes se possivel
 
-OPERADOR ISOLADO
-"++"" { return (INCREMENTO); }
-"--"" { return (DECREMENTO); }
+8) Construir zona corrigida para validar tamanhos de vetores
 
-"+" { return (OPERADOR); }
-"-" { return (MENOS); }
-"*" { return (MULTIPLICA); }
-"/" { return (DIVIDE); }
-"%" { return (MODULO); }
+9) SEEGUNDO NOVO ENUNCIADO o ponto "." tem de sair, certo?
+valores:
+        ABREPARENT valores_dentro FECHAPARENT	// (INTEIRO, FLOAT, BOOLEANO)
+    |   ABREPARENT valores_dentro FECHAPARENT 	// (q) (q.x) (q.p.x)
+    |   valores_dentro
+    ;
 
-
-%type<tipoint>variavel_int  /* TODO: A VERIFICAR SE FAZ SENTIDO!!!!*/
-%type<tipostring>variavel_string  /* TODO: A VERIFICAR SE FAZ SENTIDO!!!!*/
-%type<tipofloat>variavel_float  /* TODO: A VERIFICAR SE FAZ SENTIDO!!! */
-
-
-
+valores_dentro:
+        valor  			// valor = INTEIRO, FLOAT, BOOLEANO
+    |   IDENT 			// q
+    |   IDENT PF IDENT		// q.x
+    |   IDENT PF IDENT PF IDENT // q.p.x
+    ;
 
 
+10) CORRIGIR ERROS E GCC ?!?!?! COMO FAZER
+
+11) IMPLEMENTAR TAC, E TRANSFORMAÇÃO ASSEMBLY com funções em C para cada parte
+
+12)
 Outros testes globais futuros:
 
 # Constante
@@ -44,7 +47,6 @@ const { float def = square_root(pow(2),1);}
 const { float def = square_root(pow(2 + 1),1);}
 const { float def = square_root(pow((q.x - p.x),2) + 1);}
 const { float def = square_root(pow((q.x - p.x), 2)+pow((q.y - p.y),2) + 1);}
-
 
 main() bool{
 
@@ -94,3 +96,30 @@ main() bool{
 #distance2D (Point2Dp,Point2Dq) float{
     #intx=1;
 #}
+
+
+
+DONE 5) Corretivo quanto aos comparativos algébricos para fazer funcionar na ordem correta :
+"+="|"-="|"*="|"/="|"%="    { return (OPERADORLOGICO); } OK
+
+CORRIGIR
+"+"|"-"|"*"|"/"|"%"	{ return (OPERADOR); }
+
+OPERADOR ISOLADO
+"++"" { return (INCREMENTO); }
+"--"" { return (DECREMENTO); }
+
+"+" { return (OPERADOR); }
+"-" { return (MENOS); }
+"*" { return (MULTIPLICA); }
+"/" { return (DIVIDE); }
+"%" { return (MODULO); }
+
+
+%type<tipoint>variavel_int  /* TODO: A VERIFICAR SE FAZ SENTIDO!!!!*/
+%type<tipostring>variavel_string  /* TODO: A VERIFICAR SE FAZ SENTIDO!!!!*/
+%type<tipofloat>variavel_float  /* TODO: A VERIFICAR SE FAZ SENTIDO!!! */
+
+
+
+

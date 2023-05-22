@@ -64,7 +64,7 @@ booleano (false)|(true)
 "!"             { return(EXCLAMACAO); }
 "++"            { return (INCREMENTO); }
 "--"            { return (DECREMENTO); }
-"+"             { return (OPERADOR); }
+"+"             { return (MAIS); }
 "-"             { return (MENOS); }
 "*"             { return (MULTIPLICA); }
 "/"             { return (DIVIDE); }

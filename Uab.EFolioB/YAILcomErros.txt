@@ -11,6 +11,7 @@ structs {
     int Gcalculo[a * 2] = gen(1,9);
     int Gcalculo1[a / 2] = gen(2,0);
     int Gcalculo_1[a - 2] = gen(0,9);
+    a1 { y, t, r; };
 }
 int g[10] = gen(1,9);
 int g[a + 1] = gen(1,9);

@@ -2267,7 +2267,7 @@ YY_RULE_SETUP
 case 39:
 YY_RULE_SETUP
 #line 67 "lex.l"
-{ return (OPERADOR); }
+{ return (MAIS); }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
