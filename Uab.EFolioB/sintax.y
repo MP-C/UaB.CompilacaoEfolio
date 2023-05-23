@@ -71,6 +71,7 @@
 %token PARA
 %token OU
 %token E
+%token NOT
 %token ESTRUTURA
 %token CONST
 %token MAIN
@@ -103,7 +104,7 @@
 %token EXCLAMACAO
 %token COMPARATIVOS
 // %token OPERADOR // TODO: PARA APAGAR
-%token OPERADORLOGICO
+//%token OPERADORLOGICO// TODO: PARA APAGAR
 %token COMENTARIO
 %token PARAGRAFO
 %token INTEIRO
@@ -498,19 +499,20 @@ condicional: // Se e/ou  Senão. exemplo: if/else,
     ;
 condicoes_inicio: // exemplo: if(condicoes_inicio)
 	condicoes_resto
-    |	ABREPARENT condicoes_resto FECHAPARENT e_ou condicoes_inicio
+    |	ABREPARENT condicoes_resto FECHAPARENT operadores_logicos condicoes_inicio
     |  	ABREPARENT condicoes_resto FECHAPARENT COMPARATIVOS condicoes_inicio
     ;
 condicoes_resto: // exemplo: if(condicoes_inicio, condicoes_resto)
-        valores COMPARATIVOS valores e_ou condicoes_resto
+        valores COMPARATIVOS valores operadores_logicos condicoes_resto
     |   valores COMPARATIVOS valores
-    |   valores OPERADORLOGICO valores e_ou condicoes_resto
-    |   valores OPERADORLOGICO valores
+    |   valores operadores_logicos valores operadores_logicos condicoes_resto
+    |   valores operadores_logicos valores
     |	valores
     ;
-e_ou:
-	E
-    |	OU
+operadores_logicos:
+	OU
+    |	E
+    |	NOT
     ;
 senao:
 	SENAO condicional {printf("Condicional SENAO encontrado\n");}

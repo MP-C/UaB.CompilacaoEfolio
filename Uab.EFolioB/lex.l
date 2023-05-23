@@ -32,8 +32,9 @@ booleano (false)|(true)
 "else"          { return SENAO; }
 "while"         { return ENQUANTO; }
 "for"           { return PARA; }
-"or"            { return OU; }
-"and"           { return E; }
+"|"             { return OU; }
+"&"             { return E; }
+"~"             { return NOT; }
 "structs"       { return ESTRUTURA; }
 "const"         { return CONST; }
 "main"          { return MAIN; }

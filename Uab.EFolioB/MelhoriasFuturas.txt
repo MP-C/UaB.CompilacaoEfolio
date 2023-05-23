@@ -1,17 +1,18 @@
 MELHORIAS FUTURAS:
-1 ON GOING ) Excluir do regex IDENT a possibilidade de escrever INT; Float ou Bool => identificador [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?)
+1) Excluir do regex IDENT a possibilidade de escrever INT; Float ou Bool
+ => identificador [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?) => JOao
 
-8) Construir zona corrigida para validar tamanhos de vetores
+8) Construir zona corrigida para validar tamanhos de vetores => Todos?
 
-3) Rever problema de números negativos não serem interpretados como subtração
+3) Rever problema de números negativos não serem interpretados como subtração => SE CALHAR JÀ ESTÀ?!
 
-11) IMPLEMENTAR TAC, E TRANSFORMAÇÃO ASSEMBLY com funções em C para cada parte
+11) IMPLEMENTAR TAC, E TRANSFORMAÇÃO ASSEMBLY com funções em C para cada parte => TODOS?
 
 4) Assimilar diferenças ou associar:
         GLOBAL ABRECHAVETA declara_variavel FECHACHAVETA fim_linha
         CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA fim_linha
 
-6) SUBSTITUIR? APAGAR?
+6) SUBSTITUIR? APAGAR? => substituido por OPERADOR OPERADOR
 "++"            { return (INCREMENTO); }
 "--"            { return (DECREMENTO); }
 
@@ -19,6 +20,8 @@ MELHORIAS FUTURAS:
  via comando => "win_bison --report=all --warninfgs=all --debug -o %(Filename.cpp)"
 
 
+
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
 
 DONE 5) Corretivo quanto aos comparativos algébricos para fazer funcionar na ordem correta :
 "+="|"-="|"*="|"/="|"%="    { return (OPERADORLOGICO); } OK
