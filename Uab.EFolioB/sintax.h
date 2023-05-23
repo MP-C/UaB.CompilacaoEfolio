@@ -99,9 +99,7 @@ extern int yydebug;
     MULTIPLICA = 305,
     DIVIDE = 306,
     MODULO = 307,
-    INCREMENTO = 308,
-    DECREMENTO = 309,
-    empty = 310
+    empty = 308
   };
 #endif
 /* Tokens.  */
@@ -155,9 +153,7 @@ extern int yydebug;
 #define MULTIPLICA 305
 #define DIVIDE 306
 #define MODULO 307
-#define INCREMENTO 308
-#define DECREMENTO 309
-#define empty 310
+#define empty 308
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -170,7 +166,7 @@ union YYSTYPE
         struct valorTipo vTipo;
      
 
-#line 174 "sintax.h"
+#line 170 "sintax.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

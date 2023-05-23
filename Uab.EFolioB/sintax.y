@@ -117,8 +117,8 @@
 %token MULTIPLICA
 %token DIVIDE
 %token MODULO
-%token INCREMENTO
-%token DECREMENTO
+//%token INCREMENTO // TODO: PARA APAGAR  // Antes de + : "++"            { return (INCREMENTO); }
+//%token DECREMENTO // TODO: PARA APAGAR  // Antes de + : "--"            { return (DECREMENTO); }
 
 %token empty /* TODO: ANTES NÃO EXISTIA, AGORA ESTÁ AQUI E TEM QUE ESTAR PARA FUNCIONAR PQ???*/
 

@@ -63,8 +63,7 @@ booleano (false)|(true)
 ";"	            { return(PV); }
 "."             { return(PF); }
 "!"             { return(EXCLAMACAO); }
-"++"            { return (INCREMENTO); }
-"--"            { return (DECREMENTO); }
+
 "+"             { return (MAIS); }
 "-"             { return (MENOS); }
 "*"             { return (MULTIPLICA); }
