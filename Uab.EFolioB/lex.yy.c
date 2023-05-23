@@ -1163,7 +1163,7 @@ case 51:
 YY_RULE_SETUP
 #line 102 "lex.l"
 {
-                 yylval.vTipo.valorString = strdup(yytext);
+                 yylval.vTipo.valorString = strdupwsl(yytext);
                  yylval.vTipo.tipo = strdup("string");
                  return(IDENT);
                  }

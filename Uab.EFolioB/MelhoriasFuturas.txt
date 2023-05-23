@@ -1,10 +1,11 @@
 MELHORIAS FUTURAS:
-1) Excluir do regex IDENT a possibilidade de escrever INT; Float ou Bool => identificador [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?)
+1 ON GOING ) Excluir do regex IDENT a possibilidade de escrever INT; Float ou Bool => identificador [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?)
 
-2) Tratamento de erros e mensagens certas, com correções de ambiguídades
- via comando => "win_bison --report=all --warninfgs=all --debug -o %(Filename.cpp)"
+8) Construir zona corrigida para validar tamanhos de vetores
 
 3) Rever problema de números negativos não serem interpretados como subtração
+
+11) IMPLEMENTAR TAC, E TRANSFORMAÇÃO ASSEMBLY com funções em C para cada parte
 
 4) Assimilar diferenças ou associar:
         GLOBAL ABRECHAVETA declara_variavel FECHACHAVETA fim_linha
@@ -14,13 +15,35 @@ MELHORIAS FUTURAS:
 "++"            { return (INCREMENTO); }
 "--"            { return (DECREMENTO); }
 
+2) Tratamento de erros e mensagens certas, com correções de ambiguídades
+ via comando => "win_bison --report=all --warninfgs=all --debug -o %(Filename.cpp)"
 
-8) Construir zona corrigida para validar tamanhos de vetores
 
 
-7DONE) Ordenar funções, e simplificar nomes se possivel
+DONE 5) Corretivo quanto aos comparativos algébricos para fazer funcionar na ordem correta :
+"+="|"-="|"*="|"/="|"%="    { return (OPERADORLOGICO); } OK
 
-9DONE) SEEGUNDO NOVO ENUNCIADO o ponto "." tem de sair, certo?
+CORRIGIR
+"+"|"-"|"*"|"/"|"%"	{ return (OPERADOR); }
+
+OPERADOR ISOLADO
+"++"" { return (INCREMENTO); }
+"--"" { return (DECREMENTO); }
+
+"+" { return (OPERADOR); }
+"-" { return (MENOS); }
+"*" { return (MULTIPLICA); }
+"/" { return (DIVIDE); }
+"%" { return (MODULO); }
+
+
+%type<tipoint>variavel_int  /* TODO: A VERIFICAR SE FAZ SENTIDO!!!!*/
+%type<tipostring>variavel_string  /* TODO: A VERIFICAR SE FAZ SENTIDO!!!!*/
+%type<tipofloat>variavel_float  /* TODO: A VERIFICAR SE FAZ SENTIDO!!! */
+
+DONE 7) Ordenar funções, e simplificar nomes se possivel
+
+DONE 9) SEEGUNDO NOVO ENUNCIADO o ponto "." tem de sair, certo?
 valores:
         ABREPARENT valores_dentro FECHAPARENT	// (INTEIRO, FLOAT, BOOLEANO)
     |   ABREPARENT valores_dentro FECHAPARENT 	// (q) (q.x) (q.p.x)
@@ -37,7 +60,6 @@ valores_dentro:
 
 10) CORRIGIR ERROS E GCC ?!?!?! COMO FAZER
 
-11) IMPLEMENTAR TAC, E TRANSFORMAÇÃO ASSEMBLY com funções em C para cada parte
 
 12)
 Outros testes globais futuros:
@@ -100,27 +122,6 @@ main() bool{
 #}
 
 
-
-DONE 5) Corretivo quanto aos comparativos algébricos para fazer funcionar na ordem correta :
-"+="|"-="|"*="|"/="|"%="    { return (OPERADORLOGICO); } OK
-
-CORRIGIR
-"+"|"-"|"*"|"/"|"%"	{ return (OPERADOR); }
-
-OPERADOR ISOLADO
-"++"" { return (INCREMENTO); }
-"--"" { return (DECREMENTO); }
-
-"+" { return (OPERADOR); }
-"-" { return (MENOS); }
-"*" { return (MULTIPLICA); }
-"/" { return (DIVIDE); }
-"%" { return (MODULO); }
-
-
-%type<tipoint>variavel_int  /* TODO: A VERIFICAR SE FAZ SENTIDO!!!!*/
-%type<tipostring>variavel_string  /* TODO: A VERIFICAR SE FAZ SENTIDO!!!!*/
-%type<tipofloat>variavel_float  /* TODO: A VERIFICAR SE FAZ SENTIDO!!! */
 
 
 
