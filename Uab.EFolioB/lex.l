@@ -32,8 +32,9 @@ booleano (false)|(true)
 "else"          { return SENAO; }
 "while"         { return ENQUANTO; }
 "for"           { return PARA; }
-"or"            { return OU; }
-"and"           { return E; }
+"|"             { return OU; }
+"&"             { return E; }
+"~"             { return NOT; }
 "structs"       { return ESTRUTURA; }
 "const"         { return CONST; }
 "main"          { return MAIN; }
@@ -62,8 +63,7 @@ booleano (false)|(true)
 ";"	            { return(PV); }
 "."             { return(PF); }
 "!"             { return(EXCLAMACAO); }
-"++"            { return (INCREMENTO); }
-"--"            { return (DECREMENTO); }
+
 "+"             { return (MAIS); }
 "-"             { return (MENOS); }
 "*"             { return (MULTIPLICA); }
