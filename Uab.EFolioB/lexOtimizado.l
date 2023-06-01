@@ -13,7 +13,7 @@
           char *local;          // local onde variável foi declarada
         };
 
-    #include "sc.h"
+    #include "sintaxOtimizado.h"
 
     // TODO: ELIMINIAR snippet
     // Caracteres invalidos

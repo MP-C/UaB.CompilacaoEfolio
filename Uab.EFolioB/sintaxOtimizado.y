@@ -15,9 +15,10 @@
 
     extern int yylineno;
 
-    char localDecalracao[100];
-    char tipoVar[6];
+    char localDecalracao[100]; // local onde está a haver a declaração: structs || const || global || ...
+    char tipoVar[5]; // tipo de var: int || float || bool
 
+    /* estrutura que guarda as variáveis em pilha */
     typedef struct {
         char token[MAX][MAX]; // fica com o valor de string/token
         int valor[MAX][1];    // fica com o valor de int
@@ -30,20 +31,31 @@
     Variaveis teste;
 
 
+    FILE *ficheiro; // ficheiro que gera o código intermédio
+    char tk[5]; // $t1...
+    int contaTk = 1; // numero do t
 
+    /* funcao que gera um novo token do tipo $t... */
+    void novoTk( char* t, int i) {
+        sprintf(t, "$t%d",i);
+        contaTk++;
+    }
+
+    /* inicia a pilha */
     void startStack(Variaveis* stack){
         stack->stackCount=-1;
     }
 
+    /* push para pilha de valores int */
     void pushInt(Variaveis* stack, char* token, int val, char* tipo){
         stack->stackCount++;
         char* parsedT = token;
         strcpy(stack->token[stack->stackCount],parsedT);
         stack->valor[stack->stackCount][0] = val;
         strcpy(stack->tipo[stack->stackCount], tipo);
-
     }
 
+    /* push para pilha de valores float */
 	void pushFloat(Variaveis* stack, char* token, float val, char* tipo) {
         stack->stackCount++;
         char* parsedT = token;
@@ -52,7 +64,7 @@
         strcpy(stack->tipo[stack->stackCount], tipo);
     }
 
-
+    /* apresenta pilha */
     void printStack(Variaveis* stack, char* local) {
         printf("%s encontrado\n", local);
         int i;
@@ -65,6 +77,24 @@
                 printf("variavel %s do tipo %s com valor %f\n", stack->token[i],stack->tipo[i], stack->real[i][0]);
         }
     }
+
+    /* push stack para o ficheiro */
+    void pushStack(Variaveis* stack) {
+        for(int i = stack->stackCount; i >=0 ; i--) {
+            if(!strcmp(stack->tipo[i],"int")) {
+            novoTk(tk, contaTk);
+            printf(ficheiro, "%s = %d\n", strdup(tk), stack->valor[i][0]);
+            //fprintf(ficheiro, "%s = %d", strdup(tk), stack->valor[i][0]);
+            printf("%s = %s\n", stack->token[i],strdup(tk));
+            //fprintf(ficheiro, "%s = %s\n", strdup(tk), strdup(stack->token[i]));
+            //fprintf(ficheiro, "%s = %s", $$.valorString, strdup(tk));
+            //fprintf
+            }
+
+
+        }
+    }
+
 
 %}
 
@@ -128,8 +158,11 @@ int main(int argc, char** argv) {
 		//printf("");
 	} else {
 		yyin = fopen(argv[1], "r");
+		//ficheiro = fopen("tac","w");
 		if (NULL != yyin) {
 			yyparse();
+			pushStack(&teste);
+			//fclose(ficheiro;)
 			fclose(yyin);
 			if (count_error == 0) {
 				printf("\nPrograma sem erros.\n \n");

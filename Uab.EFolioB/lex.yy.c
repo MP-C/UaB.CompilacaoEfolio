@@ -517,9 +517,9 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "lc.l"
+#line 1 "lexOtimizado.l"
 /* versao 30.04.23 */
-#line 4 "lc.l"
+#line 4 "lexOtimizado.l"
 
     #include <string.h>
     #include <stdlib.h>
@@ -756,7 +756,7 @@ YY_DECL
 		}
 
 	{
-#line 30 "lc.l"
+#line 30 "lexOtimizado.l"
 
 
 #line 762 "lex.yy.c"
@@ -828,7 +828,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 32 "lc.l"
+#line 32 "lexOtimizado.l"
 {
                     yylval.valTip.valorString= strdup(yytext);
                     yylval.valTip.tipo = strdup("tipoVar");
@@ -837,7 +837,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 38 "lc.l"
+#line 38 "lexOtimizado.l"
 {
                     yylval.valTip.valorString= strdup(yytext);
                     yylval.valTip.tipo = strdup("tipoVar");
@@ -846,108 +846,108 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 44 "lc.l"
+#line 44 "lexOtimizado.l"
 { return CONST; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 46 "lc.l"
+#line 46 "lexOtimizado.l"
 { return ESCREVE; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 47 "lc.l"
+#line 47 "lexOtimizado.l"
 { return ESCREVETUDO; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 48 "lc.l"
+#line 48 "lexOtimizado.l"
 { return ESCREVESTRING; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 49 "lc.l"
+#line 49 "lexOtimizado.l"
 { return LE; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 50 "lc.l"
+#line 50 "lexOtimizado.l"
 { return LETUDO; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 51 "lc.l"
+#line 51 "lexOtimizado.l"
 { return LESTRING; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 53 "lc.l"
+#line 53 "lexOtimizado.l"
 { return(VIRGULA); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 54 "lc.l"
+#line 54 "lexOtimizado.l"
 { return(ABRECHAVETA); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 55 "lc.l"
+#line 55 "lexOtimizado.l"
 { return(FECHACHAVETA); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 56 "lc.l"
+#line 56 "lexOtimizado.l"
 { return(IGUAL); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 57 "lc.l"
+#line 57 "lexOtimizado.l"
 { return(PV); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 58 "lc.l"
+#line 58 "lexOtimizado.l"
 { return(PF); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 60 "lc.l"
+#line 60 "lexOtimizado.l"
 { return (MAIS); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 61 "lc.l"
+#line 61 "lexOtimizado.l"
 { return (MENOS); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 62 "lc.l"
+#line 62 "lexOtimizado.l"
 { return (MULTIPLICA); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 63 "lc.l"
+#line 63 "lexOtimizado.l"
 { return (DIVIDE); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 64 "lc.l"
+#line 64 "lexOtimizado.l"
 { return (MODULO); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 68 "lc.l"
+#line 68 "lexOtimizado.l"
 
 	YY_BREAK
 case 22:
 /* rule 22 can match eol */
 YY_RULE_SETUP
-#line 69 "lc.l"
+#line 69 "lexOtimizado.l"
 { return(PARAGRAFO); }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 71 "lc.l"
+#line 71 "lexOtimizado.l"
 {
                     yylval.valTip.valorInt = atoi(yytext);
                     yylval.valTip.tipo = strdup("inteiro");
@@ -956,7 +956,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 77 "lc.l"
+#line 77 "lexOtimizado.l"
 {
                     yylval.valTip.valorString = strdup(yytext);
                     yylval.valTip.tipo = strdup("string");
@@ -965,21 +965,21 @@ YY_RULE_SETUP
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 83 "lc.l"
+#line 83 "lexOtimizado.l"
 {
-                    yylval.valTip.valorDecimal= atof(yytext);
-                    yylval.valTip.tipo = strdup("tipoVar");
+                    yylval.valTip.valorDecimal= (float)atof(yytext);
+                    yylval.valTip.tipo = strdup("decimal");
                     return(DECIMAL);
                 }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 90 "lc.l"
+#line 90 "lexOtimizado.l"
 { yyerror("caractere inesperado"); }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 92 "lc.l"
+#line 92 "lexOtimizado.l"
 ECHO;
 	YY_BREAK
 #line 985 "lex.yy.c"
@@ -1997,5 +1997,5 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 92 "lc.l"
+#line 92 "lexOtimizado.l"
 
