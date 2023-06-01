@@ -120,7 +120,7 @@
 %start input
 
 /* Associatividade de operadores */
-%precedence OPERADOR
+//%precedence OPERADOR
 %left  OPERADOR
 %right COMENTARIO
 %nonassoc  SINAL
@@ -188,7 +188,7 @@ tipo:
     ;
 
 primeira_variavel:
-        IDENT segundo_termo       {$$ = encontra_var($1,1);}
+        IDENT {$$ = encontra_var($1,1);} segundo_termo
     ;
 
 segundo_termo:

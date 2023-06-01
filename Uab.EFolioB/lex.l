@@ -4,9 +4,16 @@
 
     #include <string.h>
     #include <stdlib.h>
-    /*
-        Incluir definicoes criadas pelo bison e exportadas para um ficheiro".h"
-    */
+    #include <stdbool.h>
+
+    struct valorTipo {
+        int valorInteiro;
+        float valorReal;
+        bool valorBoleano;
+        char* nome_var;
+        char* tipo_var;
+        char* local_var;
+    } variaveis[100];
 
     #include "sintax.h"
     // Caracteres invalidos
