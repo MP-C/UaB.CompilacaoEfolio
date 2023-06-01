@@ -1,5 +1,5 @@
 
-#line 3 "lex.yy.c"
+#line 2 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -1796,8 +1796,8 @@ char *yytext;
     #include "sintax.h"
     // Caracteres invalidos
     void yyerror(char *s);
+#line 1799 "lex.yy.c"
 #line 1800 "lex.yy.c"
-#line 1801 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -2017,7 +2017,7 @@ YY_DECL
 #line 25 "lex.l"
 
 
-#line 2021 "lex.yy.c"
+#line 2020 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -2310,7 +2310,7 @@ YY_RULE_SETUP
 #line 78 "lex.l"
 ECHO;
 	YY_BREAK
-#line 2314 "lex.yy.c"
+#line 2313 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2574,8 +2574,6 @@ static int yy_get_next_buffer (void)
 			(void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf, (yy_size_t) new_size  );
 		if ( ! YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
 			YY_FATAL_ERROR( "out of dynamic memory in yy_get_next_buffer()" );
-		/* "- 2" to take care of EOB's */
-		YY_CURRENT_BUFFER_LVALUE->yy_buf_size = (int) (new_size - 2);
 	}
 
 	(yy_n_chars) += number_to_move;

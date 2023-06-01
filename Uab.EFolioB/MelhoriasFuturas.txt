@@ -4,7 +4,7 @@ MELHORIAS FUTURAS:
 
 8) Construir zona corrigida para validar tamanhos de vetores => Todos?
 
-3) Rever problema de números negativos não serem interpretados como subtração => SE CALHAR JÀ ESTÀ?!
+
 
 11) IMPLEMENTAR TAC, E TRANSFORMAÇÃO ASSEMBLY com funções em C para cada parte => TODOS?
 
@@ -20,6 +20,9 @@ DONE 4) Assimilar diferenças ou associar:
         GLOBAL ABRECHAVETA declara_variavel FECHACHAVETA fim_linha
         CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA fim_linha
 CONCLUSÃO : ESTÃO DIFERENTES Não me parece que permita associar!
+
+DONE 3) Rever problema de números negativos não serem interpretados como subtração:
+No lex está previsto os valores decimais e inteiros terem ou não um - atrás.
 
 DONE 5) Corretivo quanto aos comparativos algébricos para fazer funcionar na ordem correta :
 "+="|"-="|"*="|"/="|"%="    { return (OPERADORLOGICO); } OK
