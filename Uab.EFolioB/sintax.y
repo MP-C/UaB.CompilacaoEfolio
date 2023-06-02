@@ -18,15 +18,6 @@
 	   ou seja, "externa":
 	*/
 
-	struct valorTipo {
-                int valorInteiro=0;
-                float valorReal=0.0;
-                bool valorBoleano=false;
-                char* nome_var;
-                char* tipo_var;
-                char* local_var;
-            } variaveis[100];
-
 	extern int yylex( void );
 	extern FILE *yyin;
 
@@ -155,6 +146,17 @@ programa: // Atribuição do esquema geral de um programa em YAIL - 0/6 partes
     |   error PARAGRAFO{ yyerrok; }
     ;
 
+/*
+primeira_camada: // Atribuição do esquema geral de um programa em YAIL
+        PARAGRAFO primeira_camada {printf("Paragrafo primeira camada encontrado\n");}
+    |   comentario primeira_camada {printf("Comentario de primeira camada encontrado\n");}
+    |   estructs {printf("Estruturas encontrado\n");}
+    |   constante {printf("Constante encontrado\n");}
+    |   global {printf("Global encontrado\n");}
+    |   main {printf("Main encontrado\n");}
+    | 	vazio
+    ;
+*/
 comentario: // COMENTARIO => [#].* \n, pois começam com o símbolo # e vão até ao fim da linha
         COMENTARIO {printf("Comentario encontrado\n");}
     ;
@@ -163,21 +165,36 @@ comentario: // COMENTARIO => [#].* \n, pois começam com o símbolo # e vão at�
 estructs_inicio: // Atribuição do esquema geral de um programa em YAIL- 1/6
 	PARAGRAFO estructs constante_inicio {printf("Paragrafo Estruturas encontrado\n");}
     |   comentario estructs constante_inicio {printf("Comentario de Estruturas encontrado\n");}
-    |	estructs constante_inicio
     |   constante_inicio
     | 	vazio
     ;
 estructs: // ESTRUTURA => Definição das estruturas
-    |   ESTRUTURA ABRECHAVETA estruct_corpo FECHACHAVETA {printf("Estruturas encontrado\n");}
+    |   ESTRUTURA ABRECHAVETA estruct_corpo FECHACHAVETA estructs {printf("Estruturas encontrado\n");}
     ;
 estruct_corpo:
         PARAGRAFO estruct_corpo
     |   comentario estruct_corpo
+/*|   estruct_dentro_estruct estruct_corpo {printf("Estruturas dentro de estruturas encontrado\n");}*/
     |   IDENT ABRECHAVETA declara_variavel FECHACHAVETA PV estruct_corpo
     |   vetor estruct_corpo  {printf("Vetor dentro de estruturas encontrado\n");}  // int v []
     |   vazio
     ;
 
+/* NOVO ENUNCIADO efolioB
+estruct_dentro_estruct:
+	IDENT ABRECHAVETA IDENT primeira_variavel FECHACHAVETA PV
+    ;*/
+/*
+estruct_primeiro_termo:
+	tipo variavel_estruct PV
+    ;
+
+estruct_segundo_termo:
+        VIRGULA primeira_variavel
+    |   vetor
+    |   PV
+    ;
+*/
 
 tipo:
         INT {printf("Valor INTEIRO encontrado\n");} // Valores Inteiros
@@ -241,7 +258,6 @@ gerador:
 constante_inicio: // Atribuição do esquema geral de um programa em YAIL- 3/6
         PARAGRAFO constante global_inicio {printf("Paragrafo de Constante encontrado\n");}
     |   comentario constante global_inicio {printf("Comentario de Constante encontrado\n");}
-    |   constante global_inicio
     |	global_inicio
     | 	vazio
     ;
@@ -270,7 +286,6 @@ valor:
 global_inicio: // Atribuição do esquema geral de um programa em YAIL- 4/6
         PARAGRAFO global main_inicio {printf("Paragrafo de Global encontrado\n");}
     |   comentario global main_inicio {printf("Comentario de Global encontrado\n");}
-    |	global main_inicio
     |	main_inicio
     | 	vazio
     ;
@@ -395,7 +410,7 @@ valores_dentro:
         valor  			// valor = INTEIRO, FLOAT, BOOLEANO
     |   IDENT 			// q
     |   IDENT PF IDENT		// q.x
-    |   IDENT PF IDENT PF IDENT // q.p.x
+    /*|   IDENT PF IDENT PF IDENT // q.p.x  => retirado dos padrões do novo efolio B */
     ;
 metodos: // Para cada método, pode ficar mais facil tratar os ponto e virgulas aqui
 	size PV
@@ -588,7 +603,6 @@ int encontra_var(const char *nome, int adicionar) {
 	}
     return -1;
 }
-
 
 /* funcao para apresentar info de funcionamento do EfolioA */
 void bashInfo(char* argumento) {

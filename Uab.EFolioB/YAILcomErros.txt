@@ -1,3 +1,4 @@
+
 structs {
     a1asd{int x y
     # geradores

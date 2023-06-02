@@ -1,3 +1,5 @@
+int a = 20;
+
 structs {
     # structs
     a { int q ;};

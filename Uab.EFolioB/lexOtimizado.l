@@ -26,6 +26,7 @@ paragrafo [\r\n]
 identificador [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?)
 inteiro [-]?[0-9]+
 decimal [-]?[0-9]+(\.[0-9]+)?
+booleano (false)|(true)
 
 %%
 
@@ -39,6 +40,12 @@ decimal [-]?[0-9]+(\.[0-9]+)?
                     yylval.valTip.valorString= strdup(yytext);
                     yylval.valTip.tipo = strdup("tipoVar");
                     return FLOAT;
+                }
+
+"bool"         {
+                    yylval.valTip.valorString= strdup(yytext);
+                    yylval.valTip.tipo = strdup("tipoVar");
+                    return BOOL;
                 }
 
 "const"         { return CONST; }
@@ -80,12 +87,17 @@ decimal [-]?[0-9]+(\.[0-9]+)?
                     return(IDENT);
                 }
 
-{decimal}          {
+{decimal}       {
                     yylval.valTip.valorDecimal= (float)atof(yytext);
                     yylval.valTip.tipo = strdup("decimal");
                     return(DECIMAL);
                 }
 
+{boleano}      {
+                   yylval.valTip.valorBoleano= (bool)atof(yytext);
+                   yylval.valTip.tipo = strdup("boleano");
+                   return(BOLEANO);
+                }
 
 . { yyerror("caractere inesperado"); }
 

@@ -23,9 +23,9 @@
         char token[MAX][MAX]; // fica com o valor de string/token
         int valor[MAX][1];    // fica com o valor de int
         float real[MAX][1];   // fica com o valor de floats
-        int boleano[MAX][1];  // fica com o valor de bools
+        bool boleano[MAX][1]; // fica com o valor de bools
         char tipo[MAX][7];    // fica com o tipo da variável/token
-        int stackCount;		  // conta a quantidade de variaveis/tokens
+        int stackCount;	      // conta a quantidade de variaveis/tokens
     }Variaveis;
 
     Variaveis teste;
@@ -64,6 +64,15 @@
         strcpy(stack->tipo[stack->stackCount], tipo);
     }
 
+    /* push para pilha de valores booleanos */
+    void pushBool(Variaveis* stack, char* token, bool val, char* tipo) {
+	stack->stackCount++;
+	char* parsedT = token;
+	strcpy(stack->token[stack->stackCount], parsedT);
+	stack->real[stack->stackCount][0] = val;
+	strcpy(stack->tipo[stack->stackCount], tipo);
+    }
+
     /* apresenta pilha */
     void printStack(Variaveis* stack, char* local) {
         printf("%s encontrado\n", local);
@@ -90,8 +99,6 @@
             //fprintf(ficheiro, "%s = %s", $$.valorString, strdup(tk));
             //fprintf
             }
-
-
         }
     }
 
@@ -106,8 +113,7 @@
      }
 
 
-%token <valTip> IDENT INT INTEIRO FLOAT DECIMAL
-// %token <float> IDENT FLOAT DECIMAL
+%token <valTip> IDENT INT INTEIRO FLOAT DECIMAL BOOL BOOLEANO
 
 %token PARAGRAFO ABRECHAVETA FECHACHAVETA PV IGUAL CONST VIRGULA PF
 %token ESCREVE ESCREVETUDO ESCREVESTRING LE LETUDO LESTRING
@@ -137,6 +143,7 @@ constante_corpo:
 tipo_variavel:
         INT { strcpy(tipoVar,"int"); }
     |   FLOAT { strcpy(tipoVar,"float"); }
+    |   BOOL { strcpy(tipoVar,"bool"); }
     ;
 
 atribuicao:
@@ -144,6 +151,8 @@ atribuicao:
     |   IDENT IGUAL INTEIRO { pushInt(&teste,$1.valorString, $3.valorInt, tipoVar); }
     |	IDENT IGUAL DECIMAL VIRGULA atribuicao {pushFloat(&teste, $1.valorString, $3.valorDecimal, tipoVar);}
     |   IDENT IGUAL DECIMAL {pushFloat(&teste, $1.valorString, $3.valorDecimal, tipoVar);}
+    |	IDENT IGUAL BOOL VIRGULA atribuicao {pushBool(&teste, $1.valorString, $3.valorBoleano, tipoVar);}
+    |   IDENT IGUAL BOOL {pushBool(&teste, $1.valorString, $3.valorBoleano, tipoVar);}
     ;
 
 

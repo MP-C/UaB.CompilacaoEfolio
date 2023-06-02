@@ -4,12 +4,11 @@ MELHORIAS FUTURAS:
 
 8) Construir zona corrigida para validar tamanhos de vetores => Todos?
 
-
-
 11) IMPLEMENTAR TAC, E TRANSFORMAÇÃO ASSEMBLY com funções em C para cada parte => TODOS?
 
-10) CORRIGIR ERROS E GCC ?!?!?! COMO FAZER ?
 
+
+10) CORRIGIR ERROS E GCC ?!?!?! COMO FAZER ?
 2) Tratamento de erros e mensagens certas, com correções de ambiguídades
  via comando => "win_bison --report=all --warninfgs=all --debug -o %(Filename.cpp)"
 
@@ -64,10 +63,3 @@ valores_dentro:
     |   IDENT PF IDENT		// q.x
     |   IDENT PF IDENT PF IDENT // q.p.x
     ;
-
-
-
-
-
-
-
