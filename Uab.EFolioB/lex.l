@@ -55,7 +55,7 @@ booleano (false)|(true)
 ","	            { return(VIRGULA); }
 "{"	            { return(ABRECHAVETA); }
 "}"	            { return(FECHACHAVETA); }
-"("	            { return(ABREPARENT); }
+"("	            { return(ABREPARENT); }helenaifcunha
 ")"	            { return(FECHAPARENT); }
 "["             { return(ABREVETOR); }
 "]"             { return(FECHAVETOR); }
