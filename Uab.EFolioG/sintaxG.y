@@ -16,7 +16,7 @@
     	extern int yylineno;
 
 	char localDecalracao[100]; // local onde está a haver a declaração: structs || const || global || ...
-	char tipoVar[5]; // tipo de var: int || float || bool
+	char tipoVar[6]; // tipo de var: int || float || bool
 
 	/* estrutura que guarda as variáveis em pilha */
 	typedef struct {
@@ -25,11 +25,16 @@
 		float real[MAX][1];   // fica com o valor de floats
 		bool boleano[MAX][1]; // fica com o valor de bools
 		char tipo[MAX][7];    // fica com o tipo da variável/token
+        char teste[100];
 		int stackCount;	      // conta a quantidade de variaveis/tokens
 	}Variaveis;
 
 	Variaveis teste;
 
+    struct {
+        char nome [33];
+        char valor[100];
+    }vars[100];
 
     FILE *ficheiro; // ficheiro que gera o código intermédio
     char tk[5]; // $t1...
@@ -44,6 +49,32 @@
     /* inicia a pilha */
     void startStack(Variaveis* stack){
        stack->stackCount=-1;
+    }
+
+    void push(Variaveis* stack, char* token, char* valor, char* tipo) {
+        //printf("push\ntoken:%s\nvalor:%s -\n",token, valor);
+        //TODO: FAZER FLOAT E BOOL
+        //TODO: CARREGAR PARA A PILHA
+        //TODO: VERIFICAR SE VAR EXISTE
+        char inteiro[3]="int", real[5]="float", booleano[4]="bool";
+        char boolTrue[5]="true", boolFalse[6]="false";
+        if(!strcmp(tipo,inteiro))
+        {
+            //printf("inteiro\n");
+            if(strcmp(valor,boolTrue)==0)
+            {
+                printf("\nVariavel %s com valor 1", token);
+                //push int = 1
+            } else if(strcmp(valor,boolFalse)==0)
+            {
+                printf("\nVariavel %s com valor 0", token);
+                //push int = 1
+            }
+            if(strchr(valor, '.')!=NULL)
+            {
+                printf("\nVariavel %s recebeu %f mas ficou com %d\n", token, atof(valor), atoi(valor));
+            }
+        }
     }
 
     /* push para pilha de valores int */
@@ -113,8 +144,8 @@
      }
 
 
-%token <valTip> IDENT INT INTEIRO FLOAT DECIMAL BOOL BOOLEANO
-
+%token <valTip> IDENT INTEIRO DECIMAL BOOLEANO
+%token INT FLOAT BOOL
 %token PARAGRAFO ABRECHAVETA FECHACHAVETA PV IGUAL CONST VIRGULA PF
 %token ESCREVE ESCREVETUDO ESCREVESTRING LE LETUDO LESTRING
 %token MAIS MENOS MULTIPLICA DIVIDE MODULO
@@ -137,32 +168,28 @@ constante: //
 
 constante_corpo:
         PARAGRAFO constante_corpo
-        tipo_variavel_int atribuicao int fim_declaracao constante_copro
-    |
     |   tipo_variavel atribuicao PV constante_corpo
     |   %empty
     ;
 
-tipo_variavel_INT: INT { strcpy(tipoVar,"int"); };
-tipo_variavel_FLOAT: FLOAT { strcpy(tipoVar,"float"); };
-tipo_variavel_BOOL: BOOL { strcpy(tipoVar,"bool"); };
-
-fim_declaracao: PV {};
 tipo_variavel:
         INT { strcpy(tipoVar,"int"); }
     |   FLOAT { strcpy(tipoVar,"float"); }
     |   BOOL { strcpy(tipoVar,"bool"); }
     ;
 
-atribuicao:
+atribuicao: IDENT IGUAL BOOLEANO {push(&teste, $1.valorString, $3.valorString, tipoVar);}
+
+/*
+atribuicao_a:
         IDENT IGUAL INTEIRO VIRGULA atribuicao { pushInt(&teste,$1.valorString, $3.valorInt, tipoVar); }
     |   IDENT IGUAL INTEIRO { pushInt(&teste,$1.valorString, $3.valorInt, tipoVar); }
     |	IDENT IGUAL DECIMAL VIRGULA atribuicao {pushFloat(&teste, $1.valorString, $3.valorDecimal, tipoVar);}
     |   IDENT IGUAL DECIMAL {pushFloat(&teste, $1.valorString, $3.valorDecimal, tipoVar);}
-    |	IDENT IGUAL BOOL VIRGULA atribuicao {pushBool(&teste, $1.valorString, $3.valorBoleano, tipoVar);}
-    |   IDENT IGUAL BOOL {pushBool(&teste, $1.valorString, $3.valorBoleano, tipoVar);}
+    |	IDENT IGUAL BOOLEANO VIRGULA atribuicao {pushBool(&teste, $1.valorString, $3.valorBoleano, tipoVar);}
+    |   IDENT IGUAL BOOLEANO {pushBool(&teste, $1.valorString, $3.valorBoleano, tipoVar);}
     ;
-
+*/
 
 %%
 
