@@ -227,7 +227,7 @@ vetor:  // Exemplo: TIPO igual ao mesmo valor int = INTEIRO
 vetor_corpo:
 	ident_ou_inteiro 	{printf("Vetor com variavel encontrado\n");}
     |   calculos vetor_corpo_extra {printf("Vetor com calculo encontrado\n");}
-    |   vazio   {printf("Vetor vazio encontrado\n");}
+    |   vazio   		{printf("Vetor vazio encontrado\n");}
     ;
 ident_ou_inteiro:
         IDENT 	{printf("Identificação de variavel encontrado\n");}// [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?)
