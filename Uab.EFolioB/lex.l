@@ -4,16 +4,9 @@
 
     #include <string.h>
     #include <stdlib.h>
-    #include <stdbool.h>
-
-    struct valorTipo {
-        int valorInteiro;
-        float valorReal;
-        bool valorBoleano;
-        char* nome_var;
-        char* tipo_var;
-        char* local_var;
-    } variaveis[100];
+    /*
+        Incluir definicoes criadas pelo bison e exportadas para um ficheiro".h"
+    */
 
     #include "sintax.h"
     // Caracteres invalidos
@@ -33,7 +26,7 @@ booleano (false)|(true)
 
 "int"           { return INT;}
 "float"         { return FLOAT; }
-"bool"          {return BOOL;}
+"bool"          { return BOOL;}
 
 "if"            { return SE; }
 "else"          { return SENAO; }
@@ -62,7 +55,7 @@ booleano (false)|(true)
 ","	            { return(VIRGULA); }
 "{"	            { return(ABRECHAVETA); }
 "}"	            { return(FECHACHAVETA); }
-"("	            { return(ABREPARENT); }
+"("	            { return(ABREPARENT); }helenaifcunha
 ")"	            { return(FECHAPARENT); }
 "["             { return(ABREVETOR); }
 "]"             { return(FECHAVETOR); }

@@ -1,3 +1,23 @@
 const {
+    int i=2.3, j=true;
     int a=-20, b=2;
+    float c=-2,3123, d=123.213;
+    bool e=true, f = true;
+}
+
+push(estrutura teste, char* valor, char* tipoVar)
+{
+    if(tipoVar=="int")
+    {
+        if(valor=="true" || valor=="false")
+        {
+            switch(valor)
+            {
+                case "true"
+                    int acarregar = 1;
+                    break;
+                case
+            }
+        } else
+    }
 }

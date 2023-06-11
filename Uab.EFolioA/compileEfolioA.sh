@@ -12,3 +12,11 @@ bison -dy sintax.y -o sintax.c
 flex lex.l
 gcc sintax.c -o efolioA
 ./efolioA YAILsemErros.txt
+
+
+/*
+bison -d sc.y -o sc.c
+flex lex.l
+gcc sc.c -o programa
+./programa t
+*/

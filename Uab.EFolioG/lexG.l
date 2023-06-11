@@ -13,7 +13,7 @@
           char *local;          // local onde variável foi declarada
     };
 
-    #include "sintaxOtimizado.h"
+    #include "sintaxG.h"
 
     // TODO: ELIMINIAR snippet
     // Caracteres invalidos
@@ -28,25 +28,14 @@ inteiro [-]?[0-9]+
 decimal [-]?[0-9]+(\.[0-9]+)?
 booleano (false)|(true)
 
+
 %%
 
-"int"           {
-                    yylval.valTip.valorString= strdup(yytext);
-                    yylval.valTip.tipo = strdup("tipoVar");
-                    return INT;
-                }
+"int"           {return INT;}
 
-"float"         {
-                    yylval.valTip.valorString= strdup(yytext);
-                    yylval.valTip.tipo = strdup("tipoVar");
-                    return FLOAT;
-                }
+"float"         {return FLOAT;}
 
-"bool"         {
-                    yylval.valTip.valorString= strdup(yytext);
-                    yylval.valTip.tipo = strdup("tipoVar");
-                    return BOOL;
-                }
+"bool"          {return BOOL;}
 
 "const"         { return CONST; }
 
@@ -76,28 +65,27 @@ booleano (false)|(true)
 {paragrafo}   { return(PARAGRAFO); }
 
 {inteiro}       {
-                    yylval.valTip.valorInt = atoi(yytext);
-                    yylval.valTip.tipo = strdup("inteiro");
+                    yylval.valTip.valorString = strdup(yytext);
                     return(INTEIRO);
+                }
+
+{booleano}         {
+                   yylval.valTip.valorString = strdup(yytext);
+                   return(BOOLEANO);
                 }
 
 {identificador} {
                     yylval.valTip.valorString = strdup(yytext);
-                    yylval.valTip.tipo = strdup("string");
                     return(IDENT);
                 }
 
+
 {decimal}       {
-                    yylval.valTip.valorDecimal= (float)atof(yytext);
-                    yylval.valTip.tipo = strdup("decimal");
+                    yylval.valTip.valorString = strdup(yytext);
                     return(DECIMAL);
                 }
 
-{booleano}      {
 
-                   yylval.valTip.tipo = strdup("boleano");
-                   return(BOLEANO);
-                }
 
 . { yyerror("caractere inesperado"); }
 

@@ -34,8 +34,8 @@
 /* Undocumented macros, especially those whose name start with YY_,
    are private implementation details.  Do not rely on them.  */
 
-#ifndef YY_YY_SINTAX_H_INCLUDED
-# define YY_YY_SINTAX_H_INCLUDED
+#ifndef YY_YY_SINTAXOTIMIZADO_H_INCLUDED
+# define YY_YY_SINTAXOTIMIZADO_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -51,121 +51,45 @@ extern int yydebug;
   {
     IDENT = 258,
     INT = 259,
-    FLOAT = 260,
-    BOOL = 261,
-    SE = 262,
-    SENAO = 263,
-    ENQUANTO = 264,
-    PARA = 265,
-    OU = 266,
-    E = 267,
-    NOT = 268,
-    ESTRUTURA = 269,
+    INTEIRO = 260,
+    FLOAT = 261,
+    DECIMAL = 262,
+    BOOL = 263,
+    BOOLEANO = 264,
+    PARAGRAFO = 265,
+    ABRECHAVETA = 266,
+    FECHACHAVETA = 267,
+    PV = 268,
+    IGUAL = 269,
     CONST = 270,
-    MAIN = 271,
-    LOCAL = 272,
-    GLOBAL = 273,
-    ESCREVE = 274,
-    ESCREVETUDO = 275,
-    ESCREVESTRING = 276,
-    LE = 277,
-    LETUDO = 278,
-    LESTRING = 279,
-    EXPOENTE = 280,
-    RAIZ = 281,
-    SIZE = 282,
-    GEN = 283,
-    RESIZE = 284,
-    VIRGULA = 285,
-    ABRECHAVETA = 286,
-    FECHACHAVETA = 287,
-    ABREPARENT = 288,
-    FECHAPARENT = 289,
-    ABREVETOR = 290,
-    FECHAVETOR = 291,
-    IGUAL = 292,
-    PV = 293,
-    PF = 294,
-    ASPAS = 295,
-    EXCLAMACAO = 296,
-    COMPARATIVOS = 297,
-    COMENTARIO = 298,
-    PARAGRAFO = 299,
-    INTEIRO = 300,
-    REAL = 301,
-    BOOLEANO = 302,
-    MAIS = 303,
-    MENOS = 304,
-    MULTIPLICA = 305,
-    DIVIDE = 306,
-    MODULO = 307,
-    empty = 308
+    VIRGULA = 271,
+    PF = 272,
+    ESCREVE = 273,
+    ESCREVETUDO = 274,
+    ESCREVESTRING = 275,
+    LE = 276,
+    LETUDO = 277,
+    LESTRING = 278,
+    MAIS = 279,
+    MENOS = 280,
+    MULTIPLICA = 281,
+    DIVIDE = 282,
+    MODULO = 283
   };
 #endif
-/* Tokens.  */
-#define IDENT 258
-#define INT 259
-#define FLOAT 260
-#define BOOL 261
-#define SE 262
-#define SENAO 263
-#define ENQUANTO 264
-#define PARA 265
-#define OU 266
-#define E 267
-#define NOT 268
-#define ESTRUTURA 269
-#define CONST 270
-#define MAIN 271
-#define LOCAL 272
-#define GLOBAL 273
-#define ESCREVE 274
-#define ESCREVETUDO 275
-#define ESCREVESTRING 276
-#define LE 277
-#define LETUDO 278
-#define LESTRING 279
-#define EXPOENTE 280
-#define RAIZ 281
-#define SIZE 282
-#define GEN 283
-#define RESIZE 284
-#define VIRGULA 285
-#define ABRECHAVETA 286
-#define FECHACHAVETA 287
-#define ABREPARENT 288
-#define FECHAPARENT 289
-#define ABREVETOR 290
-#define FECHAVETOR 291
-#define IGUAL 292
-#define PV 293
-#define PF 294
-#define ASPAS 295
-#define EXCLAMACAO 296
-#define COMPARATIVOS 297
-#define COMENTARIO 298
-#define PARAGRAFO 299
-#define INTEIRO 300
-#define REAL 301
-#define BOOLEANO 302
-#define MAIS 303
-#define MENOS 304
-#define MULTIPLICA 305
-#define DIVIDE 306
-#define MODULO 307
-#define empty 308
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 54 "sintax.y"
+#line 109 "sintaxOtimizado.y"
 
         char nome_var[33];
         int tipoint;
+        struct valorTipo valTip;
      
 
-#line 169 "sintax.h"
+#line 93 "sintaxOtimizado.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -178,4 +102,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_SINTAX_H_INCLUDED  */
+#endif /* !YY_YY_SINTAXOTIMIZADO_H_INCLUDED  */
