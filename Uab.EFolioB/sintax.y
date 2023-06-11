@@ -142,7 +142,7 @@ comentario: // COMENTARIO => [#].* \n, pois começam com o símbolo # e vão at�
     ;
 // Para ser lida cada linha
 programa: // Atribuição do esquema geral de um programa em YAIL - 0/6 partes
-        estructs_inicio
+        estructs_inicio  {}
     |   error PARAGRAFO{ yyerrok; }
     ;
 
