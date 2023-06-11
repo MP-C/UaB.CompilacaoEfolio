@@ -1,0 +1,65 @@
+MELHORIAS FUTURAS:
+1) Excluir do regex IDENT a possibilidade de escrever INT; Float ou Bool
+ => identificador [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?) => JOao
+
+8) Construir zona corrigida para validar tamanhos de vetores => Todos?
+
+11) IMPLEMENTAR TAC, E TRANSFORMAÇÃO ASSEMBLY com funções em C para cada parte => TODOS?
+
+
+
+10) CORRIGIR ERROS E GCC ?!?!?! COMO FAZER ?
+2) Tratamento de erros e mensagens certas, com correções de ambiguídades
+ via comando => "win_bison --report=all --warninfgs=all --debug -o %(Filename.cpp)"
+
+
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
+
+DONE 4) Assimilar diferenças ou associar:
+        GLOBAL ABRECHAVETA declara_variavel FECHACHAVETA fim_linha
+        CONST ABRECHAVETA declaracao_atribuicao FECHACHAVETA fim_linha
+CONCLUSÃO : ESTÃO DIFERENTES Não me parece que permita associar!
+
+DONE 3) Rever problema de números negativos não serem interpretados como subtração:
+No lex está previsto os valores decimais e inteiros terem ou não um - atrás.
+
+DONE 5) Corretivo quanto aos comparativos algébricos para fazer funcionar na ordem correta :
+"+="|"-="|"*="|"/="|"%="    { return (OPERADORLOGICO); } OK
+
+CORRIGIR
+"+"|"-"|"*"|"/"|"%"	{ return (OPERADOR); }
+
+OPERADOR ISOLADO
+"++"" { return (INCREMENTO); }
+"--"" { return (DECREMENTO); }
+
+"+" { return (OPERADOR); }
+"-" { return (MENOS); }
+"*" { return (MULTIPLICA); }
+"/" { return (DIVIDE); }
+"%" { return (MODULO); }
+
+
+%type<tipoint>variavel_int  /* TODO: A VERIFICAR SE FAZ SENTIDO!!!!*/
+%type<tipostring>variavel_string  /* TODO: A VERIFICAR SE FAZ SENTIDO!!!!*/
+%type<tipofloat>variavel_float  /* TODO: A VERIFICAR SE FAZ SENTIDO!!! */
+
+DONE 6) SUBSTITUIR? APAGAR? => substituido por OPERADOR OPERADOR
+"++"            { return (INCREMENTO); }
+"--"            { return (DECREMENTO); }
+
+DONE 7) Ordenar funções, e simplificar nomes se possivel
+
+DONE 9) SEEGUNDO NOVO ENUNCIADO o ponto "." tem de sair, certo?
+valores:
+        ABREPARENT valores_dentro FECHAPARENT	// (INTEIRO, FLOAT, BOOLEANO)
+    |   ABREPARENT valores_dentro FECHAPARENT 	// (q) (q.x) (q.p.x)
+    |   valores_dentro
+    ;
+
+valores_dentro:
+        valor  			// valor = INTEIRO, FLOAT, BOOLEANO
+    |   IDENT 			// q
+    |   IDENT PF IDENT		// q.x
+    |   IDENT PF IDENT PF IDENT // q.p.x
+    ;

@@ -6,5 +6,9 @@ For informational purposes, the following information is included:
 
 - AF1, how it was resolved
 - AF2, and how it was resolved
-- AF3, not resolved
+- AF3, done
+- AF4, 1-3 are done (logic to achive GCI)
+- AF5, Transformation to TAC
+- AF6, Transformation to Assembly
 - EFolio A, instructions and how should be compiled
+- EFolio B, instructions, correction and evaluated + how to compiled
