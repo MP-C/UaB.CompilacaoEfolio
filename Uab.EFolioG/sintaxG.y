@@ -52,30 +52,30 @@
     }
 
     void push(Variaveis* stack, char* token, char* valor, char* tipo) {
-        //printf("push\ntoken:%s\nvalor:%s -\n",token, valor);
-        //TODO: FAZER FLOAT E BOOL
-        //TODO: CARREGAR PARA A PILHA
-        //TODO: VERIFICAR SE VAR EXISTE
-        char inteiro[3]="int", real[5]="float", booleano[4]="bool";
-        char boolTrue[5]="true", boolFalse[6]="false";
-        if(!strcmp(tipo,inteiro))
-        {
-            //printf("inteiro\n");
-            if(strcmp(valor,boolTrue)==0)
+            //printf("push\ntoken:%s\nvalor:%s -\n",token, valor);
+            //TODO: FAZER FLOAT E BOOL
+            //TODO: CARREGAR PARA A PILHA
+            //TODO: VERIFICAR SE VAR EXISTE
+            char inteiro[3]="int", real[5]="float", booleano[4]="bool";
+            char boolTrue[5]="true", boolFalse[6]="false";
+            if(!strcmp(tipo,inteiro))
             {
-                printf("\nVariavel %s com valor 1", token);
-                //push int = 1
-            } else if(strcmp(valor,boolFalse)==0)
-            {
-                printf("\nVariavel %s com valor 0", token);
-                //push int = 1
-            }
-            if(strchr(valor, '.')!=NULL)
-            {
-                printf("\nVariavel %s recebeu %f mas ficou com %d\n", token, atof(valor), atoi(valor));
+                //printf("inteiro\n");
+                if(strcmp(valor,boolTrue)==0)
+                {
+                    printf("\nVariavel %s com valor 1", token);
+                    //push int = 1
+                } else if(strcmp(valor,boolFalse)==0)
+                {
+                    printf("\nVariavel %s com valor 0", token);
+                    //push int = 1
+                }
+                if(strchr(valor, '.')!=NULL)
+                {
+                    printf("\nVariavel %s recebeu %f mas ficou com %d\n", token, atof(valor), atoi(valor));
+                }
             }
         }
-    }
 
     /* push para pilha de valores int */
     void pushInt(Variaveis* stack, char* token, int val, char* tipo){
@@ -122,13 +122,13 @@
     void pushStack(Variaveis* stack) {
         for(int i = stack->stackCount; i >=0 ; i--) {
             if(!strcmp(stack->tipo[i],"int")) {
-            novoTk(tk, contaTk);
-            printf("%s = %d\n", strdup(tk), stack->valor[i][0]);
-            //fprintf(ficheiro, "%s = %d", strdup(tk), stack->valor[i][0]);
-            printf("%s = %s\n", stack->token[i],strdup(tk));
-            //fprintf(ficheiro, "%s = %s\n", strdup(tk), strdup(stack->token[i]));
-            //fprintf(ficheiro, "%s = %s", $$.valorString, strdup(tk));
-            //fprintf
+		    novoTk(tk, contaTk);
+		    printf("%s = %d\n", strdup(tk), stack->valor[i][0]);
+		    //fprintf(ficheiro, "%s = %d", strdup(tk), stack->valor[i][0]);
+		    printf("%s = %s\n", stack->token[i],strdup(tk));
+		    //fprintf(ficheiro, "%s = %s\n", strdup(tk), strdup(stack->token[i]));
+		    //fprintf(ficheiro, "%s = %s", $$.valorString, strdup(tk));
+		    //fprintf
             }
         }
     }
@@ -151,6 +151,7 @@
 %token MAIS MENOS MULTIPLICA DIVIDE MODULO
 
 %start input
+%token COMENTARIO
 
 
 %%
@@ -163,6 +164,10 @@ programa:
         constante
     |   PARAGRAFO
     ;
+comentario: // COMENTARIO => [#].* \n, pois começam com o símbolo # e vão até ao fim da linha
+        COMENTARIO {printf("Comentario encontrado\n");}
+    ;
+
 constante: //
     CONST ABRECHAVETA constante_corpo FECHACHAVETA PARAGRAFO { printStack(&teste,"const"); } ;
 
@@ -173,7 +178,7 @@ constante_corpo:
     ;
 
 tipo_variavel:
-        INT { strcpy(tipoVar,"int"); }
+        INT { strcpy(tipoVar,"INT"); }
     |   FLOAT { strcpy(tipoVar,"float"); }
     |   BOOL { strcpy(tipoVar,"bool"); }
     ;

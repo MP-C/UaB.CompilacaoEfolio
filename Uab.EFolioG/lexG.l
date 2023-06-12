@@ -23,11 +23,11 @@
 
 espaco [ \S]
 paragrafo [\r\n]
+comentario (#.*)
 identificador [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?)
 inteiro [-]?[0-9]+
 decimal [-]?[0-9]+(\.[0-9]+)?
 booleano (false)|(true)
-
 
 %%
 
@@ -60,9 +60,9 @@ booleano (false)|(true)
 "%"             { return (MODULO); }
 
 
-
+{comentario}    { return(COMENTARIO); }
 {espaco}
-{paragrafo}   { return(PARAGRAFO); }
+{paragrafo}     { return(PARAGRAFO); }
 
 {inteiro}       {
                     yylval.valTip.valorString = strdup(yytext);

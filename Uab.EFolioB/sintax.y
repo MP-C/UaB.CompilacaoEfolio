@@ -157,9 +157,6 @@ primeira_camada: // Atribuição do esquema geral de um programa em YAIL
     | 	vazio
     ;
 */
-comentario: // COMENTARIO => [#].* \n, pois começam com o símbolo # e vão até ao fim da linha
-        COMENTARIO {printf("Comentario encontrado\n");}
-    ;
 
 // Início Structure
 estructs_inicio: // Atribuição do esquema geral de um programa em YAIL- 1/6
