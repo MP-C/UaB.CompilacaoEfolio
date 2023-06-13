@@ -1,28 +1,7 @@
 const {
     int b = true;
-}
-
-
-# INT
-const {
-    int i=23, j=true;  // resultado i = 1
-    int i=23, j=false; // resultado i = 0
-}
-
-# Boolean ?
-const {
-    bool i=true, j=0; // resultado i = false
-    bool i=true, j=1; // resultado i = true
-}
-
-# FLOAT PARA BOOL ?
-const {
-    float i=2.3, j=false;  // resultado i = ]-1,1[
-    float i=2.3, j=true;  // resultado i = ]- ∞,-1]∪[1, +∞[
-}
-
-# FLOAT PARA INTEIRO ?
-const {
-    float i=2.3, j=int;  // resultado i = 2
-    float i=2.3, j=int;  // resultado i = 2
+    float a = 2.3;
+    int c = 2.45;
+    bool d = 0;
+    float e = true;
 }

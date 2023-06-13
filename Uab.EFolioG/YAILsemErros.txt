@@ -1,1 +1,1 @@
-const {    int b = true;}
+const {    int b = true;    float a = 2.3;    int c = 2.45;    bool d = 0;    float e = true;}

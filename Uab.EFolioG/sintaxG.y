@@ -3,6 +3,7 @@
     	#include <string.h>
    	#include <stdlib.h>
    	#include <stdbool.h>
+   	#include <ctype.h>
    	#include "lex.yy.c"
 
     	#define MAX 100
@@ -288,6 +289,126 @@
         } else {
             printf("ERRO! Variavel %s já declarada\n", token);
             count_error++;
+        }
+    }
+
+    /* funcao para receber e calcular dois valores +, -, *, e / ou ++ e -- */
+    void operacao(char* var, char* valor1, char* operacao, char* valor2) {
+        char inteiro[4]="int", real[6]="float", booleano[5]="bool";
+        char boolTrue[5]="true", boolFalse[6]="false";
+        int i = encontra_var(var);
+        char tipo[6];
+        strcpy(tipo,vars[i].tipo);
+        if(!strcmp(tipo,inteiro)) {
+            int val1, val2, total;
+            if(!strcmp(valor1,boolTrue)) {
+                strcpy(valor1, "1");
+                val1=atoi(valor1);
+            } else if(!strcmp(valor1,boolFalse)) {
+                strcpy(valor1, "0");
+                val1=atoi(valor1);
+            } else if(isalpha(valor1[0])==0 || valor1[0]=="_"){
+                int var_check = encontra_var(valor1);
+                if(var_check!=-1) {
+                    val1=vars[var_check].inteiro;
+                } else {
+                    printf("ERRO! Variavel %s nao declarada\n", valor1);
+                    count_error++;
+                }
+            } else {
+                val1=atoi(valor1);
+            }
+            if(!strcmp(valor2,boolTrue)) {
+                strcpy(valor2, "1");
+                val2=atoi(valor2);
+            } else if(!strcmp(valor2,boolFalse)) {
+                strcpy(valor2, "0");
+                val2=atoi(valor2);
+            } else if(isalpha(valor2[0])==0 || valor2[0]=="_"){
+                int var_check = encontra_var(valor2);
+                if(var_check!=-1) {
+                    val2=vars[var_check].inteiro;
+                } else {
+                    printf("ERRO! Variavel %s nao declarada\n", valor2);
+                    count_error++;
+                }
+            } else {
+                val2=atoi(valor2);
+            }
+            if (strcmp(operacao, "+") == 0) {
+                total = val1 + val2;
+            } else if (strcmp(operacao, "-") == 0) {
+                total = val1 - val2;
+            } else if (strcmp(operacao, "*") == 0) {
+                total = val1 * val2;
+            } else if (strcmp(operacao, "/") == 0) {
+                if (val2 == 0) {
+                    printf("ERRO! Divisão por 0\n");
+                    count_error++;
+                } else {
+                    total = val1 / val2;
+                }
+            } else if (strcmp(operacao, "++") == 0) {
+                total = val1++;
+            } else if (strcmp(operacao, "--") == 0) {
+                total = val1--;
+              }
+
+        }
+        if(!strcmp(tipo,real)) {
+            float val1, val2, total;
+            if(!strcmp(valor1,boolTrue)) {
+                strcpy(valor1, "1");
+                val1=atof(valor1);
+            } else if(!strcmp(valor1,boolFalse)) {
+                strcpy(valor1, "0");
+                val1=atof(valor1);
+            } else if(isalpha(valor1[0])==0 || valor1[0]=="_"){
+                int var_check = encontra_var(valor1);
+                if(var_check!=-1) {
+                    val1=vars[var_check].real;
+                } else {
+                    printf("ERRO! Variavel %s nao declarada\n", valor1);
+                    count_error++;
+                }
+            } else {
+                val1=atof(valor1);
+            }
+            if(!strcmp(valor2,boolTrue)) {
+                strcpy(valor2, "1");
+                val2=atof(valor2);
+            } else if(!strcmp(valor2,boolFalse)) {
+                strcpy(valor2, "0");
+                val2=atof(valor2);
+            } else if(isalpha(valor2[0])==0 || valor2[0]=="_"){
+                int var_check = encontra_var(valor2);
+                if(var_check!=-1) {
+                    val2=vars[var_check].real;
+                } else {
+                    printf("ERRO! Variavel %s nao declarada\n", valor2);
+                    count_error++;
+                }
+            } else {
+                val2=atof(valor2);
+            }
+            if (strcmp(operacao, "+") == 0) {
+                total = val1 + val2;
+            } else if (strcmp(operacao, "-") == 0) {
+                total = val1 - val2;
+            } else if (strcmp(operacao, "*") == 0) {
+                total = val1 * val2;
+            } else if (strcmp(operacao, "/") == 0) {
+                if (val2 == 0) {
+                    printf("ERRO! Divisão por 0\n");
+                    count_error++;
+                } else {
+                    total = val1 / val2;
+                }
+            } else if (strcmp(operacao, "++") == 0) {
+                total = val1++;
+            } else if (strcmp(operacao, "--") == 0) {
+                total = val1--;
+            }
         }
     }
 

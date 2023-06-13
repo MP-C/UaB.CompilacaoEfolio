@@ -4,7 +4,7 @@
 
 clear
 rm sintaxG.c sintaxG.h lex.yy.c
-bison -dy sintaxG.y -o sintaxG.c
+bison -d sintaxG.y -o sintaxG.c
 flex lexG.l
 gcc sintaxG.c -o global
 ./global YAILsemErros.txt
