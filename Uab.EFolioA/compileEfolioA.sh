@@ -1,6 +1,6 @@
 #clear
-#bison -dy sintax.y -o sintax.c
-#flex lex.l
+#bison -dy sintaxB.y -o sintax.c
+#flex lexB.l
 #gcc sintax.c lex.yy.c -o efolioA
 #./efolioA YAILsemErros.txt
 
