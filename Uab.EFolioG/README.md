@@ -27,22 +27,19 @@
 +  1) compileGlobal.sh - que substitui a insercao 	    +
 +     individual de cada comando     			        +
 +  2) lexG.l   - ficheiro com especificação lexical   	+
-+  2) README.me - Ficheiro de explicações e conteudo	+
-+  3) RelatorioEquipa.PDF - Realtório final 		    +
-+  4) sintaxG.y - analise sintatica			            +
-+  5) YAILcomErros.txt - ficheiro de testes realizados  +
-+	diretamente no compilador		                	+
-+  6) YAILsemErros.txt - ficheiro de testes realizados 	+
++  3) sintaxG.y - analise sintatica			            +
++  4) YAILcomErros.txt - ficheiro de testes realizados  +
 +	diretamente no compilador			                +
-+  7) compileEfolioB.sh - que substitui a insercao 	    +
++  5) YAILsemErros.txt - ficheiro de testes realizados 	+
++	diretamente no compilador		                	+
++  6) compileEfolioB.sh - que substitui a insercao 	    +
 +     individual de cada comando     			        +
-+  8) lexB.l   - ficheiro com especificação lexical   	+
-+  9) RelatorioEquipa.PDF - Realtório final 		    +
-+  4) sintaxG.y - analise sintatica			            +
-+  5) YAILcomErros.txt - ficheiro de testes realizados  +
-+	diretamente no compilador		                	+
-+  6) YAILsemErros.txt - ficheiro de testes realizados 	+
-+	diretamente no compilador			                +
++  7) lexB.l   - ficheiro com especificação lexical   	+
++  8) sintaxB.y - analise sintatica			            +
++  9) YAILotimizado.txt - ficheiro                      +
++  10) README.me - Ficheiro de explicações e conteudo	+
++  11) RelatorioEquipa.PDF - Realtório final 		    +
++  12) RelatorioIndividual.PDF - Realtório final 		+
 +-------------------------------------------------------+
 
 
@@ -57,14 +54,14 @@
 +     sudo apt-get install bison (--version bison 3.8.2)+
 +                                                       +
 + para correr o programa                                +
-+    a) $ bison -dy sintatico.y -o sintatico.c		    +
-+    b) $ flex lexico.l			                        +
-+    c) $ gcc sintax.c yy.lex.c -o efolioA		        +
++    a) $ bison -d sintaxG.y -o sintaG.c    		    +
++    b) $ flex lexG.l			                        +
++    c) $ gcc sintaxG.c yy.lex.c -o global		        +
 + 							                            +
 + Para efeitos de facilidade de execução e de testes,   +
 + foi criado um ficheiro "bash" que executa todos estes +
-+ comandos de forma automatisada "./compileEfolioA.sh"	+
-+   P.S. -o efolioA corresponde ao <nome executavel> é 	+
++ comandos de forma automatisada "./compileEfolioG.sh"	+
++   P.S. -o efolioG corresponde ao <nome executavel> é 	+
 +	opcional, caso não execute ficará com o nome de     +
 + 	ficheiro a.out					                    +
 +-------------------------------------------------------+
@@ -73,17 +70,15 @@
 +-------------------------------------------------------+
 +            Instruções para Utilização                 +
 +-------------------------------------------------------+
-+     $ ./efolioA YAILcomErros.txt			            +
++     $ ./efolioG YAILotimizado.txt			            +
 +  	  sudo apt-get update                               +
-+     $ ./efolioA YAILsemErros.txt			            +
-+ 							                            +
-+  <YAILcomErros.txt> pode ser substituido por qualquer	+
++ <YAILotimizado.txt> pode ser substituido por qualquer +
 +     outro ficheiro que se pretenda utilizar 		    +
 +                           				            +
-+     $ ./efolioA					                    +
++     $ ./efolioG					                    +
 +   output:						                        +
 +          				                                +
-+     funcionamento: ./efolioA <ficheiro>               +
++     funcionamento: ./efolioG <ficheiro>               +
 +                           				            +
 +      <ficheiro>     Ficheiro em linguagem YAIL    	+
 +-------------------------------------------------------+
