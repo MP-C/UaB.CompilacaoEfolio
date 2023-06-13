@@ -13,7 +13,7 @@
           char *local;          // local onde variável foi declarada
     };
 
-    #include "sintaxG.h"
+    #include "s.h"
 
     // TODO: ELIMINIAR snippet
     // Caracteres invalidos
@@ -29,15 +29,16 @@ inteiro [-]?[0-9]+
 decimal [-]?[0-9]+(\.[0-9]+)?
 booleano (false)|(true)
 
+
 %%
 
-"int"           {return INT;}
-
-"float"         {return FLOAT;}
-
-"bool"          {return BOOL;}
+"int"           { return INT;}
+"float"         { return FLOAT;}
+"bool"          { return BOOL;}
 
 "const"         { return CONST; }
+"global"        { return GLOBAL; }
+"main"          { return MAIN; }
 
 "write"         { return ESCREVE; }
 "write_all"     { return ESCREVETUDO; }
@@ -60,9 +61,10 @@ booleano (false)|(true)
 "%"             { return (MODULO); }
 
 
-{comentario}    { return(COMENTARIO); }
+
 {espaco}
-{paragrafo}     { return(PARAGRAFO); }
+{paragrafo}   { return(PARAGRAFO); }
+{comentario}  { return(COMENTARIO); }
 
 {inteiro}       {
                     yylval.valTip.valorString = strdup(yytext);
