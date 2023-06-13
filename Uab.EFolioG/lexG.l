@@ -1,4 +1,4 @@
-/* versao 30.04.23 */
+/* versao 14.06.23 */
 %option noyywrap yylineno
 %{
 

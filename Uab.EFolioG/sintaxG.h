@@ -34,8 +34,8 @@
 /* Undocumented macros, especially those whose name start with YY_,
    are private implementation details.  Do not rely on them.  */
 
-#ifndef YY_YY_SINTAX_H_INCLUDED
-# define YY_YY_SINTAX_H_INCLUDED
+#ifndef YY_YY_SINTAXG_H_INCLUDED
+# define YY_YY_SINTAXG_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -50,122 +50,49 @@ extern int yydebug;
   enum yytokentype
   {
     IDENT = 258,
-    INT = 259,
-    FLOAT = 260,
-    BOOL = 261,
-    SE = 262,
-    SENAO = 263,
-    ENQUANTO = 264,
-    PARA = 265,
-    OU = 266,
-    E = 267,
-    NOT = 268,
-    ESTRUTURA = 269,
-    CONST = 270,
-    MAIN = 271,
-    LOCAL = 272,
-    GLOBAL = 273,
-    ESCREVE = 274,
-    ESCREVETUDO = 275,
-    ESCREVESTRING = 276,
-    LE = 277,
-    LETUDO = 278,
-    LESTRING = 279,
-    EXPOENTE = 280,
-    RAIZ = 281,
-    SIZE = 282,
-    GEN = 283,
-    RESIZE = 284,
-    VIRGULA = 285,
-    ABRECHAVETA = 286,
-    FECHACHAVETA = 287,
-    ABREPARENT = 288,
-    FECHAPARENT = 289,
-    ABREVETOR = 290,
-    FECHAVETOR = 291,
-    IGUAL = 292,
-    PV = 293,
-    PF = 294,
-    ASPAS = 295,
-    EXCLAMACAO = 296,
-    COMPARATIVOS = 297,
-    COMENTARIO = 298,
-    PARAGRAFO = 299,
-    INTEIRO = 300,
-    REAL = 301,
-    BOOLEANO = 302,
-    MAIS = 303,
-    MENOS = 304,
-    MULTIPLICA = 305,
-    DIVIDE = 306,
-    MODULO = 307,
-    empty = 308
+    INTEIRO = 259,
+    DECIMAL = 260,
+    BOOLEANO = 261,
+    INT = 262,
+    FLOAT = 263,
+    BOOL = 264,
+    CONST = 265,
+    GLOBAL = 266,
+    MAIN = 267,
+    PARAGRAFO = 268,
+    COMENTARIO = 269,
+    ABRECHAVETA = 270,
+    FECHACHAVETA = 271,
+    PV = 272,
+    IGUAL = 273,
+    VIRGULA = 274,
+    PF = 275,
+    ESCREVE = 276,
+    ESCREVETUDO = 277,
+    ESCREVESTRING = 278,
+    LE = 279,
+    LETUDO = 280,
+    LESTRING = 281,
+    MAIS = 282,
+    MENOS = 283,
+    MULTIPLICA = 284,
+    DIVIDE = 285,
+    MODULO = 286
   };
 #endif
-/* Tokens.  */
-#define IDENT 258
-#define INT 259
-#define FLOAT 260
-#define BOOL 261
-#define SE 262
-#define SENAO 263
-#define ENQUANTO 264
-#define PARA 265
-#define OU 266
-#define E 267
-#define NOT 268
-#define ESTRUTURA 269
-#define CONST 270
-#define MAIN 271
-#define LOCAL 272
-#define GLOBAL 273
-#define ESCREVE 274
-#define ESCREVETUDO 275
-#define ESCREVESTRING 276
-#define LE 277
-#define LETUDO 278
-#define LESTRING 279
-#define EXPOENTE 280
-#define RAIZ 281
-#define SIZE 282
-#define GEN 283
-#define RESIZE 284
-#define VIRGULA 285
-#define ABRECHAVETA 286
-#define FECHACHAVETA 287
-#define ABREPARENT 288
-#define FECHAPARENT 289
-#define ABREVETOR 290
-#define FECHAVETOR 291
-#define IGUAL 292
-#define PV 293
-#define PF 294
-#define ASPAS 295
-#define EXCLAMACAO 296
-#define COMPARATIVOS 297
-#define COMENTARIO 298
-#define PARAGRAFO 299
-#define INTEIRO 300
-#define REAL 301
-#define BOOLEANO 302
-#define MAIS 303
-#define MENOS 304
-#define MULTIPLICA 305
-#define DIVIDE 306
-#define MODULO 307
-#define empty 308
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 54 "sintaxB.y"
+#line 418 "sintaxG.y"
 
         char nome_var[33];
         int tipoint;
+        struct valorTipo valTip;
      
 
-#line 169 "sintax.h"
+#line 96 "sintaxG.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -178,4 +105,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_SINTAX_H_INCLUDED  */
+#endif /* !YY_YY_SINTAXG_H_INCLUDED  */
