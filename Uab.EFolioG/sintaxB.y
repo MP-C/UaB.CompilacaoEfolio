@@ -405,59 +405,6 @@ valores_dentro:
     |   IDENT PF IDENT		// q.x
     /*|   IDENT PF IDENT PF IDENT // q.p.x  => retirado dos padrões do novo efolio B */
     ;
-metodos: // Para cada método, pode ficar mais facil tratar os ponto e virgulas aqui
-	size PV
-    |   resize PV
-    |	expoente PV
-    |	raiz PV
-    |  	write PV
-    |	write_all PV
-    |	write_string PV
-    |	read PV
-    |	read_all PV
-    |	read_string PV
-    ;
-size:
-	SIZE ABREPARENT IDENT FECHAPARENT {printf("Metodo SIZE encontrado\n");}
-    ;
-resize:
-	RESIZE ABREPARENT IDENT VIRGULA INTEIRO FECHAPARENT {printf("Metodo RESIZE encontrado\n");}
-    ;
-expoente:
-	EXPOENTE ABREPARENT exponte_raiz_variavel VIRGULA exponte_raiz_variavel FECHAPARENT {printf("Metodo EXPOENTE encontrado\n");}
-    ;
-exponte_raiz_variavel:
-	ident_ou_inteiro exponte_raiz_extra
-    |	expoente exponte_raiz_extra
-    |	raiz exponte_raiz_extra
-    |   calculos exponte_raiz_extra
-    |   valores exponte_raiz_extra
-    ;
-exponte_raiz_extra:
-       operador exponte_raiz_variavel
-    |  vazio
-    ;
-raiz:
-        RAIZ ABREPARENT exponte_raiz_variavel FECHAPARENT {printf("Metodo RAIZ encontrado\n");}
-    ;
-write:
-	ESCREVE ABREPARENT IDENT FECHAPARENT {printf("Metodo write encontrado\n");}
-    ;
-write_all:
-	ESCREVETUDO ABREPARENT IDENT FECHAPARENT {printf("Metodo write_all encontrado\n");}
-    ;
-write_string:
-	ESCREVESTRING ABREPARENT IDENT FECHAPARENT {printf("Metodo write_string encontrado\n");}
-    ;
-read:
-	LE ABREPARENT FECHAPARENT {printf("Metodo read encontrado\n");}
-    ;
-read_all:
-	LETUDO ABREPARENT FECHAPARENT {printf("Metodo read_all encontrado\n");}
-    ;
-read_string:
-	LESTRING ABREPARENT FECHAPARENT {printf("Metodo read_string encontrado\n");}
-    ;
 
 // Início Instruções
 instrucoes: // Atribuição do esquema geral de um programa em YAIL- 6/6
