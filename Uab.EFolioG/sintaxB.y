@@ -41,8 +41,6 @@
     int existe_var(const char*, const char*, const char*);
     void apresenta_debug(char*);
 
-    /* TODO :  APAGAR ESTE COMENTARIO ?!?!?  - - */
-    /*int debug=0;*/
     int variaveis_criadas=0;
 
     int vars_preenchidas=0;
@@ -103,8 +101,8 @@
 %token ASPAS
 %token EXCLAMACAO
 %token COMPARATIVOS
-// %token OPERADOR // TODO: PARA APAGAR
-//%token OPERADORLOGICO// TODO: PARA APAGAR
+%token OPERADOR
+%token OPERADORLOGICO
 %token COMENTARIO
 %token PARAGRAFO
 %token INTEIRO
@@ -112,22 +110,20 @@
 %token BOOLEANO
 %start input
 
-%token MAIS /* TODO : OPERADOR SUBSTITUIR NOME E CODIGO */
+%token MAIS
 %token MENOS
 %token MULTIPLICA
 %token DIVIDE
 %token MODULO
-//%token INCREMENTO // TODO: PARA APAGAR  // Antes de + : "++"            { return (INCREMENTO); }
-//%token DECREMENTO // TODO: PARA APAGAR  // Antes de + : "--"            { return (DECREMENTO); }
+%token INCREMENTO // Antes de + : "++"            { return (INCREMENTO); }
+%token DECREMENTO // Antes de + : "--"            { return (DECREMENTO); }
 
-%token empty /* TODO: ANTES NÃO EXISTIA, AGORA ESTÁ AQUI E TEM QUE ESTAR PARA FUNCIONAR PQ???*/
+%token empty
 
 /* Associatividade de operadores */
-// %precedence MENOS // TODO: PARA QUE SERVE?
 %left  MAIS MENOS
 %left  MULTIPLICA DIVIDE
 %right COMENTARIO
-/*%nonassoc  SINAL  // TODO: PODE DESAPARECER? O QUE FAZ AQUI?*/
 %%
 
 input: // Para começar a ler um ficheiro
@@ -135,7 +131,7 @@ input: // Para começar a ler um ficheiro
     |   vazio
     ;
 vazio:
-	%prec empty // TODO: Substitui a traducao do simbolo de percentagem
+	%empty
     ;
 comentario: // COMENTARIO => [#].* \n, pois começam com o símbolo # e vão até ao fim da linha
         COMENTARIO {printf("Comentario encontrado\n");}
@@ -601,7 +597,7 @@ int encontra_var(const char *nome, int adicionar) {
     return -1;
 }
 
-/* funcao para apresentar info de funcionamento do EfolioA */
+/* funcao para apresentar info de funcionamento do EfolioB */
 void bashInfo(char* argumento) {
     printf("\n");
     printf("funcionamento: %s <ficheiro>\n", argumento);

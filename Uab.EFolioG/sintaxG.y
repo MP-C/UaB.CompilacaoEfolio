@@ -22,13 +22,13 @@
 
 	/* estrutura que guarda as variáveis em pilha */
 	typedef struct {
-		char token[MAX][MAX]; // fica com o valor de string/token
+		char token[MAX][MAX]; // fica com o valor de string ou token
 		int inteiro[MAX][1];    // fica com o valor de int
 		float real[MAX][1];   // fica com o valor de floats
 		bool booleano[MAX][1]; // fica com o valor de bools
-		char tipo[MAX][7];    // fica com o tipo da variável/token
-        char local[100];
-		int stackCount;	      // conta a quantidade de variaveis/tokens
+		char tipo[MAX][7];    // fica com o tipo da variável ou token
+        	char local[100];
+		int stackCount;	      // conta a quantidade de variaveis ou tokens
 	}Variaveis;
 
 	Variaveis teste;
@@ -65,8 +65,6 @@
 
     /* carrega pilha */
     void push(Variaveis* stack, char* token, char* valor, char* tipo) {
-        //TODO: CARREGAR PARA A PILHA
-        //TODO: VERIFICAR SE VAR EXISTE
         char inteiro[4]="int", real[6]="float", booleano[5]="bool";
         char boolTrue[5]="true", boolFalse[6]="false";
         //tipo:int
@@ -190,24 +188,15 @@
             if(!strcmp(stack->tipo[i],"int")) {
             novoTk(tk, contaTk);
             printf("%s = %d\n", strdup(tk), stack->inteiro[i][0]);
-            //fprintf(ficheiro, "%s = %d", strdup(tk), stack->inteiro[i][0]);
             printf("%s = %s\n", stack->token[i],strdup(tk));
-            //fprintf(ficheiro, "%s = %s\n", strdup(tk), strdup(stack->token[i]));
-            //fprintf(ficheiro, "%s = %s", $$.valorString, strdup(tk));
             } else if(!strcmp(stack->tipo[i],"float")) {
                 novoTk(tk, contaTk);
                 printf("%s = %f\n", strdup(tk), stack->real[i][0]);
-                //fprintf(ficheiro, "%s = %d", strdup(tk), stack->real[i][0]);
                 printf("%s = %s\n", stack->token[i],strdup(tk));
-                //fprintf(ficheiro, "%s = %s\n", strdup(tk), strdup(stack->real[i]));
-                //fprintf(ficheiro, "%s = %s", $$.valorString, strdup(tk));
             } else {
                 novoTk(tk, contaTk);
                 printf("%s = %s\n", strdup(tk), stack->booleano[i][0] ? "true":"false");
-                //fprintf(ficheiro, "%s = %d", strdup(tk), stack->real[i][0]);
                 printf("%s = %s\n", stack->token[i],strdup(tk));
-                //fprintf(ficheiro, "%s = %s\n", strdup(tk), strdup(stack->real[i]));
-                //fprintf(ficheiro, "%s = %s", $$.valorString, strdup(tk));
             }
         }
     }

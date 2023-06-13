@@ -15,7 +15,6 @@
 
     #include "sintaxG.h"
 
-    // TODO: ELIMINIAR snippet
     // Caracteres invalidos
     void yyerror(char *s);
 
