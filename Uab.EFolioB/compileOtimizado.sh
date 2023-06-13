@@ -4,7 +4,6 @@
 
 clear
 rm sintaxOtimizado.c sintaxOtimizado.h lex.yy.c
--bash: ./otimizado: No such file or directory
 bison -d sintaxOtimizado.y -o sintaxOtimizado.c
 flex lexOtimizado.l
 gcc sintaxOtimizado.c -o otimizadoB

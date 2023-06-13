@@ -1,4 +1,4 @@
-/* versao 30.04.23 */
+/* versao 14.06.23 */
 %option noyywrap yylineno
 %{
 
@@ -15,7 +15,6 @@
 
     #include "sintaxG.h"
 
-    // TODO: ELIMINIAR snippet
     // Caracteres invalidos
     void yyerror(char *s);
 
@@ -23,21 +22,21 @@
 
 espaco [ \S]
 paragrafo [\r\n]
+comentario (#.*)
 identificador [_a-zA-Z\_]+([0-9]?|[_a-zA-Z\_]?)
 inteiro [-]?[0-9]+
 decimal [-]?[0-9]+(\.[0-9]+)?
 booleano (false)|(true)
 
-
 %%
 
-"int"           {return INT;}
-
-"float"         {return FLOAT;}
-
-"bool"          {return BOOL;}
+"int"           { return INT;}
+"float"         { return FLOAT;}
+"bool"          { return BOOL;}
 
 "const"         { return CONST; }
+"global"        { return GLOBAL; }
+"main"          { return MAIN; }
 
 "write"         { return ESCREVE; }
 "write_all"     { return ESCREVETUDO; }
@@ -59,17 +58,16 @@ booleano (false)|(true)
 "/"             { return (DIVIDE); }
 "%"             { return (MODULO); }
 
-
-
 {espaco}
 {paragrafo}   { return(PARAGRAFO); }
+{comentario}  { return(COMENTARIO); }
 
 {inteiro}       {
                     yylval.valTip.valorString = strdup(yytext);
                     return(INTEIRO);
                 }
 
-{booleano}         {
+{booleano}      {
                    yylval.valTip.valorString = strdup(yytext);
                    return(BOOLEANO);
                 }
@@ -79,13 +77,10 @@ booleano (false)|(true)
                     return(IDENT);
                 }
 
-
 {decimal}       {
                     yylval.valTip.valorString = strdup(yytext);
                     return(DECIMAL);
                 }
-
-
 
 . { yyerror("caractere inesperado"); }
 
