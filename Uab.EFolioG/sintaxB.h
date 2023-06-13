@@ -34,8 +34,8 @@
 /* Undocumented macros, especially those whose name start with YY_,
    are private implementation details.  Do not rely on them.  */
 
-#ifndef YY_YY_SINTAXG_H_INCLUDED
-# define YY_YY_SINTAXG_H_INCLUDED
+#ifndef YY_YY_SINTAXB_H_INCLUDED
+# define YY_YY_SINTAXB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -50,34 +50,60 @@ extern int yydebug;
   enum yytokentype
   {
     IDENT = 258,
-    INTEIRO = 259,
-    DECIMAL = 260,
-    BOOLEANO = 261,
-    INT = 262,
-    FLOAT = 263,
-    BOOL = 264,
-    CONST = 265,
-    GLOBAL = 266,
-    MAIN = 267,
-    PARAGRAFO = 268,
-    COMENTARIO = 269,
-    ABRECHAVETA = 270,
-    FECHACHAVETA = 271,
-    PV = 272,
-    IGUAL = 273,
-    VIRGULA = 274,
-    PF = 275,
-    ESCREVE = 276,
-    ESCREVETUDO = 277,
-    ESCREVESTRING = 278,
-    LE = 279,
-    LETUDO = 280,
-    LESTRING = 281,
-    MAIS = 282,
-    MENOS = 283,
-    MULTIPLICA = 284,
-    DIVIDE = 285,
-    MODULO = 286
+    INT = 259,
+    FLOAT = 260,
+    BOOL = 261,
+    SE = 262,
+    SENAO = 263,
+    ENQUANTO = 264,
+    PARA = 265,
+    OU = 266,
+    E = 267,
+    NOT = 268,
+    ESTRUTURA = 269,
+    CONST = 270,
+    MAIN = 271,
+    LOCAL = 272,
+    GLOBAL = 273,
+    ESCREVE = 274,
+    ESCREVETUDO = 275,
+    ESCREVESTRING = 276,
+    LE = 277,
+    LETUDO = 278,
+    LESTRING = 279,
+    EXPOENTE = 280,
+    RAIZ = 281,
+    SIZE = 282,
+    GEN = 283,
+    RESIZE = 284,
+    VIRGULA = 285,
+    ABRECHAVETA = 286,
+    FECHACHAVETA = 287,
+    ABREPARENT = 288,
+    FECHAPARENT = 289,
+    ABREVETOR = 290,
+    FECHAVETOR = 291,
+    IGUAL = 292,
+    PV = 293,
+    PF = 294,
+    ASPAS = 295,
+    EXCLAMACAO = 296,
+    COMPARATIVOS = 297,
+    OPERADOR = 298,
+    OPERADORLOGICO = 299,
+    COMENTARIO = 300,
+    PARAGRAFO = 301,
+    INTEIRO = 302,
+    REAL = 303,
+    BOOLEANO = 304,
+    MAIS = 305,
+    MENOS = 306,
+    MULTIPLICA = 307,
+    DIVIDE = 308,
+    MODULO = 309,
+    INCREMENTO = 310,
+    DECREMENTO = 311,
+    empty = 312
   };
 #endif
 
@@ -85,14 +111,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 407 "sintaxG.y"
+#line 52 "sintaxB.y"
 
         char nome_var[33];
         int tipoint;
-        struct valorTipo valTip;
      
 
-#line 96 "sintaxG.h"
+#line 121 "sintaxB.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -105,4 +130,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_SINTAXG_H_INCLUDED  */
+#endif /* !YY_YY_SINTAXB_H_INCLUDED  */

@@ -8,7 +8,7 @@
         Incluir definicoes criadas pelo bison e exportadas para um ficheiro".h"
     */
 
-    #include "sintax.h"
+    #include "sintaxB.h"
     // Caracteres invalidos
     void yyerror(char *s);
 %}
@@ -55,7 +55,7 @@ booleano (false)|(true)
 ","	            { return(VIRGULA); }
 "{"	            { return(ABRECHAVETA); }
 "}"	            { return(FECHACHAVETA); }
-"("	            { return(ABREPARENT); }helenaifcunha
+"("	            { return(ABREPARENT); }
 ")"	            { return(FECHAPARENT); }
 "["             { return(ABREVETOR); }
 "]"             { return(FECHAVETOR); }

@@ -410,7 +410,6 @@
         struct valorTipo valTip;
      }
 
-
 %token <valTip> IDENT INTEIRO DECIMAL BOOLEANO
 %token INT FLOAT BOOL
 %token CONST GLOBAL MAIN
@@ -419,7 +418,6 @@
 %token MAIS MENOS MULTIPLICA DIVIDE MODULO
 
 %start input
-
 
 %%
 
@@ -441,9 +439,6 @@ comentario_paragrafo:
         PARAGRAFO
     |   COMENTARIO
     ;
-
-
-
 
 constante:
         CONST {strcpy(localDecalracao,"const");} ABRECHAVETA constante_corpo FECHACHAVETA { printStack(&teste); }
@@ -485,8 +480,6 @@ global:
 
 global_corpo: comentario_paragrafo;
 
-
-
 %%
 
 /* INICIO DE FUNÇÕES PARA COMPILADOR */
@@ -494,13 +487,11 @@ global_corpo: comentario_paragrafo;
 int main(int argc, char** argv) {
     startStack(&teste);
 	if (argc<2) {
-		//printf("");
 	} else {
 		yyin = fopen(argv[1], "r");
 		//ficheiro = fopen("tac","w");
 		if (NULL != yyin) {
 			yyparse();
-			//fclose(ficheiro;)
 			fclose(yyin);
 			if (count_error == 0) {
 				printf("\nPrograma sem erros.\n \n");
@@ -514,7 +505,6 @@ int main(int argc, char** argv) {
 		}
 		else {
 			printf("\n Impossivel abrir o ficheiro: %s", argv[1]);
-			//bashInfo(argv[0]);
 		}
 	}
 	return 0;

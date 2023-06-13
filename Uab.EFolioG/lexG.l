@@ -28,7 +28,6 @@ inteiro [-]?[0-9]+
 decimal [-]?[0-9]+(\.[0-9]+)?
 booleano (false)|(true)
 
-
 %%
 
 "int"           { return INT;}
@@ -59,8 +58,6 @@ booleano (false)|(true)
 "/"             { return (DIVIDE); }
 "%"             { return (MODULO); }
 
-
-
 {espaco}
 {paragrafo}   { return(PARAGRAFO); }
 {comentario}  { return(COMENTARIO); }
@@ -70,7 +67,7 @@ booleano (false)|(true)
                     return(INTEIRO);
                 }
 
-{booleano}         {
+{booleano}      {
                    yylval.valTip.valorString = strdup(yytext);
                    return(BOOLEANO);
                 }
@@ -80,13 +77,10 @@ booleano (false)|(true)
                     return(IDENT);
                 }
 
-
 {decimal}       {
                     yylval.valTip.valorString = strdup(yytext);
                     return(DECIMAL);
                 }
-
-
 
 . { yyerror("caractere inesperado"); }
 
